@@ -52,6 +52,35 @@
 
             @yield('content')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
              <!--end::App Content-->
         </main>
         <!--end::App Main-->
