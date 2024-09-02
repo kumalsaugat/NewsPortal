@@ -16,7 +16,7 @@ class NewsCategoryController extends Controller
     {
 
 
-        $categories = Category::paginate(10);
+        $categories = Category::paginate(5);
 
         return view('admin.newsCategory.index',[
             'categories' => $categories,

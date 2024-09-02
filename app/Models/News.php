@@ -12,6 +12,8 @@ class News extends Model
         'title',
         'image',
         'description',
+        'slug',
+        'status',
         'category_id',
         'user_id',
         'published_at',

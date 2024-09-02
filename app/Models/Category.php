@@ -13,7 +13,6 @@ class Category extends Model
         'slug',
         'description',
         'image',
-        'status',
     ];
     public function news()
     {

@@ -15,7 +15,7 @@
 
                 <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
                         <p>
-                            News
+                            News Management
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
@@ -23,7 +23,7 @@
                         <li class="nav-item"> <a href="{{ route('news-category.index') }}" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                 <p>News Category</p>
                             </a> </li>
-                        <li class="nav-item"> <a href="./UI/timeline.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                        <li class="nav-item"> <a href="{{ route('news.index') }}" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                 <p>News</p>
                             </a> </li>
                     </ul>

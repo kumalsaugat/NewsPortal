@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     // News Category
     Route::resource('news-category', \App\Http\Controllers\Admin\NewsCategoryController::class);
 
+    // News
+    Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
+
 
 
 });
