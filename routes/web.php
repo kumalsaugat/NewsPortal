@@ -19,6 +19,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
+    // News Category
+    Route::resource('news-category', \App\Http\Controllers\Admin\NewsCategoryController::class);
+
+
+
 });
 
 require __DIR__.'/auth.php';
