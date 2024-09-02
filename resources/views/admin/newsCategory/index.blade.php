@@ -16,12 +16,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <div class="card-header">
+
+                    {{-- <div class="card-header d-grid gap-2 d-md-flex justify-content-md-end mb-3"> --}}
+
+                    <div class="card-header ">
                         <a href="{{ route('news-category.create') }}" >
-                            <button type="submit" class="btn btn-primary float-sm-right">Create New Category</button></a>
-
-
-
+                            <button type="submit" class="btn btn-primary float-sm-right ">Create New Category</button></a>
                     </div> <!-- /.card-header -->
 
 
@@ -33,7 +33,6 @@
                                     <th>Name</th>
                                     <th>Slug</th>
                                     <th>Image</th>
-
                                     <th>Description</th>
                                     <th style="width: 280px">Action</th>
                                 </tr>
@@ -55,23 +54,23 @@
                                             </td>
                                             <td>{!! Str::limit($category->description, 50) !!}</td>
                                             <td>
+                                                <a href="{{ route('news-category.show', $category->id)}}" class="btn btn-info btn-sm">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
 
-                                                <a href="{{ route('news-category.show', $category->id)}}"
-                                                    class="btn btn-info btn-sm">View</a>
+                                                <a href="{{ route('news-category.edit', $category->id)}}" class="btn btn-success btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
 
-                                                <a href="{{ route('news-category.edit', $category->id)}}"
-                                                    class="btn btn-primary btn-sm">Edit</a>
-
-                                                <form action="{{ route('news-category.destroy', $category->id) }}"
-                                                    method="POST" style="display:inline;">
+                                                <form action="{{ route('news-category.destroy', $category->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
                                                 </form>
-
-
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 @else
@@ -86,13 +85,7 @@
                     </div> <!-- /.card-body -->
                     <div class="card-footer clearfix">
                         {{ $categories->links('pagination::bootstrap-5') }}
-                        {{-- <ul class="pagination pagination-sm m-0 float-end">
-                            <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">2</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">3</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
-                        </ul> --}}
+
                     </div>
                 </div> <!-- /.card -->
             </div> <!-- /.col -->

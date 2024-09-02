@@ -22,48 +22,12 @@
                         </div>
                         <form action="{{ route('news-category.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="card-body">
 
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Category Name:</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Category Name">
-                                    @error('name')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="slug" class="form-label">Slug:</label>
-                                    <input type="text" class="form-control" id="slug" name="slug" placeholder=" Slug">
-                                    @error('slug')
-                                    <div class="form-text text-danger">{{ $message }}</div>
-                                @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description:</label>
-                                    <textarea id="description" class="form-control" name="description"></textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="image" class="form-label">Image:</label>
-
-
-                                    <div class="input-group mb-3">
-                                        <input type="file" class="form-control" id="image" name="image">
-                                        <label class="input-group-text" for="image">Upload</label>
-                                    </div>
-                                    @error('image')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-
-                            </div>
+                            @include('admin.newsCategory.field')
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a href="{{ route('news-category.index')}}" class="btn btn-outline-dark ml-3">Back</a>
+                                <a href="{{ route('news-category.index')}}" class="btn btn-success ml-3">Back</a>
 
                             </div>
 
@@ -79,12 +43,13 @@
     </div>
 
 
-    <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-      tinymce.init({
-        selector: 'textarea#description',
-        menubar: false
-      });
+        tinymce.init({
+            selector: '#description',
+            plugins: 'lists link image table code',
+            toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image table | code',
+            menubar: false,
+        });
     </script>
 
 
