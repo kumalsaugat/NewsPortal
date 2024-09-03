@@ -8,16 +8,12 @@
 
 
     <div class="container-fluid"> <!--begin::Row-->
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success mt-3">
-                {{ $message }}
-            </div>
-        @endif
+
+        @include('admin.message')
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
-
-                    {{-- <div class="card-header d-grid gap-2 d-md-flex justify-content-md-end mb-3"> --}}
 
                     <div class="card-header ">
                         <a href="{{ route('news.create') }}" >
@@ -30,10 +26,12 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Name</th>
+                                    <th>Title</th>
                                     <th>Slug</th>
                                     <th>Image</th>
-                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>User</th>
+                                    <th>Status</th>
                                     <th style="width: 280px">Action</th>
                                 </tr>
                             </thead>
@@ -42,7 +40,7 @@
                                     @foreach($news as $new)
                                         <tr class="align-middle">
                                             <td>{{ $loop->iteration }}.</td>
-                                            <td>{{ $new->name }}</td>
+                                            <td>{{ $new->title }}</td>
                                             <td>{{ $new->slug }}</td>
                                             <td>
                                                 @if ($new->image)
@@ -52,7 +50,15 @@
                                                     <p>No image available</p>
                                                 @endif
                                             </td>
-                                            <td>{!! Str::limit($new->description, 50) !!}</td>
+                                            <td>{{ $new->category->name }}</td>
+                                            <td>{{ $new->user->name }}</td>
+                                            <td>
+                                                @if($new->status)
+                                                    <span class="badge bg-success">Active</span>
+                                                @else
+                                                    <span class="badge bg-danger">Inactive</span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a href="{{ route('news.show', $new->id)}}" class="btn btn-info btn-sm">
                                                     <i class="fas fa-eye"></i>

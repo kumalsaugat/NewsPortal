@@ -23,13 +23,12 @@ class NewsStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'slug' => 'required|unique:news,slug',
+            'slug' => 'required|string|max:255|unique:news,slug,' . $this->route('news'),
             'description' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'published_at' => 'nullable|date',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|boolean',
-            'user_id' => 'required|exists:users,id',
         ];
     }
 }

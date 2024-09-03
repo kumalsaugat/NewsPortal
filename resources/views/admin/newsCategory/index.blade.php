@@ -8,16 +8,13 @@
 
 
     <div class="container-fluid"> <!--begin::Row-->
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success mt-3">
-                {{ $message }}
-            </div>
-        @endif
+
+        @include('admin.message')
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
 
-                    {{-- <div class="card-header d-grid gap-2 d-md-flex justify-content-md-end mb-3"> --}}
 
                     <div class="card-header ">
                         <a href="{{ route('news-category.create') }}" >

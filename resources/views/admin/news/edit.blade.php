@@ -5,30 +5,24 @@
 
     <div class="app-content">
         <div class="container-fluid">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+
+            @include('admin.message')
+
             <div class="row g-4">
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">Create News Category</div>
+                            <div class="card-title">Edit News</div>
                         </div>
-                        <form action="{{ route('news.update', $categoryData->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('news.update', $newsData->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
                             @include('admin.news.field')
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <a href="{{ route('news-category.index')}}" class="btn btn-outline-dark ml-3">Back</a>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                <a href="{{ route('news.index')}}" class="btn btn-outline-dark ml-3">Back</a>
 
                             </div>
 
