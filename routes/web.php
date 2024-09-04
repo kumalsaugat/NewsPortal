@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function () {
 
     // News
     Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
+    Route::post('upload', [\App\Http\Controllers\Admin\NewsController::class, 'upload'])->name('upload');
+    Route::delete('revert', [\App\Http\Controllers\Admin\NewsController::class, 'revert'])->name('revert');
 
 
 

@@ -30,6 +30,7 @@ class NewsController extends Controller
      */
     public function create() {
 
+
         $categories = Category::all();
         return view('admin.news.create',[
             'categories' => $categories,
@@ -52,13 +53,17 @@ class NewsController extends Controller
         $news->user_id = Auth::id();
         $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
+        if ($request->input('image')) {
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
 
-        if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
+            $newPath = 'images/' . $filename;
 
-            $news->image = $imagePath;
+            Storage::disk('public')->move($imagePath, $newPath);
+
+            $news->image = $newPath;
         }
+
 
         $news->save();
 
@@ -107,7 +112,7 @@ class NewsController extends Controller
         $newsData->slug = $request->slug;
         $newsData->description = $request->description;
         $newsData->category_id = $request->category_id;
-        $newsData->status = $request->status;
+        $newsData->status = $request->has('status') ? 1 : 0;
         $newsData->user_id = Auth::id();
 
         $newsData->published_at = $request->published_at
@@ -141,4 +146,24 @@ class NewsController extends Controller
 
         return redirect()->route('news.index')->with('success', 'News deleted successfully.');
     }
+
+    public function upload(Request $request)
+    {
+        if ($request->file('image'))
+        {
+            $path = $request->file('image')->store('tmp', 'public');
+            return response()->json(['path' => $path]);
+        }
+        return response()->json(['error' => 'No file uploaded'], 400);
+    }
+
+    public function revert(Request $request)
+    {
+        $path = $request->getContent();
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+        return response()->json(['success' => true]);
+    }
+
 }

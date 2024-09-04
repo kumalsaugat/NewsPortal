@@ -25,10 +25,10 @@ class NewsStoreRequest extends FormRequest
             'title' => 'required|max:255',
             'slug' => 'required|string|max:255|unique:news,slug,' . $this->route('news'),
             'description' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|string',
             'published_at' => 'nullable|date',
             'category_id' => 'required|exists:categories,id',
-            'status' => 'required|boolean',
+            'status' => 'boolean',
         ];
     }
 }

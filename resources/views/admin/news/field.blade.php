@@ -28,7 +28,6 @@
         <label for="image" class="form-label">Image:</label>
         <div class="input-group mb-3">
             <input type="file" class="form-control" id="image" name="image">
-            <label class="input-group-text" for="image">Upload</label>
         </div>
         @if(isset($newsData) && $newsData->image)
             <div class="mt-2">
@@ -101,4 +100,5 @@
         toggleStatusLabel();
     });
 </script>
+
 
