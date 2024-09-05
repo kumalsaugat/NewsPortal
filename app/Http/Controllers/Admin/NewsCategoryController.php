@@ -15,14 +15,12 @@ class NewsCategoryController extends Controller
     public function index(Request $request)
     {
 
-
         $categories = Category::paginate(5);
 
-        return view('admin.newsCategory.index',[
+        return view('admin.newsCategory.index', [
             'categories' => $categories,
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -38,14 +36,13 @@ class NewsCategoryController extends Controller
     public function store(CategoryStoreRequest $request)
     {
 
-        $category = new Category();
+        $category = new Category;
         $category->name = $request->name;
         $category->slug = $request->slug;
         $category->description = $request->description;
 
-
         if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
+            $imageName = time().'.'.$request->image->extension();
             $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
 
             $category->image = $imagePath;
@@ -62,7 +59,8 @@ class NewsCategoryController extends Controller
     public function show(string $id)
     {
         $categories = Category::findOrFail($id);
-        return view('admin.newsCategory.show',[
+
+        return view('admin.newsCategory.show', [
             'category' => $categories,
         ]);
     }
@@ -74,7 +72,7 @@ class NewsCategoryController extends Controller
     {
         $categoryData = Category::findOrFail($id);
 
-        return view('admin.newsCategory.edit',[
+        return view('admin.newsCategory.edit', [
             'categoryData' => $categoryData,
         ]);
     }
@@ -82,24 +80,22 @@ class NewsCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryStoreRequest  $request, string $id)
+    public function update(CategoryStoreRequest $request, string $id)
     {
         $categoryData = Category::findOrFail($id);
 
+        $categoryData->name = $request->name;
+        $categoryData->slug = $request->slug;
+        $categoryData->description = $request->description;
 
-            $categoryData->name = $request->name;
-            $categoryData->slug = $request->slug;
-            $categoryData->description = $request->description;
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
 
-            if ($request->hasFile('image')) {
-                $imageName = time() . '.' . $request->image->extension();
-                $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
+            $categoryData->image = $imagePath;
+        }
 
-                $categoryData->image = $imagePath;
-            }
-
-            $categoryData->save();
-
+        $categoryData->save();
 
         return redirect()->route('news-category.index')->with('success', 'Category updated successfully.');
     }

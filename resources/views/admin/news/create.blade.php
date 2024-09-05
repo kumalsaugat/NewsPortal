@@ -1,13 +1,11 @@
 @extends('layouts.app')
 
 @push('styles')
-<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
 @endpush
 
 @section('content')
-
-
     <div class="app-content">
         <div class="container-fluid">
 
@@ -21,13 +19,11 @@
                         </div>
                         <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-
                             @include('admin.news.field')
-
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a href="{{ route('news.index')}}" class="btn btn-success ml-3">Back</a>
+                                <a href="{{ route('news.index') }}" class="btn btn-success ml-3">Back</a>
 
                             </div>
 
@@ -51,46 +47,38 @@
             menubar: false,
         });
     </script>
-
-
-
-
 @endsection
 
 @push('scripts')
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
 
-<script>
-    FilePond.registerPlugin(FilePondPluginImagePreview);
-    FilePond.registerPlugin(FilePondPluginFileValidateType);
+    <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
 
-    const pond = FilePond.create(document.querySelector('#image'), {
-        acceptedFileTypes: ['image/*'],
-        server: {
-            process: {
-                url: '{{ route('upload') }}',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        const pond = FilePond.create(document.querySelector('#image'), {
+            acceptedFileTypes: ['image/*'],
+            server: {
+                process: {
+                    url: '{{ route('upload') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    onload: (response) => {
+                        const data = JSON.parse(response);
+                        return data.path;
+                    }
                 },
-                onload: (response) => {
-                    const data = JSON.parse(response);
-                    return data.path;
-                }
-            },
-            revert: {
-                url: '{{ route('revert') }}',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                revert: {
+                    url: '{{ route('revert') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
                 }
             }
-        }
-    });
-</script>
-
-
+        });
+    </script>
 @endpush
-
-

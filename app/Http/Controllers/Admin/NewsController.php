@@ -6,37 +6,37 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsStoreRequest;
 use App\Models\Category;
 use App\Models\News;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index()
+    {
         $news = News::paginate(5);
 
-        return view('admin.news.index',[
+        return view('admin.news.index', [
             'news' => $news,
         ]);
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
-
+    public function create()
+    {
 
         $categories = Category::all();
-        return view('admin.news.create',[
+
+        return view('admin.news.create', [
             'categories' => $categories,
         ]);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -44,7 +44,7 @@ class NewsController extends Controller
     public function store(NewsStoreRequest $request)
     {
 
-        $news = new News();
+        $news = new News;
         $news->title = $request->title;
         $news->slug = $request->slug;
         $news->description = $request->description;
@@ -57,13 +57,12 @@ class NewsController extends Controller
             $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
-            $newPath = 'images/' . $filename;
+            $newPath = 'images/'.$filename;
 
             Storage::disk('public')->move($imagePath, $newPath);
 
             $news->image = $newPath;
         }
-
 
         $news->save();
 
@@ -71,18 +70,17 @@ class NewsController extends Controller
 
     }
 
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
         $news = News::findOrFail($id);
-        return view('admin.news.show',[
+
+        return view('admin.news.show', [
             'news' => $news,
         ]);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -93,12 +91,12 @@ class NewsController extends Controller
         $categories = Category::all();
 
         $newsData->published_at = $newsData->published_at ? Carbon::parse($newsData->published_at) : null;
-        return view('admin.news.edit',[
+
+        return view('admin.news.edit', [
             'newsData' => $newsData,
             'categories' => $categories,
         ]);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -119,21 +117,34 @@ class NewsController extends Controller
             ? Carbon::parse($request->published_at)
             : $newsData->published_at;
 
-        if ($request->hasFile('image')) {
-            if ($newsData->image) {
+        if ($request->input('image')) {
+            if ($newsData->image && Storage::disk('public')->exists($newsData->image)) {
                 Storage::disk('public')->delete($newsData->image);
             }
 
-            $imageName = time() . '.' . $request->image->extension();
-            $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
-            $newsData->image = $imagePath;
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
+            $newPath = 'images/'.$filename;
+
+            Storage::disk('public')->move($imagePath, $newPath);
+
+            $newsData->image = $newPath;
         }
+
+        // if ($request->hasFile('image')) {
+        //     if ($newsData->image) {
+        //         Storage::disk('public')->delete($newsData->image);
+        //     }
+
+        //     $imageName = time() . '.' . $request->image->extension();
+        //     $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
+        //     $newsData->image = $imagePath;
+        // }
 
         $newsData->save();
 
         return redirect()->route('news.index')->with('success', 'News updated successfully.');
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -149,11 +160,12 @@ class NewsController extends Controller
 
     public function upload(Request $request)
     {
-        if ($request->file('image'))
-        {
+        if ($request->file('image')) {
             $path = $request->file('image')->store('tmp', 'public');
+
             return response()->json(['path' => $path]);
         }
+
         return response()->json(['error' => 'No file uploaded'], 400);
     }
 
@@ -163,7 +175,19 @@ class NewsController extends Controller
         if (Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);
         }
+
         return response()->json(['success' => true]);
     }
 
+    public function load($filename)
+    {
+        return response()->file(storage_path('app/public/images/'.$filename));
+
+    }
+
+    // Handle fetching image (e.g., after upload or on form load)
+    public function fetch($filename)
+    {
+        return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
+    }
 }

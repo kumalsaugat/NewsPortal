@@ -2,7 +2,8 @@
 
     <div class="mb-3">
         <label for="title" class="form-label"><strong>Title:<span class="text-danger">*</span></strong></label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" value="{{ old('title', $newsData->title ?? '') }}">
+        <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title"
+            value="{{ old('title', $newsData->title ?? '') }}">
         @error('title')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
@@ -10,7 +11,8 @@
 
     <div class="mb-3">
         <label for="slug" class="form-label"><strong>Slug:<span class="text-danger">*</span></strong></label>
-        <input type="text" class="form-control" id="slug" name="slug" placeholder=" Slug" value="{{ old('slug', $newsData->slug ?? '') }}">
+        <input type="text" class="form-control" id="slug" name="slug" placeholder=" Slug"
+            value="{{ old('slug', $newsData->slug ?? '') }}">
         @error('slug')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
@@ -29,9 +31,10 @@
         <div class="input-group mb-3">
             <input type="file" class="form-control" id="image" name="image">
         </div>
-        @if(isset($newsData) && $newsData->image)
+        @if (!empty($newsData->image))
             <div class="mt-2">
-                <img src="{{ asset('storage/' . $newsData->image) }}" alt="{{ $newsData->title }}" class="img-thumbnail" width="150">
+                <img src="{{ asset('storage/' . $newsData->image) }}" alt="{{ $newsData->title }}" class="img-thumbnail"
+                    width="150">
             </div>
         @endif
         @error('image')
@@ -44,8 +47,9 @@
         <label for="category_id" class="form-label"><strong>Category:<span class="text-danger">*</span></label>
         <select name="category_id" id="category_id" class="form-control">
             <option value="">Select Category</option>
-            @foreach($categories as $category)
-                <option value="{{ $category->id }}" {{ old('category_id', $newsData->category_id ?? '') == $category->id ? 'selected' : '' }}>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}"
+                    {{ old('category_id', $newsData->category_id ?? '') == $category->id ? 'selected' : '' }}>
                     {{ $category->name }}
                 </option>
             @endforeach
@@ -60,9 +64,9 @@
         <label for="status" class="form-label"><strong>Status:<span class="text-danger">*</span></label>
         <div class="form-check form-switch">
             <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
-                   id="status" name="status" value="1"
-                   {{ (isset($newsData) && $newsData->status) || old('status') ? 'checked' : '' }}
-                   onchange="toggleStatusLabel()">
+                id="status" name="status" value="1"
+                {{ (isset($newsData) && $newsData->status) || old('status') ? 'checked' : '' }}
+                onchange="toggleStatusLabel()">
             <label class="form-check-label" for="status" id="statusLabel">
                 {{ (isset($newsData) && $newsData->status) || old('status') ? 'Active' : 'Inactive' }}
             </label>
@@ -100,5 +104,3 @@
         toggleStatusLabel();
     });
 </script>
-
-

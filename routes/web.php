@@ -16,7 +16,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     // News Category
@@ -26,9 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
     Route::post('upload', [\App\Http\Controllers\Admin\NewsController::class, 'upload'])->name('upload');
     Route::delete('revert', [\App\Http\Controllers\Admin\NewsController::class, 'revert'])->name('revert');
-
-
-
+    Route::get('/load/{filename}', [\App\Http\Controllers\Admin\NewsController::class, 'load'])->name('load');
+    Route::get('/fetch/{filename}', [\App\Http\Controllers\Admin\NewsController::class, 'fetch'])->name('fetch');
 });
 
 require __DIR__.'/auth.php';
