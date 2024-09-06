@@ -1,12 +1,10 @@
 @extends('admin.layouts.auth')
 
 @section('content')
-
-
     <div class="login-box">
         <div class="login-logo">
-            <a href="../index2.html"><b>Admin</b>LTE</a>
-        </div> <!-- /.login-logo -->
+            <a href="#"><b>News Portal</b></a>
+        </div>
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
@@ -19,7 +17,8 @@
 
                     <!-- Email Address -->
                     <div class="input-group mb-3">
-                        <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus placeholder="Email" />
+                        <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')"
+                            required autofocus placeholder="Email" />
                         <div class="input-group-text">
                             <span class="bi bi-envelope"></span>
                         </div>
@@ -28,7 +27,8 @@
 
                     <!-- Password -->
                     <div class="input-group mb-3">
-                        <x-text-input id="password" class="form-control" type="password" name="password" required placeholder="Password" />
+                        <x-text-input id="password" class="form-control" type="password" name="password" required
+                            placeholder="Password" />
                         <div class="input-group-text">
                             <span class="bi bi-lock-fill"></span>
                         </div>
@@ -43,7 +43,7 @@
                                 <label class="form-check-label" for="remember_me">Remember Me</label>
                             </div>
                         </div>
-                         <div class="col-4">
+                        <div class="col-4">
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">Sign In</button>
                             </div>
@@ -52,26 +52,18 @@
 
                 </form>
 
-                <div class="social-auth-links text-center mb-3 d-grid gap-2">
-                    <p>- OR -</p>
-                    <a href="#" class="btn btn-primary">
-                        <i class="bi bi-facebook me-2"></i> Sign in using Facebook
-                    </a>
-                    <a href="#" class="btn btn-danger">
-                        <i class="bi bi-google me-2"></i> Sign in using Google+
-                    </a>
-                </div> <!-- /.social-auth-links -->
 
-                <p class="mb-1">
+                {{-- Password Reset --}}
+                {{-- <p class="mb-1">
                     @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}">I forgot my password</a>
                     @endif
-                </p>
+                </p> --}}
+
                 <p class="mb-0">
                     <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
                 </p>
             </div> <!-- /.login-card-body -->
         </div>
     </div> <!-- /.login-box -->
-
 @endsection
