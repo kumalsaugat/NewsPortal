@@ -49,7 +49,7 @@ class NewsController extends Controller
         $news->slug = $request->slug;
         $news->description = $request->description;
         $news->category_id = $request->category_id;
-        $news->status = $request->status;
+        $news->status = $request->has('status') ? 1 : 0;
         $news->user_id = Auth::id();
         $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
