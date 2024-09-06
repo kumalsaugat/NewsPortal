@@ -22,15 +22,13 @@ class CategoryStoreRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => 'required|unique:categories,name',
-            'slug' => 'required|unique:categories,slug',
+            'name' => 'required|unique:categories,name|max:255',
             'description' => 'nullable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         if ($this->route('id')) {
             $rules['name'] = 'required|unique:categories,name,' . $this->route('id');
-            $rules['slug'] = 'required|unique:categories,slug,' . $this->route('id');
         }
 
         return $rules;
