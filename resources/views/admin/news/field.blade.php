@@ -10,7 +10,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="slug" class="form-label"><strong>Slug:<span class="text-danger">*</span></strong></label>
+        <label for="slug" class="form-label"><strong>Slug:</strong></label>
         <input type="text" class="form-control" id="slug" name="slug" placeholder=" Slug"
             value="{{ old('slug', $newsData->slug ?? '') }}">
         @error('slug')

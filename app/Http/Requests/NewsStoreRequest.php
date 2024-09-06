@@ -22,8 +22,7 @@ class NewsStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
-            'slug' => 'required|string|max:255|unique:news,slug,' . $this->route('news'),
+            'title' => 'required|unique:news,title|max:255',
             'description' => 'required',
             'image' => 'nullable|string',
             'published_at' => 'nullable|date',

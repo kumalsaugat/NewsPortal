@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-
     <div class="app-content">
         <div class="container-fluid">
 
@@ -12,9 +10,10 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">Create News Category</div>
+                            <div class="card-title">Edit News Category</div>
                         </div>
-                        <form action="{{ route('news-category.update', $categoryData->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('news-category.update', $categoryData->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -22,7 +21,7 @@
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a href="{{ route('news-category.index')}}" class="btn btn-outline-dark ml-3">Back</a>
+                                <a href="{{ route('news-category.index') }}" class="btn btn-outline-dark ml-3">Back</a>
 
                             </div>
 
@@ -45,9 +44,4 @@
             menubar: false,
         });
     </script>
-
-
-
-
 @endsection
-
