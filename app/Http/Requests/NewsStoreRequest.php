@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class NewsStoreRequest extends FormRequest
 {
@@ -21,8 +22,10 @@ class NewsStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $newsId = $this->route('news');
+
         return [
-            'title' => 'required|unique:news,title|max:255',
+            'title' => 'required|max:255|unique:news,title,'.$newsId,
             'description' => 'required',
             'image' => 'nullable|string',
             'published_at' => 'nullable|date',
