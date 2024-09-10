@@ -26,7 +26,7 @@ class NewsStoreRequest extends FormRequest
 
         return [
             'title' => 'required|max:255|unique:news,title,'.$newsId,
-            'description' => 'required',
+            'description' => 'required|string',
             'image' => 'nullable|string',
             'published_at' => 'nullable|date',
             'category_id' => 'required|exists:categories,id',
