@@ -7,8 +7,13 @@ use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class DashboardController extends AdminBaseController
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->pageTitle = 'Dashboard';
+    }
     public function index()
     {
         //For Category
@@ -20,7 +25,9 @@ class DashboardController extends Controller
         $totalNews = News::count();
         $totalActive = News::where('status', 1)->count();
         $totalInactive = News::where('status', 0)->count();
+
         return view('admin.dashboard.index',[
+            'pageTitle' => $this->pageTitle,
             'totalNews' => $totalNews,
             'totalActive' => $totalActive,
             'totalInactive' => $totalInactive,

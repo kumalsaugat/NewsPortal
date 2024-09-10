@@ -7,8 +7,13 @@ use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-class NewsCategoryController extends Controller
+class NewsCategoryController extends AdminBaseController
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->pageTitle = 'News Category';
+    }
     /**
      * Display a listing of the resource.
      */
@@ -19,6 +24,7 @@ class NewsCategoryController extends Controller
 
         return view('admin.newsCategory.index', [
             'categories' => $categories,
+            'pageTitle' => $this->pageTitle,
         ]);
     }
 
@@ -27,7 +33,9 @@ class NewsCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.newsCategory.create');
+        return view('admin.newsCategory.create',[
+            'pageTitle' => $this->pageTitle,
+        ]);
     }
 
     /**
@@ -63,6 +71,7 @@ class NewsCategoryController extends Controller
 
         return view('admin.newsCategory.show', [
             'category' => $categories,
+            'pageTitle' => $this->pageTitle,
         ]);
     }
 
@@ -75,6 +84,7 @@ class NewsCategoryController extends Controller
 
         return view('admin.newsCategory.edit', [
             'categoryData' => $categoryData,
+            'pageTitle' => $this->pageTitle,
         ]);
     }
 
@@ -107,7 +117,8 @@ class NewsCategoryController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
+
+   {
         $category = Category::findOrFail($id);
 
         $category->delete();

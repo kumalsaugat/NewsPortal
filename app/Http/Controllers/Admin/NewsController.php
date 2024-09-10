@@ -11,8 +11,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class NewsController extends Controller
+class NewsController extends AdminBaseController
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->pageTitle = 'News';
+    }
     /**
      * Display a listing of the resource.
      */
@@ -22,6 +27,7 @@ class NewsController extends Controller
 
         return view('admin.news.index', [
             'news' => $news,
+            'pageTitle' => $this->pageTitle,
         ]);
     }
 
@@ -35,6 +41,7 @@ class NewsController extends Controller
 
         return view('admin.news.create', [
             'categories' => $categories,
+            'pageTitle' => $this->pageTitle,
         ]);
     }
 
@@ -79,6 +86,7 @@ class NewsController extends Controller
 
         return view('admin.news.show', [
             'news' => $news,
+            'pageTitle' => $this->pageTitle,
         ]);
     }
 
@@ -95,6 +103,7 @@ class NewsController extends Controller
         return view('admin.news.edit', [
             'newsData' => $newsData,
             'categories' => $categories,
+            'pageTitle' => $this->pageTitle,
         ]);
     }
 
@@ -131,16 +140,6 @@ class NewsController extends Controller
             $newsData->image = $newPath;
         }
 
-        // if ($request->hasFile('image')) {
-        //     if ($newsData->image) {
-        //         Storage::disk('public')->delete($newsData->image);
-        //     }
-
-        //     $imageName = time() . '.' . $request->image->extension();
-        //     $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
-        //     $newsData->image = $imagePath;
-        // }
-
         $newsData->save();
 
         return redirect()->route('news.index')->with('success', 'News updated successfully.');
@@ -162,7 +161,6 @@ class NewsController extends Controller
     {
         if ($request->file('image')) {
             $path = $request->file('image')->store('tmp', 'public');
-
             return response()->json(['path' => $path]);
         }
 
