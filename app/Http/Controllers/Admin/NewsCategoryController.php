@@ -125,4 +125,14 @@ class NewsCategoryController extends AdminBaseController
 
         return redirect()->route('news-category.index')->with('success', 'Category deleted successfully.');
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $newsCategory = Category::findOrFail($id);
+        $newsCategory->status = $request->status;
+        $newsCategory->save();
+
+        return response()->json(['success' => true]);
+
+    }
 }

@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
 
     // News Category
     Route::resource('news-category', \App\Http\Controllers\Admin\NewsCategoryController::class);
+    Route::patch('/news-category/update-status/{id}', [\App\Http\Controllers\Admin\NewsCategoryController::class, 'updateStatus'])->name('news-category.update-status');
 
     // News
     Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('revert', [\App\Http\Controllers\Admin\NewsController::class, 'revert'])->name('revert');
     Route::get('/load/{filename}', [\App\Http\Controllers\Admin\NewsController::class, 'load'])->name('load');
     Route::get('/fetch/{filename}', [\App\Http\Controllers\Admin\NewsController::class, 'fetch'])->name('fetch');
+    Route::patch('/news/update-status/{id}', [\App\Http\Controllers\Admin\NewsController::class, 'updateStatus'])->name('news.update-status');
 });
 
 require __DIR__.'/auth.php';

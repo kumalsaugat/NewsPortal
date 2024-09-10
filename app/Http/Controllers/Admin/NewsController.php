@@ -188,4 +188,14 @@ class NewsController extends AdminBaseController
     {
         return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $newsCategory = News::findOrFail($id);
+        $newsCategory->status = $request->status;
+        $newsCategory->save();
+
+        return response()->json(['success' => true]);
+
+    }
 }
