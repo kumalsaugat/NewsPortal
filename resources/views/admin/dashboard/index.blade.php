@@ -7,34 +7,82 @@
                 <div class="col-lg-3 col-6"> <!--begin::Small Box Widget 1-->
                     <div class="small-box text-bg-primary">
                         <div class="inner">
-                            <h3>150</h3>
-                            <p>New Orders</p>
-                        </div> <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path
-                                d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z">
-                            </path>
-                        </svg> <a href="#"
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3 id="dynamic-count">{{ $totalCategories }}</h3>
+                                    <p id="dynamic-label">Total Category</p>
+                                </div>
+                                <div class="col-6 text-end" style="z-index: +999;">
+                                    <a class="icon" href="javascript:void(0)" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateCounter('Total Category', {{ $totalCategories }})">Total Category</a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateCounter('Total Active', {{ $totalActiveCategories }})">Total Active Category</a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateCounter('Total Inactive', {{ $totalInactiveCategories }})">Total Inactive Category</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="small-box-icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
+                        </svg>
+                        <a href="{{ route('news-category.index') }}"
                             class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
-                            More info <i class="bi bi-link-45deg"></i> </a>
+                            More info <i class="bi bi-link-45deg"></i>
+                        </a>
                     </div> <!--end::Small Box Widget 1-->
                 </div> <!--end::Col-->
                 <div class="col-lg-3 col-6"> <!--begin::Small Box Widget 2-->
                     <div class="small-box text-bg-success">
                         <div class="inner">
-                            <h3>53<sup class="fs-5">%</sup></h3>
-                            <p>Bounce Rate</p>
-                        </div> <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path
-                                d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z">
-                            </path>
-                        </svg> <a href="#"
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3 id="dynamic-count-news">{{ $totalNews }}</h3>
+                                    <p id="dynamic-label-news">Total News</p>
+                                </div>
+                                <div class="col-6 text-end" style="z-index: +999;">
+                                    <a class="icon" href="javascript:void(0)" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateCounterNews('Total News', {{ $totalNews }})">Total News</a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateCounterNews('Total Active', {{ $totalActive }})">Total Active News</a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateCounterNews('Total Inactive', {{ $totalInactive }})">Total Inactive News</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="small-box-icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 3h16a1 1 0 011 1v16a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 011-1.732V4a1 1 0 011-1zm15 2H5v14h14V5zM7 7h8v2H7V7zm0 4h8v2H7v-2zm0 4h4v2H7v-2z" />
+                        </svg>
+                        <a href="{{ route('news.index') }}"
                             class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
-                            More info <i class="bi bi-link-45deg"></i> </a>
+                            More info <i class="bi bi-link-45deg"></i>
+                        </a>
                     </div> <!--end::Small Box Widget 2-->
                 </div> <!--end::Col-->
             </div> <!--end::Row--> <!--begin::Row-->
         </div> <!--end::Container-->
     </div>
+
+    <script>
+        function updateCounter(label, count) {
+            // Update the number and label
+            document.getElementById('dynamic-count').textContent = count;
+            document.getElementById('dynamic-label').textContent = label;
+        }
+        function updateCounterNews(label, count) {
+            // Update the number and label
+            document.getElementById('dynamic-count-news').textContent = count;
+            document.getElementById('dynamic-label-news').textContent = label;
+        }
+
+    </script>
 @endsection
