@@ -40,6 +40,7 @@ class NewsCategoryController extends Controller
         $category->name = $request->name;
         $category->slug = $request->slug;
         $category->description = $request->description;
+        $category->status = $request->has('status') ? 1 : 0;
 
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();
@@ -87,6 +88,8 @@ class NewsCategoryController extends Controller
         $categoryData->name = $request->name;
         $categoryData->slug = $request->slug;
         $categoryData->description = $request->description;
+        $categoryData->status = $request->has('status') ? 1 : 0;
+
 
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();

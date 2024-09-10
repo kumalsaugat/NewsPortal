@@ -31,7 +31,7 @@
                                         <th>Name</th>
                                         <th>Slug</th>
                                         <th>Image</th>
-                                        {{-- <th>Description</th> --}}
+                                        <th>Status</th>
                                         <th style="width: 280px">Action</th>
                                     </tr>
                                 </thead>
@@ -42,6 +42,8 @@
                                                 <td>{{ $loop->iteration }}.</td>
                                                 <td>{{ $category->name }}</td>
                                                 <td>{{ $category->slug }}</td>
+
+
                                                 <td>
                                                     @if ($category->image)
                                                         <a href="{{ asset('storage/' . $category->image) }}"
@@ -52,6 +54,13 @@
                                                         </a>
                                                     @else
                                                         <p>No image available</p>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($category->status)
+                                                        <span class="badge bg-success">Active</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Inactive</span>
                                                     @endif
                                                 </td>
                                                 {{-- <td>{!! Str::limit($category->description, 50) !!}</td> --}}

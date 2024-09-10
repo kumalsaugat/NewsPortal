@@ -32,6 +32,7 @@ class CategoryStoreRequest extends FormRequest
             ],
             'description' => ['nullable'],
             'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Optional image field
+            'status' => 'boolean',
         ];
     }
 }
