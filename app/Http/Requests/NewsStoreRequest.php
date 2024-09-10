@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-
+use Elegant\Sanitizer\Sanitizer;
 class NewsStoreRequest extends FormRequest
 {
     /**
@@ -32,5 +32,18 @@ class NewsStoreRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'status' => 'boolean',
         ];
+    }
+
+
+    protected function prepareForValidation()
+    {
+        // Define sanitization rules
+        $sanitizer = new Sanitizer($this->all(), [
+            'title' => 'trim|escape',
+            'slug' => 'trim|escape',
+        ]);
+
+        // Replace request data with sanitized data
+        $this->merge($sanitizer->sanitize());
     }
 }

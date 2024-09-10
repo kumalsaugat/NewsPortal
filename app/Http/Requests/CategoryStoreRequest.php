@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Elegant\Sanitizer\Sanitizer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -34,5 +35,17 @@ class CategoryStoreRequest extends FormRequest
             'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Optional image field
             'status' => 'boolean',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        // Define sanitization rules
+        $sanitizer = new Sanitizer($this->all(), [
+            'name' => 'trim|escape',
+            'slug' => 'trim|escape',
+        ]);
+
+        // Replace request data with sanitized data
+        $this->merge($sanitizer->sanitize());
     }
 }
