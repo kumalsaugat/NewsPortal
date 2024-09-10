@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NewsCategoryController extends AdminBaseController
 {
@@ -45,19 +46,7 @@ class NewsCategoryController extends AdminBaseController
     {
 
         $category = new Category;
-        $category->name = $request->name;
-        $category->slug = $request->slug;
-        $category->description = $request->description;
-        $category->status = $request->has('status') ? 1 : 0;
-
-        if ($request->hasFile('image')) {
-            $imageName = time().'.'.$request->image->extension();
-            $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
-
-            $category->image = $imagePath;
-        }
-
-        $category->save();
+        $this->saveCategoryData($category, $request);
 
         return redirect()->route('news-category.index')->with('success', 'Category created successfully.');
     }
@@ -95,20 +84,7 @@ class NewsCategoryController extends AdminBaseController
     {
         $categoryData = Category::findOrFail($id);
 
-        $categoryData->name = $request->name;
-        $categoryData->slug = $request->slug;
-        $categoryData->description = $request->description;
-        $categoryData->status = $request->has('status') ? 1 : 0;
-
-
-        if ($request->hasFile('image')) {
-            $imageName = time().'.'.$request->image->extension();
-            $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
-
-            $categoryData->image = $imagePath;
-        }
-
-        $categoryData->save();
+        $this->saveCategoryData($categoryData, $request);
 
         return redirect()->route('news-category.index')->with('success', 'Category updated successfully.');
     }
@@ -117,13 +93,32 @@ class NewsCategoryController extends AdminBaseController
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-
    {
         $category = Category::findOrFail($id);
 
         $category->delete();
 
         return redirect()->route('news-category.index')->with('success', 'Category deleted successfully.');
+    }
+
+    protected function saveCategoryData(Category $category, CategoryStoreRequest $request)
+    {
+        $category->name = $request->name;
+        $category->slug = $request->slug;
+        $category->description = $request->description;
+        $category->status = $request->has('status') ? 1 : 0;
+
+        if ($request->hasFile('image')) {
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
+
+            $imageName = time() . '.' . $request->image->extension();
+            $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
+
+            $category->image = $imagePath;
+        }
+        $category->save();
     }
 
     public function updateStatus(Request $request, $id)

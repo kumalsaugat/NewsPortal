@@ -52,26 +52,7 @@ class NewsController extends AdminBaseController
     {
 
         $news = new News;
-        $news->title = $request->title;
-        $news->slug = $request->slug;
-        $news->description = $request->description;
-        $news->category_id = $request->category_id;
-        $news->status = $request->has('status') ? 1 : 0;
-        $news->user_id = Auth::id();
-        $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
-
-        if ($request->input('image')) {
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
-
-            $newPath = 'images/'.$filename;
-
-            Storage::disk('public')->move($imagePath, $newPath);
-
-            $news->image = $newPath;
-        }
-
-        $news->save();
+        $this->saveNewsData($news, $request);
 
         return redirect()->route('news.index')->with('success', 'News created successfully.');
 
@@ -114,33 +95,7 @@ class NewsController extends AdminBaseController
     {
 
         $newsData = News::findOrFail($id);
-
-        $newsData->title = $request->title;
-        $newsData->slug = $request->slug;
-        $newsData->description = $request->description;
-        $newsData->category_id = $request->category_id;
-        $newsData->status = $request->has('status') ? 1 : 0;
-        $newsData->user_id = Auth::id();
-
-        $newsData->published_at = $request->published_at
-            ? Carbon::parse($request->published_at)
-            : $newsData->published_at;
-
-        if ($request->input('image')) {
-            if ($newsData->image && Storage::disk('public')->exists($newsData->image)) {
-                Storage::disk('public')->delete($newsData->image);
-            }
-
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
-            $newPath = 'images/'.$filename;
-
-            Storage::disk('public')->move($imagePath, $newPath);
-
-            $newsData->image = $newPath;
-        }
-
-        $newsData->save();
+        $this->saveNewsData($newsData, $request);
 
         return redirect()->route('news.index')->with('success', 'News updated successfully.');
     }
@@ -187,6 +142,35 @@ class NewsController extends AdminBaseController
     public function fetch($filename)
     {
         return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
+    }
+
+    protected function saveNewsData(News $news, NewsStoreRequest $request)
+    {
+        $news->title = $request->title;
+        $news->slug = $request->slug;
+        $news->description = $request->description;
+        $news->category_id = $request->category_id;
+        $news->status = $request->has('status') ? 1 : 0;
+        $news->user_id = Auth::id();
+        $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : $news->published_at;
+
+        // Handle image upload
+        if ($request->input('image')) {
+            // Delete old image if updating
+            if ($news->image && Storage::disk('public')->exists($news->image)) {
+                Storage::disk('public')->delete($news->image);
+            }
+
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
+            $newPath = 'images/' . $filename;
+
+            Storage::disk('public')->move($imagePath, $newPath);
+
+            $news->image = $newPath;
+        }
+
+        $news->save();
     }
 
     public function updateStatus(Request $request, $id)
