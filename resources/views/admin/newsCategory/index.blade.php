@@ -46,8 +46,9 @@
 
                                                 <td>
                                                     @if ($category->image)
+
                                                         <a href="{{ asset('storage/' . $category->image) }}"
-                                                            target="_blank">
+                                                            data-fancybox="gallery" data-caption="{{ $category->title }}">
                                                             <img src="{{ asset('storage/' . $category->image) }}"
                                                                 alt="{{ $category->title }}"
                                                                 style="width: 50px; height: auto;">
