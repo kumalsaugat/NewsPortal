@@ -93,7 +93,7 @@
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
 
-    {{-- <script>
+    <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
 
@@ -109,17 +109,28 @@
                         return res.blob();
                     }).then(load).catch(error);
                 },
-                process: '{{ route('upload') }}',
-                revert: '{{ route('revert') }}',
-
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                process: {
+                    url: '{{ route('upload') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    onload: (response) => {
+                        const data = JSON.parse(response);
+                        return data.path;
+                    }
+                },
+                revert: {
+                    url: '{{ route('revert') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
                 }
             },
+
             files: [
                 @if (isset($newsData) && $newsData->image)
                     {
-                        source: '{{ Storage::disk('public')->url($newsData->image) }}',
+                        source: '{{ asset('storage/' . $newsData->image) }}',
                         options: {
                             type: 'local',
                         },
@@ -127,7 +138,7 @@
                 @endif
             ],
         });
-    </script> --}}
+    </script>
 
     {{-- <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
@@ -162,7 +173,7 @@
         });
     </script> --}}
 
-    <script>
+    {{-- <script>
         FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
         const inputElement = document.querySelector('#image');
@@ -170,6 +181,13 @@
         const pond = FilePond.create(inputElement, {
             acceptedFileTypes: ['image/*'],
             server: {
+                load: (source, load, error, progress, abort, headers) => {
+                        fetch(source, {
+                            mode: 'cors'
+                        }).then((res) => {
+                            return res.blob();
+                        }).then(load).catch(error);
+                    },
                 process: {
                     url: '{{ route('upload') }}',
                     method: 'POST',
@@ -197,7 +215,7 @@
             files: [
                 @if (isset($newsData) && $newsData->image)
                     {
-                        source: '{{ Storage::disk('public')->url($newsData->image) }}',
+                        source: '{{ asset('storage/' . $newsData->image) }}',
                         options: {
                             type: 'local',
                             file: {
@@ -209,5 +227,5 @@
                 @endif
             ],
         });
-    </script>
+    </script> --}}
 @endpush
