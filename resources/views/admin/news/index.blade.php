@@ -44,8 +44,11 @@
                                                 <td>{{ $new->slug }}</td>
                                                 <td>
                                                     @if ($new->image)
+                                                    <a href="{{ asset('storage/' . $new->image) }}"
+                                                        data-fancybox="gallery" data-caption="{{ $new->title }}">
                                                         <img src="{{ asset('storage/' . $new->image) }}"
                                                             alt="{{ $new->title }}" style="width: 50px; height: auto;">
+                                                    </a>
                                                     @else
                                                         <p>No image available</p>
                                                     @endif

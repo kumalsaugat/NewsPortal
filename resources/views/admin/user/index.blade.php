@@ -44,8 +44,11 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td>
                                                     @if ($user->image)
+                                                    <a href="{{ asset('storage/' . $user->image) }}"
+                                                        data-fancybox="gallery" data-caption="{{ $user->title }}">
                                                         <img src="{{ asset('storage/' . $user->image) }}"
                                                             alt="{{ $user->title }}" style="width: 50px; height: auto;">
+                                                    </a>
                                                     @else
                                                         <p>No image available</p>
                                                     @endif
