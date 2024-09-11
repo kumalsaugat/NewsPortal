@@ -29,6 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/load/{filename}', [\App\Http\Controllers\Admin\NewsController::class, 'load'])->name('load');
     Route::get('/fetch/{filename}', [\App\Http\Controllers\Admin\NewsController::class, 'fetch'])->name('fetch');
     Route::patch('/news/update-status/{id}', [\App\Http\Controllers\Admin\NewsController::class, 'updateStatus'])->name('news.update-status');
+
+    //User
+    Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
+
+
 });
 
 require __DIR__.'/auth.php';
