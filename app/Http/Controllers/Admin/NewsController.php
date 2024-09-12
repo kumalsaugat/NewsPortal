@@ -9,7 +9,10 @@ use App\Models\News;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class NewsController extends AdminBaseController
 {
@@ -119,6 +122,7 @@ class NewsController extends AdminBaseController
             return response()->json(['path' => $path]);
         }
 
+
         return response()->json(['error' => 'No file uploaded'], 400);
     }
 
@@ -144,34 +148,46 @@ class NewsController extends AdminBaseController
         return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
     }
 
+
     protected function saveNewsData(News $news, NewsStoreRequest $request)
-    {
-        $news->title = $request->title;
-        $news->slug = $request->slug;
-        $news->description = $request->description;
-        $news->category_id = $request->category_id;
-        $news->status = $request->has('status') ? 1 : 0;
-        $news->user_id = Auth::id();
-        $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : $news->published_at;
+{
+    $news->title = $request->title;
+    $news->slug = $request->slug;
+    $news->description = $request->description;
+    $news->category_id = $request->category_id;
+    $news->status = $request->has('status') ? 1 : 0;
+    $news->user_id = Auth::id();
+    $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : $news->published_at;
 
-        // Handle image upload
-        if ($request->input('image')) {
-            // Delete old image if updating
-            if ($news->image && Storage::disk('public')->exists($news->image)) {
-                Storage::disk('public')->delete($news->image);
-            }
-
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
-            $newPath = 'images/' . $filename;
-
-            Storage::disk('public')->move($imagePath, $newPath);
-
-            $news->image = $newPath;
+    if ($request->input('image')) {
+        // Delete old images if they exist
+        if ($news->image) {
+            File::delete(public_path('storage/'.$news->image));
+            File::delete(public_path('storage/images/thumbnails/'.basename($news->image)));
         }
 
-        $news->save();
+        $imagePath = $request->input('image');
+        $filename = basename($imagePath);
+
+        // Define paths
+        $originalPath = 'images/'.$filename;
+        $resizedPath = 'images/thumbnails/'.$filename;
+
+        // Move the file from 'tmp' to 'images'
+        Storage::disk('public')->move($imagePath, $originalPath);
+
+        // Resize the image using Intervention Image
+        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+        // Store the resized image
+        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+        // Save the new image path in the database
+        $news->image = $originalPath;
     }
+
+    $news->save();
+}
 
     public function updateStatus(Request $request, $id)
     {
