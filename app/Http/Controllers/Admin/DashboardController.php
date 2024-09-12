@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\News;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends AdminBaseController
@@ -26,6 +27,9 @@ class DashboardController extends AdminBaseController
         $totalActive = News::where('status', 1)->count();
         $totalInactive = News::where('status', 0)->count();
 
+        //For Users
+        $totalUsers = User::count();
+
         return view('admin.dashboard.index',[
             'pageTitle' => $this->pageTitle,
             'totalNews' => $totalNews,
@@ -34,6 +38,7 @@ class DashboardController extends AdminBaseController
             'totalCategories' => $totalCategories,
             'totalActiveCategories' => $totalActiveCategories,
             'totalInactiveCategories' => $totalInactiveCategories,
+            'totalUsers' => $totalUsers,
 
         ]);
     }
