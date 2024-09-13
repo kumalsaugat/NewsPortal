@@ -1,7 +1,7 @@
 <div class="card-body">
 
     <div class="mb-3">
-        <label for="title" class="form-label"><strong>Title:<span class="text-danger">*</span></strong></label>
+        <label for="title" class="form-label"><strong>@lang('app.news.title'):<span class="text-danger">*</span></strong></label>
         <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title"
             value="{{ old('title', $newsData->title ?? '') }}">
         @error('title')
@@ -10,7 +10,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="slug" class="form-label"><strong>Slug:</strong></label>
+        <label for="slug" class="form-label"><strong>@lang('app.news.slug'):</strong></label>
         <input type="text" class="form-control" id="slug" name="slug" placeholder=" Slug"
             value="{{ old('slug', $newsData->slug ?? '') }}">
         @error('slug')
@@ -19,7 +19,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="description" class="form-label"><strong>Description:<span class="text-danger">*</span></label>
+        <label for="description" class="form-label"><strong>@lang('app.news.desc'):<span class="text-danger">*</span></label>
         <textarea id="description" class="form-control" name="description">{{ old('description', $newsData->description ?? '') }}</textarea>
         @error('description')
             <div class="form-text text-danger">{{ $message }}</div>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="image" class="form-label">Image:</label>
+        <label for="image" class="form-label">@lang('app.news.image'):</label>
         <div class="input-group mb-3">
             <input type="file" class="form-control" id="image" name="image">
         </div>
@@ -44,7 +44,7 @@
     </div>
 
     <div class="form-group mb-3">
-        <label for="category_id" class="form-label"><strong>Category:<span class="text-danger">*</span></label>
+        <label for="category_id" class="form-label"><strong>@lang('app.news.category'):<span class="text-danger">*</span></label>
         <select name="category_id" id="category_id" class="form-control">
             <option value="">Select Category</option>
             @foreach ($categories as $category)
@@ -61,7 +61,7 @@
 
 
     <div class="mb-3">
-        <label for="status" class="form-label"><strong>Status:<span class="text-danger">*</span></label>
+        <label for="status" class="form-label"><strong>@lang('app.news.status'):<span class="text-danger">*</span></label>
         <div class="form-check form-switch">
             <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
                 id="status" name="status" value="1"
@@ -77,7 +77,7 @@
     </div>
 
     <div class="form-group">
-        <label for="published_at">Publish Date:</label>
+        <label for="published_at">@lang('app.news.publish'):</label>
         <input type="datetime-local" name="published_at" class="form-control" id="published_at"
             value="{{ old('published_at', isset($newsData->published_at) ? $newsData->published_at->format('Y-m-d\TH:i') : '') }}">
         @error('published_at')

@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">Edit News</div>
+                            <div class="card-title">@lang('app.edit') : {{ $pageTitle }}</div>
                         </div>
                         <form action="{{ route('news.update', $newsData->id) }}" method="POST"
                             enctype="multipart/form-data">
@@ -27,8 +27,8 @@
 
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('news.index') }}" class="btn btn-outline-dark ml-3">Back</a>
+                                <button type="submit" class="btn btn-primary">@lang('app.update')</button>
+                                <a href="{{ route('news.index') }}" class="btn btn-outline-dark ml-3">@lang('app.back')</a>
 
                             </div>
 

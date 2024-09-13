@@ -12,7 +12,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">Create News Category</div>
+                            <div class="card-title">@lang('app.create'): {{ $pageTitle }}</div>
                         </div>
                         <form action="{{ route('news-category.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -20,8 +20,8 @@
                             @include('admin.newsCategory.field')
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <a href="{{ route('news-category.index')}}" class="btn btn-success ml-3">Back</a>
+                                <button type="submit" class="btn btn-primary">@lang('app.submit')</button>
+                                <a href="{{ route('news-category.index')}}" class="btn btn-success ml-3">@lang('app.back')</a>
 
                             </div>
 

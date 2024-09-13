@@ -17,7 +17,7 @@
 
                         <div class="card-header ">
                             <a href="{{ route('news.create') }}">
-                                <button type="submit" class="btn btn-primary float-sm-right ">Create News</button></a>
+                                <button type="submit" class="btn btn-primary float-sm-right ">@lang('app.createNew')</button></a>
                         </div> <!-- /.card-header -->
 
 
@@ -26,13 +26,13 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
-                                        <th>Title</th>
-                                        <th>Slug</th>
-                                        <th>Image</th>
-                                        <th>Category</th>
-                                        <th>User</th>
-                                        <th>Status</th>
-                                        <th style="width: 280px">Action</th>
+                                        <th>@lang('app.news.title')</th>
+                                        <th>@lang('app.news.slug')</th>
+                                        <th>@lang('app.news.image')</th>
+                                        <th>@lang('app.news.category')</th>
+                                        <th>@lang('app.news.user')</th>
+                                        <th>@lang('app.news.status')</th>
+                                        <th style="width: 280px">@lang('app.action')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
