@@ -46,7 +46,7 @@
                                                     @if ($new->image)
                                                     <a href="{{ asset('storage/' . $new->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $new->title }}">
-                                                        <img src="{{ asset('storage/images/thumbnail/' . $new->image) }}"
+                                                        <img src="{{ asset('storage/images/thumbnails/' . basename($new->image)) }}"
                                                             alt="{{ $new->title }}" style="width: 50px; height: auto;">
                                                     </a>
                                                     @else

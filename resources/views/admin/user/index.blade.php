@@ -30,8 +30,8 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Image</th>
-                                        <th>Phone</th>
-                                        <th>Address</th>
+                                        {{-- <th>Phone</th>
+                                        <th>Address</th> --}}
                                         <th style="width: 280px">Action</th>
                                     </tr>
                                 </thead>
@@ -53,10 +53,10 @@
                                                         <p>No image available</p>
                                                     @endif
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     {{ $user->phone }}
                                                 </td>
-                                                <td>{{ $user->address }}</td>
+                                                <td>{{ $user->address }}</td> --}}
                                                 <td>
                                                     {{-- <a href="{{ route('user.show', $user->id) }}"
                                                         class="btn btn-info btn-sm">
