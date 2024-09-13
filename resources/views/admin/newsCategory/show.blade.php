@@ -11,25 +11,36 @@
                     <h4>Category Details</h4>
                 </div>
                 <div class="card-body mt-3">
-                    <div>
-                        <strong>Title:</strong> {{ $category->name }}
-                    </div>
-                    <div>
-                        <strong>Slug:</strong> {{ $category->slug }}
-                    </div>
-
-                    <div>
-                        <strong>Image:</strong>
-                        @if ($category->image)
-                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->title }}" style="width: 50px; height: auto;">
-                        @else
-                            <p>No image available</p>
-                        @endif
-                    </div>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Title</th>
+                            <td>{{ $category->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Slug</th>
+                            <td>{{ $category->slug }}</td>
+                        </tr>
+                        <tr>
+                            <th>Image</th>
+                            <td>
+                                @if ($category->image)
+                                    <a href="{{ asset('storage/' . $category->image) }}"
+                                        data-fancybox="gallery" data-caption="{{ $category->title }}">
+                                        <img src="{{ asset('storage/' . $category->image) }}"
+                                            alt="{{ $category->title }}"
+                                            style="width: 50px; height: auto;">
+                                    </a>
+                                @else
+                                    <p>No image available</p>
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
                     <a href="{{ route('news-category.index') }}" class="btn btn-primary mt-3">
-                        <i class="fa-solid fa-arrow-left"></i> Back
+                        @lang('app.back')
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
