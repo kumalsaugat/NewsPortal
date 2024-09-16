@@ -30,6 +30,10 @@
     {{-- tinymce editor --}}
     <script src="{{ asset('backend/tinymce/js/tinymce/tinymce.min.js') }}"> </script>
 
+    {{-- Filepond --}}
+    <link rel="stylesheet" href="{{ asset('backend/filepond/filepond/dist/filepond.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/filepond/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}">
+
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
@@ -84,7 +88,9 @@
 
 
     {{-- File Pond --}}
-    {{-- <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> --}}
+    <script src="{{ asset('backend/filepond/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}"></script>
+    <script src="{{ asset('backend/filepond/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js') }}"></script>
+    <script src="{{ asset('backend/filepond/filepond/dist/filepond.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script>
