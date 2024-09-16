@@ -28,8 +28,7 @@
 
 
     {{-- tinymce editor --}}
-    <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
+    <script src="{{ asset('backend/tinymce/js/tinymce/tinymce.min.js') }}"> </script>
 
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
