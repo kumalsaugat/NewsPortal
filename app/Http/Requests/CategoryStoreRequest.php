@@ -32,7 +32,7 @@ class CategoryStoreRequest extends FormRequest
                 Rule::unique('categories', 'name')->ignore($categoryId),
             ],
             'description' => ['nullable','string'],
-            'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Optional image field
+            'image' => ['nullable','string'],
             'status' => 'boolean',
         ];
     }

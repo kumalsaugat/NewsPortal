@@ -25,13 +25,12 @@
         <label for="image" class="form-label">@lang('app.category.image'):</label>
         <div class="input-group mb-3">
             <input type="file" class="form-control" id="image" name="image">
-            <label class="input-group-text" for="image">Upload</label>
         </div>
-        @if(isset($categoryData) && $categoryData->image)
+        {{-- @if(isset($categoryData) && $categoryData->image)
             <div class="mt-2">
                 <img src="{{ asset('storage/' . $categoryData->image) }}" alt="{{ $categoryData->title }}" class="img-thumbnail" width="150">
             </div>
-        @endif
+        @endif --}}
         @error('image')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror

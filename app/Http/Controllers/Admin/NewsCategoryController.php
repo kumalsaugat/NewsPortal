@@ -7,6 +7,8 @@ use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class NewsCategoryController extends AdminBaseController
 {
@@ -108,15 +110,38 @@ class NewsCategoryController extends AdminBaseController
         $category->description = $request->description;
         $category->status = $request->has('status') ? 1 : 0;
 
-        if ($request->hasFile('image')) {
+        if ($request->input('image')) {
+
+            // Delete old images if they exist
             if ($category->image) {
-                Storage::disk('public')->delete($category->image);
+
+                if (Storage::exists(public_path('storage/'.$category->image))) {
+                    Storage::delete(public_path('storage/'.$category->image));
+                }
+                if (Storage::exists(public_path('storage/images/thumbnails/'.basename($category->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/'.basename($category->image)));
+                }
+
             }
 
-            $imageName = time() . '.' . $request->image->extension();
-            $imagePath = $request->file('image')->storeAs('images', $imageName, 'public');
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
 
-            $category->image = $imagePath;
+            // Define paths
+            $originalPath = 'images/'.$filename;
+            $resizedPath = 'images/thumbnails/'.$filename;
+
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
+
+            // Resize the image using Intervention Image
+            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+            // Store the resized image
+            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+            // Save the new image path in the database
+            $category->image = $originalPath;
         }
         $category->save();
     }
