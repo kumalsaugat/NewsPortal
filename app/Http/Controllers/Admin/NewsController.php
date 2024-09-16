@@ -57,7 +57,7 @@ class NewsController extends AdminBaseController
         $news = new News;
         $this->saveNewsData($news, $request);
 
-        return redirect()->route('news.index')->with('success', 'News created successfully.');
+        return redirect()->route('news.show',$news->id)->with('success', 'News created successfully.');
 
     }
 
@@ -100,7 +100,7 @@ class NewsController extends AdminBaseController
         $newsData = News::findOrFail($id);
         $this->saveNewsData($newsData, $request);
 
-        return redirect()->route('news.index')->with('success', 'News updated successfully.');
+        return redirect()->route('news.show',$newsData->id)->with('success', 'News updated successfully.');
     }
 
     /**

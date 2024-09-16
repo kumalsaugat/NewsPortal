@@ -18,7 +18,7 @@
 
                         <div class="card-header ">
                             <a href="{{ route('news-category.create') }}">
-                                <button type="submit" class="btn btn-primary float-sm-right ">@lang('app.createNew')</button></a>
+                                <button type="submit" class="btn btn-success float-sm-right ">@lang('app.createNew')</button></a>
                         </div> <!-- /.card-header -->
 
 

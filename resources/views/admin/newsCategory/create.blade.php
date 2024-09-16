@@ -20,8 +20,8 @@
                             @include('admin.newsCategory.field')
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">@lang('app.submit')</button>
-                                <a href="{{ route('news-category.index')}}" class="btn btn-success ml-3">@lang('app.back')</a>
+                                <button type="submit" class="btn btn-primary mt-3">@lang('app.submit')</button>
+                                <a href="{{ route('news-category.index')}}" class="btn btn-secondary mt-3">@lang('app.back')</a>
 
                             </div>
 

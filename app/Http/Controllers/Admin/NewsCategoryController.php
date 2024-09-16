@@ -50,7 +50,7 @@ class NewsCategoryController extends AdminBaseController
         $category = new Category;
         $this->saveCategoryData($category, $request);
 
-        return redirect()->route('news-category.index')->with('success', 'Category created successfully.');
+        return redirect()->route('news-category.show',$category->id)->with('success', 'Category created successfully.');
     }
 
     /**
@@ -88,7 +88,7 @@ class NewsCategoryController extends AdminBaseController
 
         $this->saveCategoryData($categoryData, $request);
 
-        return redirect()->route('news-category.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('news-category.show',$categoryData->id)->with('success', 'Category updated successfully.');
     }
 
     /**

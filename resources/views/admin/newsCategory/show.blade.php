@@ -36,8 +36,14 @@
                             </td>
                         </tr>
                     </table>
-                    <a href="{{ route('news-category.index') }}" class="btn btn-primary mt-3">
+                    <a href="{{ route('news-category.index') }}" class="btn btn-secondary mt-3">
                         @lang('app.back')
+                    </a>
+                    <a href="{{ route('news-category.create') }}" class="btn btn-success mt-3">
+                        @lang('app.createNew')
+                    </a>
+                    <a href="{{ route('news-category.edit',$category->id) }}" class="btn btn-warning mt-3">
+                        @lang('app.edit')
                     </a>
                 </div>
 

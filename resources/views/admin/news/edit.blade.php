@@ -22,9 +22,9 @@
 
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">@lang('app.update')</button>
-                                <a href="{{ route('news.index') }}" class="btn btn-outline-dark ml-3">@lang('app.back')</a>
-
+                                <button type="submit" class="btn btn-primary mt-3">@lang('app.update')</button>
+                                <a href="{{ route('news.index') }}" class="btn btn-secondary mt-3">@lang('app.back')</a>
+                                <a href="{{ route('news.create') }}" class="btn btn-success mt-3">@lang('app.createNew')</a>
                             </div>
 
                         </form>
