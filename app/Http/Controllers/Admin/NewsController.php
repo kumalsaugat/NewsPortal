@@ -160,10 +160,29 @@ class NewsController extends AdminBaseController
     $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : $news->published_at;
 
     if ($request->input('image')) {
+
         // Delete old images if they exist
         if ($news->image) {
-            File::delete(public_path('storage/'.$news->image));
-            File::delete(public_path('storage/images/thumbnails/'.basename($news->image)));
+
+            // Check if the original image exists before deleting it
+            // $oldImagePath = public_path('storage/'.$news->image);
+            // $oldThumbnailPath = public_path('storage/images/thumbnails/'.basename($news->image));
+
+            // if (File::exists($oldImagePath)) {
+            //     File::delete($oldImagePath);
+            // }
+
+            // if (File::exists($oldThumbnailPath)) {
+            //     File::delete($oldThumbnailPath);
+            // }
+
+            if (Storage::exists(public_path('storage/'.$news->image))) {
+                Storage::delete(public_path('storage/'.$news->image));
+            }
+            if (Storage::exists(public_path('storage/images/thumbnails/'.basename($news->image)))) {
+                Storage::delete(public_path('storage/images/thumbnails/'.basename($news->image)));
+            }
+
         }
 
         $imagePath = $request->input('image');
