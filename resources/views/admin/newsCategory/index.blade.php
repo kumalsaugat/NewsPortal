@@ -26,23 +26,38 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10px">#</th>
+                                        <th style="width: 280px">@lang('app.action')</th>
                                         <th>@lang('app.category.name')</th>
-                                        <th>@lang('app.category.slug')</th>
                                         <th>@lang('app.category.image')</th>
                                         <th>@lang('app.category.status')</th>
-                                        <th style="width: 280px">@lang('app.action')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if ($categories->isNotEmpty())
                                         @foreach ($categories as $category)
                                             <tr class="align-middle">
-                                                <td>{{ $loop->iteration }}.</td>
+                                                <td>
+                                                    <a href="{{ route('news-category.show', $category->id) }}"
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+
+                                                    <a href="{{ route('news-category.edit', $category->id) }}"
+                                                        class="btn btn-success btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+
+                                                    <form action="{{ route('news-category.destroy', $category->id) }}"
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Are you sure you want to delete?')">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
                                                 <td>{{ $category->name }}</td>
-                                                <td>{{ $category->slug }}</td>
-
-
                                                 <td>
                                                     @if ($category->image)
 
@@ -67,28 +82,6 @@
                                                     </div>
                                                 </td>
                                                 {{-- <td>{!! Str::limit($category->description, 50) !!}</td> --}}
-                                                <td>
-                                                    <a href="{{ route('news-category.show', $category->id) }}"
-                                                        class="btn btn-info btn-sm">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-
-                                                    <a href="{{ route('news-category.edit', $category->id) }}"
-                                                        class="btn btn-success btn-sm">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-
-                                                    <form action="{{ route('news-category.destroy', $category->id) }}"
-                                                        method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Are you sure you want to delete?')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-
                                             </tr>
                                         @endforeach
                                     @else

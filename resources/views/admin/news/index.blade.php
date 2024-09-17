@@ -25,23 +25,41 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10px">#</th>
+                                        <th style="width: 280px">@lang('app.action')</th>
                                         <th>@lang('app.news.title')</th>
-                                        <th>@lang('app.news.slug')</th>
                                         <th>@lang('app.news.image')</th>
                                         <th>@lang('app.news.category')</th>
                                         <th>@lang('app.news.user')</th>
                                         <th>@lang('app.news.status')</th>
-                                        <th style="width: 280px">@lang('app.action')</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if ($news->isNotEmpty())
                                         @foreach ($news as $new)
                                             <tr class="align-middle">
-                                                <td>{{ $loop->iteration }}.</td>
+                                                <td>
+                                                    <a href="{{ route('news.show', $new->id) }}"
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+
+                                                    <a href="{{ route('news.edit', $new->id) }}"
+                                                        class="btn btn-success btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+
+                                                    <form action="{{ route('news.destroy', $new->id) }}" method="POST"
+                                                        style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Are you sure you want to delete?')">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
                                                 <td>{{ $new->title }}</td>
-                                                <td>{{ $new->slug }}</td>
                                                 <td>
                                                     @if ($new->image)
                                                     <a href="{{ asset('storage/' . $new->image) }}"
@@ -71,28 +89,6 @@
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <a href="{{ route('news.show', $new->id) }}"
-                                                        class="btn btn-info btn-sm">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-
-                                                    <a href="{{ route('news.edit', $new->id) }}"
-                                                        class="btn btn-success btn-sm">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-
-                                                    <form action="{{ route('news.destroy', $new->id) }}" method="POST"
-                                                        style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Are you sure you want to delete?')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-
                                             </tr>
                                         @endforeach
                                     @else
