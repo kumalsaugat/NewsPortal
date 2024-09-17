@@ -35,8 +35,11 @@
     <link rel="stylesheet" href="{{ asset('backend/filepond/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}">
 
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script> --}}
+    <link rel="stylesheet" href="{{ asset('backend/sweetalert2/sweetalert2.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/sweetalert2/sweetalert2.min.css') }}">
+    <script src="{{ asset('backend/sweetalert2/sweetalert2.min.js') }}"></script>
 
     {{-- Fancy Box --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -85,6 +88,7 @@
 
 
     <script src="{{ asset('js/tinymce-config.js') }}"></script>
+
 
 
     {{-- File Pond --}}

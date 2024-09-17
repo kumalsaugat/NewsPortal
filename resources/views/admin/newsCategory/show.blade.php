@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@include('admin.message')
 <div class="container">
     <div class="row mt-4">
         <div class="col-lg-12">

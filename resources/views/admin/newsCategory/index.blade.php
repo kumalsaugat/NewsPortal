@@ -47,12 +47,12 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
 
-                                                    <form action="{{ route('news-category.destroy', $category->id) }}"
+                                                    <form id="deletePostForm" action="{{ route('news-category.destroy', $category->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Are you sure you want to delete?')">
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                        onclick="handleDelete({{ $category->id }})">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
@@ -191,5 +191,24 @@
             }
         });
     </script>
+
+<script>
+    function handleDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the form
+                document.getElementById('deletePostForm').submit();
+            }
+        });
+    }
+</script>
 @endpush
 
