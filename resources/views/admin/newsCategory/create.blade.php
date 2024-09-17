@@ -39,10 +39,6 @@
 @endsection
 
 @push('scripts')
-    <script>
-        // Initialize TinyMCE for the textarea
-        initTinyMCE('#description');
-    </script>
 
     <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);

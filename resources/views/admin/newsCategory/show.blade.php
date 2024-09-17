@@ -26,7 +26,7 @@
                                 @if ($category->image)
                                     <a href="{{ asset('storage/' . $category->image) }}"
                                         data-fancybox="gallery" data-caption="{{ $category->title }}">
-                                        <img src="{{ asset('storage/' . $category->image) }}"
+                                        <img src="{{ asset('storage/images/thumbnails/' . basename($category->image)) }}"
                                             alt="{{ $category->title }}"
                                             style="width: 50px; height: auto;">
                                     </a>
