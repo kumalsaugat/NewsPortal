@@ -80,11 +80,9 @@
                                                 <td>{{ $new->user->name }}</td>
                                                 <td>
                                                     <div class="form-check form-switch">
-                                                        <input class="form-check-input status-toggle" type="checkbox"
-                                                            data-id="{{ $new->id }}"
-                                                            {{ $new->status ? 'checked' : '' }}>
+                                                        <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $new->id }}" {{ $new->status ? 'checked' : '' }}>
                                                         <label class="form-check-label" id="statusLabel{{ $new->id }}">
-                                                            {{-- {{ $new->status ? 'Active' : 'Inactive' }} --}}
+                                                            {{-- Optionally: {{ $new->status ? 'Active' : 'Inactive' }} --}}
                                                         </label>
                                                     </div>
                                                 </td>
@@ -109,26 +107,6 @@
         </div> <!--end::Container-->
     </div> <!--end::App Content-->
 
-    {{-- modal for status --}}
-    <div class="modal fade" id="modal-status-toggle" tabindex="-1" aria-labelledby="modal-status-toggle"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-status-toggle">Confirm Status Update</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to update the status of this News category?</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="confirmStatusUpdate">Update</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @endsection
 
 @push('scripts')
@@ -146,57 +124,75 @@
                     selectedCategoryId = this.getAttribute('data-id');
                     selectedStatus = this.checked;
 
-                    // Show confirmation modal
-                    var modal = new bootstrap.Modal(document.getElementById('modal-status-toggle'));
-                    modal.show();
+                    // Trigger SweetAlert confirmation
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Do you want to update the status?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, update it!',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // If user confirms, call the updateStatus function
+                            updateStatus(selectedCategoryId, selectedStatus);
+                        } else {
+                            // If canceled, reset the checkbox to its previous state
+                            document.querySelector(`input[data-id="${selectedCategoryId}"]`).checked = !selectedStatus;
+                        }
+                    });
                 });
-            });
-
-            // Handle modal confirmation for status update
-            document.getElementById('confirmStatusUpdate').addEventListener('click', function() {
-                if (selectedCategoryId !== null) {
-                    updateStatus(selectedCategoryId, selectedStatus);
-                }
             });
 
             // Update status using AJAX and show SweetAlert on success
             function updateStatus(id, status) {
                 fetch(`/news/update-status/${id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            status: status
-                        })
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        status: status
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // document.getElementById(`statusLabel${id}`).textContent = status ? 'Active' :
-                            //     'Inactive';
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Manually update the toggle status
+                        document.querySelector(`input[data-id="${id}"]`).checked = status;
 
-                            // Manually update the toggle status
-                            document.querySelector(`input[data-id="${id}"]`).checked = status;
+                        // Show SweetAlert success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Status updated successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'There was a problem updating the status.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating status:', error);
 
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'Status updated successfully.',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-
-                        // Hide the modal after update
-                        var modal = bootstrap.Modal.getInstance(document.getElementById('modal-status-toggle'));
-                        modal.hide();
-                    })
-                    .catch(error => {
-                        console.error('Error updating status:', error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while updating the status.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
                     });
+                });
             }
         });
+
     </script>
 
 <script>

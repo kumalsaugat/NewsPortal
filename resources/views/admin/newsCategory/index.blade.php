@@ -73,11 +73,9 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-check form-switch">
-                                                        <input class="form-check-input status-toggle" type="checkbox"
-                                                            data-id="{{ $category->id }}"
-                                                            {{ $category->status ? 'checked' : '' }}>
+                                                        <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $category->id }}" {{ $category->status ? 'checked' : '' }}>
                                                         <label class="form-check-label" id="statusLabel{{ $category->id }}">
-                                                            {{-- {{ $category->status ? 'Active' : 'Inactive' }} --}}
+                                                            {{-- Optionally: {{ $category->status ? 'Active' : 'Inactive' }} --}}
                                                         </label>
                                                     </div>
                                                 </td>
@@ -125,72 +123,90 @@
 @endsection
 
 @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let selectedCategoryId = null;
-            let selectedStatus = null;
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let selectedCategoryId = null;
+        let selectedStatus = null;
 
-            // Handle status toggle click event
-            document.querySelectorAll('.status-toggle').forEach(toggle => {
-                toggle.addEventListener('click', function(e) {
-                    e.preventDefault();
+        // Handle status toggle click event
+        document.querySelectorAll('.status-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
 
-                    // Store the category ID and status
-                    selectedCategoryId = this.getAttribute('data-id');
-                    selectedStatus = this.checked;
+                // Store the category ID and status
+                selectedCategoryId = this.getAttribute('data-id');
+                selectedStatus = this.checked;
 
-                    // Show confirmation modal
-                    var modal = new bootstrap.Modal(document.getElementById('modal-status-toggle'));
-                    modal.show();
+                // Trigger SweetAlert confirmation
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you want to update the status?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, update it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If user confirms, call the updateStatus function
+                        updateStatus(selectedCategoryId, selectedStatus);
+                    } else {
+                        // If canceled, reset the checkbox to its previous state
+                        document.querySelector(`input[data-id="${selectedCategoryId}"]`).checked = !selectedStatus;
+                    }
                 });
             });
-
-            // Handle modal confirmation for status update
-            document.getElementById('confirmStatusUpdate').addEventListener('click', function() {
-                if (selectedCategoryId !== null) {
-                    updateStatus(selectedCategoryId, selectedStatus);
-                }
-            });
-
-            // Update status using AJAX and show SweetAlert on success
-            function updateStatus(id, status) {
-                fetch(`/news-category/update-status/${id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            status: status
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // document.getElementById(`statusLabel${id}`).textContent = status ? 'Active' :
-                            //     'Inactive';
-
-                            // Manually update the toggle status
-                            document.querySelector(`input[data-id="${id}"]`).checked = status;
-
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'Status updated successfully.',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-
-                        // Hide the modal after update
-                        var modal = bootstrap.Modal.getInstance(document.getElementById('modal-status-toggle'));
-                        modal.hide();
-                    })
-                    .catch(error => {
-                        console.error('Error updating status:', error);
-                    });
-            }
         });
-    </script>
+
+        // Update status using AJAX and show SweetAlert on success
+        function updateStatus(id, status) {
+            fetch(`/news-category/update-status/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    status: status
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Manually update the toggle status
+                    document.querySelector(`input[data-id="${id}"]`).checked = status;
+
+                    // Show SweetAlert success message
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Status updated successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'There was a problem updating the status.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while updating the status.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        }
+    });
+
+</script>
 
 <script>
     function handleDelete(id) {
