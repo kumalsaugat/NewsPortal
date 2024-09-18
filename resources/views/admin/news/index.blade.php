@@ -47,10 +47,10 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
 
-                                                    <form id="deletePostForm" action="{{ route('news.destroy', $new->id) }}" method="POST" style="display:inline;">
+                                                    <form id="deleteForm-news-{{ $new->id }}" action="{{ route('news.destroy', $new->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete({{ $new->id }})">
+                                                        <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete('deleteForm-news-{{ $new->id }}')">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
@@ -112,27 +112,5 @@
             setupStatusToggles('.status-toggle', '/news/update-status');
         });
     </script>
-
-<script>
-    function handleDelete(id) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // If confirmed, submit the form
-                document.getElementById('deletePostForm').submit();
-            }
-        });
-    }
-</script>
-
-
-
 
 @endpush

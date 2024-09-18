@@ -92,6 +92,8 @@
     {{-- Status- toggle --}}
     <script src="{{ asset('js/status-toggle.js') }}"></script>
 
+    {{-- delete Form --}}
+    <script src="{{ asset('js/deleteForm.js') }}"></script>
 
 
     {{-- File Pond --}}
