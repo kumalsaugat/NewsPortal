@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class News extends Model
 {
     use HasFactory;
     use HasSlug;
+    use SoftDeletes;
+
     protected $fillable = [
         'title',
         'image',
