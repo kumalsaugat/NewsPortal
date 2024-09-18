@@ -86,8 +86,11 @@
 
 
 
-
+    {{-- Tinymce  --}}
     <script src="{{ asset('js/tinymce-config.js') }}"></script>
+
+    {{-- Status- toggle --}}
+    <script src="{{ asset('js/status-toggle.js') }}"></script>
 
 
 

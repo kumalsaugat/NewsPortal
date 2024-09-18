@@ -37,7 +37,12 @@
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <td>{{ $category->status }}</td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $category->id }}" {{ $category->status ? 'checked' : '' }}>
+                                    <label class="form-check-label" id="statusLabel{{ $category->id }}"></label>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <th>Description:</th>
@@ -77,3 +82,12 @@
 </div>
 @endsection
 
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup status toggles for this module
+            setupStatusToggles('.status-toggle', '/news-category/update-status');
+        });
+    </script>
+
+@endpush

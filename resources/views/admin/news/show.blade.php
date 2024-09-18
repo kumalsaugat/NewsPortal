@@ -41,7 +41,12 @@
 
                         <tr>
                             <th>@lang('app.news.status')</th>
-                            <td>{{ $news->status ? 'Active' : 'Inactive' }}</td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $news->id }}" {{ $news->status ? 'checked' : '' }}>
+                                    <label class="form-check-label" id="statusLabel{{ $news->id }}"></label>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <th>@lang('app.news.desc')</th>
@@ -84,4 +89,14 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup status toggles for this module
+            setupStatusToggles('.status-toggle', '/news/update-status');
+        });
+    </script>
+
+@endpush
 
