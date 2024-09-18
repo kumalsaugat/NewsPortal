@@ -21,6 +21,10 @@
                             <td>{{ $news->slug }}</td>
                         </tr>
                         <tr>
+                            <th>@lang('app.news.category')</th>
+                            <td>{{ $news->category->name }}</td>
+                        </tr>
+                        <tr>
                             <th>@lang('app.news.image')</th>
                             <td>
                                 @if ($news->image)
@@ -34,14 +38,7 @@
                                 @endif
                             </td>
                         </tr>
-                        <tr>
-                            <th>@lang('app.news.category')</th>
-                            <td>{{ $news->category->name }}</td>
-                        </tr>
-                        <tr>
-                            <th>@lang('app.news.user')</th>
-                            <td>{{ $news->user->name }}</td>
-                        </tr>
+
                         <tr>
                             <th>@lang('app.news.status')</th>
                             <td>{{ $news->status ? 'Active' : 'Inactive' }}</td>
@@ -49,6 +46,26 @@
                         <tr>
                             <th>@lang('app.news.desc')</th>
                             <td>{!! $news->description !!}</td>
+                        </tr>
+                        <tr>
+                            <th>Published At</th>
+                            <td>{{ $news->published_at }}</td>
+                        </tr>
+                        <tr>
+                            <th>Created At</th>
+                            <td>{{ $news->created_at}}</td>
+                        </tr>
+                        <tr>
+                            <th>Created By</th>
+                            <td>{{ optional($news->createdBy)->name ?? 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Updated At</th>
+                            <td>{{$news->updated_at}}</td>
+                        </tr>
+                        <tr>
+                            <th>Updated By</th>
+                             <td>{{ optional($news->updatedBy)->name ?? 'N/A' }}</td>
                         </tr>
                     </table>
                     <a href="{{ route('news.index') }}" class="btn btn-secondary mt-3">

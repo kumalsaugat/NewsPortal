@@ -156,8 +156,13 @@ class NewsController extends AdminBaseController
     $news->description = $request->description;
     $news->category_id = $request->category_id;
     $news->status = $request->has('status') ? 1 : 0;
-    $news->user_id = Auth::id();
     $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : $news->published_at;
+
+    if (!$news->exists) {
+        $news->created_by = Auth::id();
+    }
+
+    $news->updated_by = Auth::id();
 
     if ($request->input('image')) {
 
@@ -210,11 +215,14 @@ class NewsController extends AdminBaseController
 
     public function updateStatus(Request $request, $id)
     {
-        $newsCategory = News::findOrFail($id);
-        $newsCategory->status = $request->status;
-        $newsCategory->save();
+        try {
+            $news = News::findOrFail($id);
+            $news->status = $request->status;
+            $news->save();
 
-        return response()->json(['success' => true]);
-
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to update status.']);
+        }
     }
 }

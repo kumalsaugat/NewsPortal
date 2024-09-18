@@ -17,13 +17,15 @@ class News extends Model
 
     protected $fillable = [
         'title',
-        'image',
-        'description',
         'slug',
-        'status',
+        'image',
         'category_id',
-        'user_id',
+        'description',
+        'status',
         'published_at',
+        'created_by',
+        'updated_by',
+        'deleted_by',
     ];
 
     public function getSlugOptions() : SlugOptions
@@ -37,8 +39,18 @@ class News extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    public function user()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function deletedBy()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
     }
 }

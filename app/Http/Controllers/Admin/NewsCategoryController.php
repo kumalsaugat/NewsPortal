@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Auth;
 
 
 class NewsCategoryController extends AdminBaseController
@@ -98,6 +99,9 @@ class NewsCategoryController extends AdminBaseController
    {
         $category = Category::findOrFail($id);
 
+        $category->deleted_by = Auth::id();
+        $category->save();
+
         $category->delete();
 
         return redirect()->route('news-category.index')->with('success', 'Category deleted successfully.');
@@ -109,6 +113,12 @@ class NewsCategoryController extends AdminBaseController
         $category->slug = $request->slug;
         $category->description = $request->description;
         $category->status = $request->has('status') ? 1 : 0;
+
+        if (!$category->exists) {
+            $category->created_by = Auth::id();
+        }
+
+        $category->updated_by = Auth::id();
 
         if ($request->input('image')) {
 
@@ -148,11 +158,15 @@ class NewsCategoryController extends AdminBaseController
 
     public function updateStatus(Request $request, $id)
     {
-        $newsCategory = Category::findOrFail($id);
-        $newsCategory->status = $request->status;
-        $newsCategory->save();
+        try {
+            $newsCategory = Category::findOrFail($id);
+            $newsCategory->status = $request->status;
+            $newsCategory->save();
 
-        return response()->json(['success' => true]);
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to update status.']);
+        }
 
     }
 }

@@ -19,6 +19,9 @@ class Category extends Model
         'description',
         'image',
         'status',
+        'created_by',
+        'updated_by',
+        'deleted_by',
     ];
 
     public function getSlugOptions() : SlugOptions
@@ -26,6 +29,22 @@ class Category extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    // Relationship to User (created_by, updated_by, deleted_by)
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function deletedBy()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
     }
     public function news()
     {

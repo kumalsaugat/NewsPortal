@@ -35,6 +35,30 @@
                                 @endif
                             </td>
                         </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{{ $category->status }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td>{!! $category->description !!}</td>
+                        </tr>
+                        <tr>
+                            <th>Created At:</th>
+                            <td>{{ $category->created_at}}</td>
+                        </tr>
+                        <tr>
+                            <th>Created By:</th>
+                            <td>{{ optional($category->createdBy)->name ?? 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Updated At:</th>
+                            <td>{{$category->updated_at}}</td>
+                        </tr>
+                        <tr>
+                            <th>Updated By:</th>
+                             <td>{{ optional($category->updatedBy)->name ?? 'N/A' }}</td>
+                        </tr>
                     </table>
                     <a href="{{ route('news-category.index') }}" class="btn btn-secondary mt-3">
                         @lang('app.back')

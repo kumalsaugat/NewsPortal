@@ -27,11 +27,9 @@
                                     <tr>
                                         <th style="width: 280px">@lang('app.action')</th>
                                         <th>@lang('app.news.title')</th>
-                                        <th>@lang('app.news.image')</th>
                                         <th>@lang('app.news.category')</th>
-                                        <th>@lang('app.news.user')</th>
+                                        <th>@lang('app.news.image')</th>
                                         <th>@lang('app.news.status')</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,6 +57,13 @@
                                                 </td>
                                                 <td>{{ $new->title }}</td>
                                                 <td>
+                                                    @if ($new->category)
+                                                        {{ $new->category->name }}
+                                                    @else
+                                                        None
+                                                    @endif
+                                                </td>
+                                                <td>
                                                     @if ($new->image)
                                                     <a href="{{ asset('storage/' . $new->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $new->title }}">
@@ -69,14 +74,6 @@
                                                         <p>No image available</p>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    @if ($new->category)
-                                                        {{ $new->category->name }}
-                                                    @else
-                                                        None
-                                                    @endif
-
-                                                <td>{{ $new->user->name }}</td>
                                                 <td>
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $new->id }}" {{ $new->status ? 'checked' : '' }}>
