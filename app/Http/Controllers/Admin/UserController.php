@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class UserController extends AdminBaseController
 {
@@ -48,7 +51,12 @@ class UserController extends AdminBaseController
      */
     public function show(string $id)
     {
-        //
+        $users = User::findOrFail($id);
+
+        return view('admin.user.show', [
+            'users' => $users,
+            'pageTitle' => $this->pageTitle,
+        ]);
     }
 
     /**
@@ -70,7 +78,51 @@ class UserController extends AdminBaseController
      */
     public function update(Request $request, string $id)
     {
-        //
+        $userData = User::findOrFail($id);
+        $userData->name = $request->name;
+        $userData->email = $request->email;
+
+
+        if ($request->input('image')) {
+
+            // Delete old images if they exist
+            if ($userData->image) {
+
+                if (Storage::exists(public_path('storage/'.$userData->image))) {
+                    Storage::delete(public_path('storage/'.$userData->image));
+                }
+                if (Storage::exists(public_path('storage/images/thumbnails/'.basename($userData->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/'.basename($userData->image)));
+                }
+
+            }
+
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
+
+            // Define paths
+            $originalPath = 'images/'.$filename;
+            $resizedPath = 'images/thumbnails/'.$filename;
+
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
+
+            // Resize the image using Intervention Image
+            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+            // Store the resized image
+            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+            // Save the new image path in the database
+            $userData->image = $originalPath;
+        }
+
+        $userData->save();
+
+
+        return redirect()->route('user.index')->with('success', 'User updated successfully.');
+
+
     }
 
     /**

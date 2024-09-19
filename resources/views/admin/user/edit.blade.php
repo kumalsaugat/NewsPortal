@@ -40,15 +40,10 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="image" class="form-label">@lang('app.user.image'):</label>
+                                    <label for="image" class="form-label"><strong>@lang('app.user.image'):</strong></label>
                                     <div class="input-group mb-3">
                                         <input type="file" class="form-control" id="image" name="image">
                                     </div>
-                                    @if($userData->image)
-                                        <div class="mt-2">
-                                            <img src="{{ asset('storage/' . $userData->image) }}" alt="User Image" class="img-thumbnail" width="150">
-                                        </div>
-                                    @endif
                                     @error('image')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
@@ -122,7 +117,7 @@
             files: [
                 @if (isset($userData) && $userData->image)
                     {
-                        source: '{{ asset('storage/' . $newsData->image) }}',
+                        source: '{{ asset('storage/' . $userData->image) }}',
                         options: {
                             type: 'local',
                         },
