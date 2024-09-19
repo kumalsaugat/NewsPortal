@@ -175,6 +175,11 @@ class NewsController extends AdminBaseController
 
     $news->updated_by = Auth::id();
 
+    if ($request->has('image_path')) {
+        $path = Storage::disk('public')->move($request->image_path, 'permanent_directory/'.basename($request->image_path));
+        $news['image'] = $path;
+    }
+
     if ($request->input('image')) {
 
         // Delete old images if they exist

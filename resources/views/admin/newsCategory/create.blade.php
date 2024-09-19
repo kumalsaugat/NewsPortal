@@ -40,7 +40,7 @@
 
 @push('scripts')
 
-    <script>
+    {{-- <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
 
@@ -65,6 +65,40 @@
                 }
             }
         });
+    </script> --}}
+
+    <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+
+        const pond = FilePond.create(document.querySelector('#image'), {
+            acceptedFileTypes: ['image/*'],
+            server: {
+                process: {
+                    url: '{{ route('upload') }}',  // Temporary upload route
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    onload: (response) => {
+                        const data = JSON.parse(response);
+                        document.querySelector('input[name="uploaded_image"]').value = data.path; // Store temp file path
+                        return data.path;
+                    }
+                },
+                revert: {
+                    url: '{{ route('revert') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                },
+                load: '{{ old('uploaded_image') }}', // Restore the temporarily uploaded image
+            }
+        });
+
+        // If there's an old uploaded image, load it into FilePond
+        @if (old('uploaded_image'))
+            pond.addFile("{{ asset('storage/' . old('uploaded_image')) }}");
+        @endif
     </script>
 @endpush
 

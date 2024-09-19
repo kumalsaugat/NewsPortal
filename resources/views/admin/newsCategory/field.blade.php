@@ -26,11 +26,7 @@
         <div class="input-group mb-3">
             <input type="file" class="form-control" id="image" name="image">
         </div>
-        {{-- @if(isset($categoryData) && $categoryData->image)
-            <div class="mt-2">
-                <img src="{{ asset('storage/' . $categoryData->image) }}" alt="{{ $categoryData->title }}" class="img-thumbnail" width="150">
-            </div>
-        @endif --}}
+        <input type="hidden" name="uploaded_image" value="{{ old('uploaded_image') }}">
         @error('image')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
