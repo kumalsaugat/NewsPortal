@@ -22,7 +22,13 @@
                         </tr>
                         <tr>
                             <th>@lang('app.news.category')</th>
-                            <td>{{ $news->category->name }}</td>
+                            <td>
+                                @if ($news->category)
+                                    {{ $news->category->name }}
+                                @else
+                                    None
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <th>@lang('app.news.image')</th>
