@@ -171,13 +171,9 @@ class NewsController extends AdminBaseController
 
     if (!$news->exists) {
         $news->created_by = Auth::id();
-    }
-
-    $news->updated_by = Auth::id();
-
-    if ($request->has('image_path')) {
-        $path = Storage::disk('public')->move($request->image_path, 'permanent_directory/'.basename($request->image_path));
-        $news['image'] = $path;
+        $news->updated_at = null;
+    }else {
+        $news->updated_by = Auth::id();
     }
 
     if ($request->input('image')) {

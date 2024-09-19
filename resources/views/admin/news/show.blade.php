@@ -70,14 +70,16 @@
                             <th>Created By</th>
                             <td>{{ optional($news->createdBy)->name ?? 'N/A' }}</td>
                         </tr>
-                        <tr>
-                            <th>Updated At</th>
-                            <td>{{$news->updated_at}}</td>
-                        </tr>
-                        <tr>
-                            <th>Updated By</th>
-                             <td>{{ optional($news->updatedBy)->name ?? 'N/A' }}</td>
-                        </tr>
+                        @if ($news->updated_at && $news->updatedBy)
+                            <tr>
+                                <th>Updated At</th>
+                                <td>{{$news->updated_at}}</td>
+                            </tr>
+                            <tr>
+                                <th>Updated By</th>
+                                <td>{{ optional($news->updatedBy)->name ?? 'N/A' }}</td>
+                            </tr>
+                        @endif
                     </table>
                     <a href="{{ route('news.index') }}" class="btn btn-secondary mt-3">
                         @lang('app.back')

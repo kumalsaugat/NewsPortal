@@ -56,14 +56,16 @@
                             <th>Created By:</th>
                             <td>{{ optional($category->createdBy)->name ?? 'N/A' }}</td>
                         </tr>
-                        <tr>
-                            <th>Updated At:</th>
-                            <td>{{$category->updated_at}}</td>
-                        </tr>
-                        <tr>
-                            <th>Updated By:</th>
-                             <td>{{ optional($category->updatedBy)->name ?? 'N/A' }}</td>
-                        </tr>
+                        @if ($category->updated_at && $category->updatedBy)
+                            <tr>
+                                <th>Updated At:</th>
+                                <td>{{$category->updated_at}}</td>
+                            </tr>
+                            <tr>
+                                <th>Updated By:</th>
+                                <td>{{ optional($category->updatedBy)->name ?? 'N/A' }}</td>
+                            </tr>
+                        @endif
                     </table>
                     <a href="{{ route('news-category.index') }}" class="btn btn-secondary mt-3">
                         @lang('app.back')

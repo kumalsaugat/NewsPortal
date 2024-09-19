@@ -116,6 +116,9 @@ class NewsCategoryController extends AdminBaseController
 
         if (!$category->exists) {
             $category->created_by = Auth::id();
+            $category->updated_at = null;
+        }else {
+            $category->updated_by = Auth::id();
         }
 
         $category->updated_by = Auth::id();
