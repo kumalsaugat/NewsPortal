@@ -30,6 +30,12 @@ return array (
     'user' => 'User',
 ),
 
+'user' => array (
+    'image' => 'Image',
+    'name' => 'User Name',
+    'email' => 'Email',
+),
+
 
 
 

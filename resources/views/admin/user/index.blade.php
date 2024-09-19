@@ -26,20 +26,40 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10px">#</th>
+                                        <th >Action</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Image</th>
-                                        {{-- <th>Phone</th>
-                                        <th>Address</th> --}}
-                                        <th style="width: 280px">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if ($users->isNotEmpty())
                                         @foreach ($users as $user)
                                             <tr class="align-middle">
-                                                <td>{{ $loop->iteration }}.</td>
+                                                <td>
+                                                    <a href="{{ route('user.show', $user->id) }}"
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+
+                                                    <a href="{{ route('user.edit', $user->id) }}"
+                                                        class="btn btn-success btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    @auth
+                                                        {{-- Only show the delete button if the authenticated user is not the same as the user being deleted --}}
+                                                        @if (auth()->id() !== $user->id)
+                                                            <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                    @endauth
+
+                                                </td>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>
@@ -53,31 +73,7 @@
                                                         <p>No image available</p>
                                                     @endif
                                                 </td>
-                                                {{-- <td>
-                                                    {{ $user->phone }}
-                                                </td>
-                                                <td>{{ $user->address }}</td> --}}
-                                                <td>
-                                                    {{-- <a href="{{ route('user.show', $user->id) }}"
-                                                        class="btn btn-info btn-sm">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
 
-                                                    <a href="{{ route('user.edit', $user->id) }}"
-                                                        class="btn btn-success btn-sm">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a> --}}
-
-                                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                                        style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Are you sure you want to delete?')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
 
                                             </tr>
                                         @endforeach

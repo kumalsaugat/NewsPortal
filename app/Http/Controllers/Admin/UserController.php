@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends AdminBaseController
@@ -55,7 +56,13 @@ class UserController extends AdminBaseController
      */
     public function edit(string $id)
     {
-        //
+        $userData = User::findOrFail($id);
+
+
+        return view('admin.user.edit', [
+            'userData' => $userData,
+            'pageTitle' => $this->pageTitle,
+        ]);
     }
 
     /**
