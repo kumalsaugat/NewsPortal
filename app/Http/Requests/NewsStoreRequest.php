@@ -25,7 +25,7 @@ class NewsStoreRequest extends FormRequest
         $newsId = $this->route('news');
 
         return [
-            'title' => 'required|max:255|unique:news,title,'.$newsId,
+            'title' => 'required|max:255|unique:news,title,'.$newsId .',id,category_id,' . $this->category_id,
             'description' => 'required|string',
             'image' => 'nullable|string',
             'published_at' => 'nullable|date',
