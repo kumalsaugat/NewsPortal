@@ -62,6 +62,13 @@
                     <a href="{{ route('user.edit',$users->id) }}" class="btn btn-warning mt-3">
                         @lang('app.edit')
                     </a>
+                    <form id="deleteForm-user-{{ $users->id }}" action="{{ route('user.destroy', $users->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <a onclick="handleDelete('deleteForm-user-{{ $users->id }}')" class="btn btn-warning mt-3">
+                            @lang('app.delete')
+                        </a>
+                    </form>
                 </div>
 
             </div>

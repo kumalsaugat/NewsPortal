@@ -90,6 +90,13 @@
                     <a href="{{ route('news.edit',$news->id) }}" class="btn btn-warning mt-3">
                         @lang('app.edit')
                     </a>
+                    <form id="deleteForm-news-{{ $news->id }}" action="{{ route('news.destroy', $news->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <a onclick="handleDelete('deleteForm-news-{{ $news->id }}')" class="btn btn-warning mt-3">
+                            @lang('app.delete')
+                        </a>
+                    </form>
                 </div>
 
             </div>

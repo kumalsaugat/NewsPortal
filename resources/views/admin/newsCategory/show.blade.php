@@ -76,6 +76,13 @@
                     <a href="{{ route('news-category.edit',$category->id) }}" class="btn btn-warning mt-3">
                         @lang('app.edit')
                     </a>
+                    <form id="deleteForm-category-{{ $category->id }}" action="{{ route('news-category.destroy', $category->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <a onclick="handleDelete('deleteForm-category-{{ $category->id }}')" class="btn btn-warning mt-3">
+                            @lang('app.delete')
+                        </a>
+                    </form>
                 </div>
 
             </div>

@@ -49,10 +49,10 @@
                                                     @auth
                                                         {{-- Only show the delete button if the authenticated user is not the same as the user being deleted --}}
                                                         @if (auth()->id() !== $user->id)
-                                                            <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                                            <form id="deleteForm-user-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">
+                                                                <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete('deleteForm-user-{{ $user->id }}')">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                             </form>

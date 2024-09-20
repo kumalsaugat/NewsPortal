@@ -11,6 +11,7 @@ return array (
 'update' => 'Update',
 'back' => "Back",
 'action' => "Action",
+'delete' => "Delete",
 
 'category' => array (
     'image' => 'Image',
