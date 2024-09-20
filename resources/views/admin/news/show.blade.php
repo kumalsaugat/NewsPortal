@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -11,17 +10,17 @@
                     <h4>News Details</h4>
                 </div>
                 <div class="card-body mt-3">
-                    <table class="table table-striped">
+                    <table class="table table-striped fixed-table">
                         <tr>
-                            <th>@lang('app.news.title')</th>
+                            <th style="width: 200px;">@lang('app.news.title')</th>
                             <td>{{ $news->title }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('app.news.slug')</th>
+                            <th style="width: 200px;">@lang('app.news.slug')</th>
                             <td>{{ $news->slug }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('app.news.category')</th>
+                            <th style="width: 200px;">@lang('app.news.category')</th>
                             <td>
                                 @if ($news->category)
                                     {{ $news->category->name }}
@@ -31,7 +30,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>@lang('app.news.image')</th>
+                            <th style="width: 200px;">@lang('app.news.image')</th>
                             <td>
                                 @if ($news->image)
                                     <a href="{{ asset('storage/' . $news->image) }}"
@@ -44,9 +43,8 @@
                                 @endif
                             </td>
                         </tr>
-
                         <tr>
-                            <th>@lang('app.news.status')</th>
+                            <th style="width: 200px;">@lang('app.news.status')</th>
                             <td>
                                 <div class="form-check form-switch">
                                     <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $news->id }}" {{ $news->status ? 'checked' : '' }}>
@@ -55,45 +53,45 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>@lang('app.news.desc')</th>
-                            <td>{!! $news->description !!}</td>
+                            <th style="width: 200px;">@lang('app.news.desc')</th>
+                            <td style="white-space: normal;">{!! $news->description !!}</td>  <!-- Add white-space: normal for text wrap -->
                         </tr>
                         <tr>
-                            <th>Published At</th>
+                            <th style="width: 200px;">Published At</th>
                             <td>{{ $news->published_at }}</td>
                         </tr>
                         <tr>
-                            <th>Created At</th>
+                            <th style="width: 200px;">Created At</th>
                             <td>{{ $news->created_at}}</td>
                         </tr>
                         <tr>
-                            <th>Created By</th>
+                            <th style="width: 200px;">Created By</th>
                             <td>{{ optional($news->createdBy)->name ?? 'N/A' }}</td>
                         </tr>
                         @if ($news->updated_at && $news->updatedBy)
                             <tr>
-                                <th>Updated At</th>
+                                <th style="width: 200px;">Updated At</th>
                                 <td>{{$news->updated_at}}</td>
                             </tr>
                             <tr>
-                                <th>Updated By</th>
+                                <th style="width: 200px;">Updated By</th>
                                 <td>{{ optional($news->updatedBy)->name ?? 'N/A' }}</td>
                             </tr>
                         @endif
                     </table>
-                    <a href="{{ route('news.index') }}" class="btn btn-secondary mt-3">
+                    <a href="{{ route('news.index') }}" class="btn btn-warning mt-3 text-white"><i class="fas fa-arrow-left"></i>
                         @lang('app.back')
                     </a>
-                    <a href="{{ route('news.create') }}" class="btn btn-success mt-3">
+                    <a href="{{ route('news.create') }}" class="btn btn-success  mt-3"> <i class="fas fa-plus"></i>
                         @lang('app.createNew')
                     </a>
-                    <a href="{{ route('news.edit',$news->id) }}" class="btn btn-warning mt-3">
-                        @lang('app.edit')
+                    <a href="{{ route('news.edit', $news->id) }}" class="btn btn-primary mt-3">
+                        <i class="fas fa-edit"></i> @lang('app.update')
                     </a>
                     <form id="deleteForm-news-{{ $news->id }}" action="{{ route('news.destroy', $news->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <a onclick="handleDelete('deleteForm-news-{{ $news->id }}')" class="btn btn-warning mt-3">
+                        <a class="btn btn-danger mt-3" onclick="handleDelete('deleteForm-news-{{ $news->id }}')"><i class="fas fa-trash"></i>
                             @lang('app.delete')
                         </a>
                     </form>
@@ -105,13 +103,31 @@
 </div>
 @endsection
 
+@push('styles')
+    <style>
+        /* Ensure the table header (th) has a fixed width */
+        .fixed-table {
+            table-layout: fixed; /* Ensures that th width is fixed and td can wrap */
+            width: 100%;
+        }
+
+        .fixed-table th {
+            width: 200px;
+            white-space: nowrap;
+        }
+
+        .fixed-table td {
+            width: auto;
+            overflow-wrap: break-word; /* Allows breaking long words */
+            word-wrap: break-word;
+        }
+    </style>
+@endpush
+
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Setup status toggles for this module
             setupStatusToggles('.status-toggle', '/news/update-status');
         });
     </script>
-
 @endpush
-

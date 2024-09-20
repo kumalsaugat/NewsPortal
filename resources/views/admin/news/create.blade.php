@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
     <div class="app-content">
         <div class="container-fluid">
@@ -18,8 +17,9 @@
                             @include('admin.news.field')
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary mt-3">@lang('app.submit')</button>
-                                <a href="{{ route('news.index') }}" class="btn btn-secondary mt-3">@lang('app.back')</a>
+                                <button type="submit" class="btn btn-success mt-3"><i class="fas fa-save"></i> @lang('app.submit')</button>
+                                <a href="{{ route('news.index') }}" class="btn btn-warning text-white mt-3"><i class="fas fa-times-circle"></i> @lang('app.cancel')</a>
+
 
                             </div>
                         </form>

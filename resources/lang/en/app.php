@@ -9,7 +9,7 @@ return array (
 'show' => 'Show',
 "submit" => "Save",
 'update' => 'Update',
-'back' => "Back",
+'cancel' => "Cancel",
 'action' => "Action",
 'delete' => "Delete",
 

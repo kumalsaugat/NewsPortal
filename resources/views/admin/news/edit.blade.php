@@ -22,9 +22,8 @@
 
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary mt-3">@lang('app.update')</button>
-                                <a href="{{ route('news.index') }}" class="btn btn-secondary mt-3">@lang('app.back')</a>
-                                <a href="{{ route('news.create') }}" class="btn btn-success mt-3">@lang('app.createNew')</a>
+                                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-edit"></i> @lang('app.update')</button>
+                                <a href="{{ route('news.index') }}" class="btn btn-warning text-white mt-3"><i class="fas fa-times-circle"></i> @lang('app.cancel')</a>
                             </div>
 
                         </form>
