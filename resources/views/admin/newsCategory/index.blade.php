@@ -18,7 +18,8 @@
 
                         <div class="card-header ">
                             <a href="{{ route('news-category.create') }}">
-                                <button type="submit" class="btn btn-success float-sm-right ">@lang('app.createNew')</button></a>
+                                <button type="submit" class="btn btn-success float-sm-right "><i class="fas fa-plus"></i> @lang('app.createNew')</button>
+                            </a>
                         </div> <!-- /.card-header -->
 
 
@@ -38,12 +39,12 @@
                                             <tr class="align-middle">
                                                 <td>
                                                     <a href="{{ route('news-category.show', $category->id) }}"
-                                                        class="btn btn-info btn-sm">
+                                                        class="btn btn-success btn-sm">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
 
                                                     <a href="{{ route('news-category.edit', $category->id) }}"
-                                                        class="btn btn-success btn-sm">
+                                                        class="btn btn-primary btn-sm">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
 

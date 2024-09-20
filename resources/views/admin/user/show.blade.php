@@ -13,15 +13,15 @@
                 <div class="card-body mt-3">
                     <table class="table table-striped">
                         <tr>
-                            <th>@lang('app.user.name')</th>
+                            <th style="width: 200px;">@lang('app.user.name')</th>
                             <td>{{ $users->name }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('app.user.email')</th>
+                            <th style="width: 200px;">@lang('app.user.email')</th>
                             <td>{{ $users->email }}</td>
                         </tr>
                         <tr>
-                            <th>@lang('app.user.image')</th>
+                            <th style="width: 200px;">@lang('app.user.image')</th>
                             <td>
                                 @if ($users->image)
                                     <a href="{{ asset('storage/' . $users->image) }}"
@@ -35,40 +35,42 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>Created At</th>
+                            <th style="width: 200px;">@lang('app.createdAt')</th>
                             <td>{{ $users->created_at}}</td>
                         </tr>
                         <tr>
-                            <th>Created By</th>
+                            <th style="width: 200px;">@lang('app.createdBy')</th>
                             <td>{{ optional($users->createdBy)->name ?? 'N/A' }}</td>
                         </tr>
                         @if ($users->updated_at && $users->updatedBy)
                             <tr>
-                                <th>Updated At</th>
+                                <th style="width: 200px;">@lang('app.updatedAt')</th>
                                 <td>{{$users->updated_at}}</td>
                             </tr>
                             <tr>
-                                <th>Updated By</th>
+                                <th style="width: 200px;">@lang('app.updatedBy')</th>
                                 <td>{{ optional($users->updatedBy)->name ?? 'N/A' }}</td>
                             </tr>
                         @endif
                     </table>
-                    <a href="{{ route('user.index') }}" class="btn btn-secondary mt-3">
+                    <a href="{{ route('user.index') }}" class="btn btn-warning mt-3 text-white"><i class="fas fa-arrow-left"></i>
                         @lang('app.back')
                     </a>
-                    <a href="{{ route('user.create') }}" class="btn btn-success mt-3">
+                    <a href="{{ route('user.create') }}" class="btn btn-success  mt-3"> <i class="fas fa-plus"></i>
                         @lang('app.createNew')
                     </a>
-                    <a href="{{ route('user.edit',$users->id) }}" class="btn btn-warning mt-3">
-                        @lang('app.edit')
+                    <a href="{{ route('user.edit', $users->id) }}" class="btn btn-primary mt-3">
+                        <i class="fas fa-edit"></i> @lang('app.update')
                     </a>
                     <form id="deleteForm-user-{{ $users->id }}" action="{{ route('user.destroy', $users->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <a onclick="handleDelete('deleteForm-user-{{ $users->id }}')" class="btn btn-warning mt-3">
+                        <a class="btn btn-danger mt-3" onclick="handleDelete('deleteForm-user-{{ $users->id }}')"><i class="fas fa-trash"></i>
                             @lang('app.delete')
                         </a>
                     </form>
+
+
                 </div>
 
             </div>

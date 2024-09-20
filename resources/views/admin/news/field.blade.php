@@ -73,7 +73,7 @@
                 <label for="description" class="form-label">
                     <strong>@lang('app.news.desc'):<span class="text-danger"> *</span></strong>
                 </label>
-                <textarea id="description" class="form-control" name="description">{{ old('description', $newsData->description ?? '') }}</textarea>
+                <textarea id="description" class="form-control" name="description" placeholder="Enter description...">{{ old('description', $newsData->description ?? '') }}</textarea>
                 @error('description')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror

@@ -18,62 +18,54 @@
                             @method('PUT')
 
                             <div class="card-body">
+                                <div class="row">
+                                    <!-- Left Column -->
+                                    <div class="col-md-6">
+                                        {{-- Name Field --}}
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label"><strong>@lang('app.user.name'):<span class="text-danger">*</span></strong></label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name"
+                                                value="{{ old('name', $userData->name ?? '') }}">
+                                            @error('name')
+                                                <div class="form-text text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
 
-                                {{-- Name Field --}}
-                                <div class="mb-3">
-                                    <label for="name" class="form-label"><strong>@lang('app.user.name'):<span class="text-danger">*</span></strong></label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name"
-                                        value="{{ old('name', $userData->name ?? '') }}">
-                                    @error('name')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                {{-- Email Field --}}
-                                <div class="mb-3">
-                                    <label for="email" class="form-label"><strong>@lang('app.user.email'):<span class="text-danger">*</span></strong></label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email"
-                                        value="{{ old('email', $userData->email ?? '') }}">
-                                    @error('email')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="image" class="form-label"><strong>@lang('app.user.image'):</strong></label>
-                                    <div class="input-group mb-3">
-                                        <input type="file" class="form-control" id="image" name="image">
+                                        {{-- Email Field --}}
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label"><strong>@lang('app.user.email'):<span class="text-danger">*</span></strong></label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email"
+                                                value="{{ old('email', $userData->email ?? '') }}">
+                                            @error('email')
+                                                <div class="form-text text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                    @error('image')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
+
+                                    <!-- Right Column -->
+                                    <div class="col-md-6">
+                                        {{-- Image Field --}}
+                                        <div class="mb-3">
+                                            <label for="image" class="form-label"><strong>@lang('app.user.image'):</strong></label>
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="image" name="image">
+                                            </div>
+                                            @error('image')
+                                                <div class="form-text text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
-
-
-
-
-
                             </div>
-
-
-
-
-
-
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary mt-3">@lang('app.update')</button>
-                                <a href="{{ route('user.index') }}" class="btn btn-secondary mt-3">@lang('app.back')</a>
-                                {{-- <a href="{{ route('news.create') }}" class="btn btn-success mt-3">@lang('app.createNew')</a> --}}
-                            </div>
+                                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-edit"></i> @lang('app.update')</button>
+                                <a href="{{ route('user.index') }}" class="btn btn-warning text-white mt-3"><i class="fas fa-times-circle"></i> @lang('app.cancel')</a>
 
+                            </div>
                         </form>
                     </div>
-
-
                 </div>
-
-
             </div>
         </div>
     </div>

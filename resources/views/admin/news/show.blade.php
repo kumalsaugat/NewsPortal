@@ -57,24 +57,24 @@
                             <td style="white-space: normal;">{!! $news->description !!}</td>  <!-- Add white-space: normal for text wrap -->
                         </tr>
                         <tr>
-                            <th style="width: 200px;">Published At</th>
+                            <th style="width: 200px;">@lang('app.news.publish')</th>
                             <td>{{ $news->published_at }}</td>
                         </tr>
                         <tr>
-                            <th style="width: 200px;">Created At</th>
+                            <th style="width: 200px;">@lang('app.createdAt')</th>
                             <td>{{ $news->created_at}}</td>
                         </tr>
                         <tr>
-                            <th style="width: 200px;">Created By</th>
+                            <th style="width: 200px;">@lang('app.createdBy')</th>
                             <td>{{ optional($news->createdBy)->name ?? 'N/A' }}</td>
                         </tr>
                         @if ($news->updated_at && $news->updatedBy)
                             <tr>
-                                <th style="width: 200px;">Updated At</th>
+                                <th style="width: 200px;">@lang('app.updatedAt')</th>
                                 <td>{{$news->updated_at}}</td>
                             </tr>
                             <tr>
-                                <th style="width: 200px;">Updated By</th>
+                                <th style="width: 200px;">@lang('app.updatedBy')</th>
                                 <td>{{ optional($news->updatedBy)->name ?? 'N/A' }}</td>
                             </tr>
                         @endif

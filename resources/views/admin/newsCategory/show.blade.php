@@ -11,17 +11,17 @@
                     <h4>Category Details</h4>
                 </div>
                 <div class="card-body mt-3">
-                    <table class="table table-striped">
+                    <table class="table table-striped fixed-table">
                         <tr>
-                            <th>Title</th>
+                            <th style="width: 200px;">@lang('app.category.name')</th>
                             <td>{{ $category->name }}</td>
                         </tr>
                         <tr>
-                            <th>Slug</th>
+                            <th style="width: 200px;">@lang('app.category.slug')</th>
                             <td>{{ $category->slug }}</td>
                         </tr>
                         <tr>
-                            <th>Image</th>
+                            <th style="width: 200px;">@lang('app.category.image')</th>
                             <td>
                                 @if ($category->image)
                                     <a href="{{ asset('storage/' . $category->image) }}"
@@ -36,7 +36,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>Status</th>
+                            <th style="width: 200px;">@lang('app.category.status')</th>
                             <td>
                                 <div class="form-check form-switch">
                                     <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $category->id }}" {{ $category->status ? 'checked' : '' }}>
@@ -45,46 +45,45 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>Description:</th>
-                            <td>{!! $category->description !!}</td>
+                            <th style="width: 200px;">@lang('app.category.desc')</th>
+                            <td style="white-space: normal;">{!! $category->description !!}</td>  <!-- Add white-space: normal for text wrap -->
                         </tr>
                         <tr>
-                            <th>Created At:</th>
+                            <th style="width: 200px;">@lang('app.createdAt')</th>
                             <td>{{ $category->created_at}}</td>
                         </tr>
                         <tr>
-                            <th>Created By:</th>
+                            <th style="width: 200px;">@lang('app.createdBy')</th>
                             <td>{{ optional($category->createdBy)->name ?? 'N/A' }}</td>
                         </tr>
                         @if ($category->updated_at && $category->updatedBy)
                             <tr>
-                                <th>Updated At:</th>
+                                <th style="width: 200px;">@lang('app.updatedAt')</th>
                                 <td>{{$category->updated_at}}</td>
                             </tr>
                             <tr>
-                                <th>Updated By:</th>
+                                <th style="width: 200px;">@lang('app.updatedBy')</th>
                                 <td>{{ optional($category->updatedBy)->name ?? 'N/A' }}</td>
                             </tr>
                         @endif
                     </table>
-                    <a href="{{ route('news-category.index') }}" class="btn btn-secondary mt-3">
+                    <a href="{{ route('news-category.index') }}" class="btn btn-warning mt-3 text-white"><i class="fas fa-arrow-left"></i>
                         @lang('app.back')
                     </a>
-                    <a href="{{ route('news-category.create') }}" class="btn btn-success mt-3">
+                    <a href="{{ route('news-category.create') }}" class="btn btn-success  mt-3"> <i class="fas fa-plus"></i>
                         @lang('app.createNew')
                     </a>
-                    <a href="{{ route('news-category.edit',$category->id) }}" class="btn btn-warning mt-3">
-                        @lang('app.edit')
+                    <a href="{{ route('news-category.edit', $category->id) }}" class="btn btn-primary mt-3">
+                        <i class="fas fa-edit"></i> @lang('app.update')
                     </a>
                     <form id="deleteForm-category-{{ $category->id }}" action="{{ route('news-category.destroy', $category->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <a onclick="handleDelete('deleteForm-category-{{ $category->id }}')" class="btn btn-warning mt-3">
+                        <a class="btn btn-danger mt-3" onclick="handleDelete('deleteForm-category-{{ $category->id }}')"><i class="fas fa-trash"></i>
                             @lang('app.delete')
                         </a>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

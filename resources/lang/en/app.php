@@ -5,13 +5,16 @@ return array (
 'designed' => 'Designed by Saugat Kumal.',
 "createNew" => "Create New",
 'create' => 'Create',
-'edit' => 'Edit',
-'show' => 'Show',
 "submit" => "Save",
 'update' => 'Update',
 'cancel' => "Cancel",
 'action' => "Action",
 'delete' => "Delete",
+'back' => "Back",
+'createdAt' => "Created At",
+'createdBy' => "Created By",
+'updatedAt' => "Updated At",
+'updatedBy' => "Updated By",
 
 'category' => array (
     'image' => 'Image',
