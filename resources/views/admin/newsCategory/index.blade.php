@@ -56,7 +56,11 @@
                                                         </button>
                                                     </form>
                                                 </td>
-                                                <td>{{ $category->name }}</td>
+                                                <td>
+                                                    <a href="{{ route('news-category.edit', $category->id) }}" class="text-decoration-none">
+                                                    {{ $category->name }}
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     @if ($category->image)
 

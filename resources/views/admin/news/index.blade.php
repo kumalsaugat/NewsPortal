@@ -55,7 +55,11 @@
                                                         </button>
                                                     </form>
                                                 </td>
-                                                <td>{{ $new->title }}</td>
+                                                <td>
+                                                    <a href="{{ route('news.edit', $new->id) }}" class="text-decoration-none">
+                                                        {{ $new->title }}
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     @if ($new->category)
                                                         {{ $new->category->name }}

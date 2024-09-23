@@ -60,7 +60,11 @@
                                                     @endauth
 
                                                 </td>
-                                                <td>{{ $user->name }}</td>
+                                                <td>
+                                                    <a href="{{ route('user.edit', $user->id) }}" class="text-decoration-none">
+                                                    {{ $user->name }}
+                                                    </a>
+                                                </td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>
                                                     @if ($user->image)
