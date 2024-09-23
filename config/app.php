@@ -65,7 +65,9 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'Asia/Kathmandu'),
+    // 'timezone' => env('APP_TIMEZONE', 'Asia/Kathmandu'),
+
+    'timezone' => 'Asia/Kathmandu',
 
     /*
     |--------------------------------------------------------------------------
