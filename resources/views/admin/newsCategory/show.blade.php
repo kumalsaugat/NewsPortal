@@ -46,7 +46,7 @@
                         </tr>
                         <tr>
                             <th style="width: 200px;">@lang('app.category.desc')</th>
-                            <td style="white-space: normal;">{!! $category->description !!}</td>  <!-- Add white-space: normal for text wrap -->
+                            <td >{!! nl2br(e($category->description)) !!}</td>  <!-- Add white-space: normal for text wrap -->
                         </tr>
                         <tr>
                             <th style="width: 200px;">@lang('app.createdAt')</th>

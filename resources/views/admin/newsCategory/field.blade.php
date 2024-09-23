@@ -19,7 +19,7 @@
                 <label for="description" class="form-label">
                     <strong>@lang('app.category.desc'):</strong>
                 </label>
-                <textarea id="description" class="form-control" name="description" placeholder="Enter description...">{{ old('description', $categoryData->description ?? '') }}</textarea>
+                <textarea id="description" class="form-control" rows="4" name="description" placeholder="Enter description...">{{ old('description', $categoryData->description ?? '') }}</textarea>
             </div>
         </div>
 
