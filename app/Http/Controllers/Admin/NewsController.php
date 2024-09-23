@@ -230,6 +230,7 @@ class NewsController extends AdminBaseController
         try {
             $news = News::findOrFail($id);
             $news->status = $request->status;
+            $news->updated_by = Auth::id();
             $news->save();
 
             return response()->json(['success' => true]);

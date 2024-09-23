@@ -60,6 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     text: 'Status updated successfully.',
                     icon: 'success',
                     confirmButtonText: 'OK'
+                }).then((result) => {
+                    window.location.reload();
                 });
             } else {
                 Swal.fire({
