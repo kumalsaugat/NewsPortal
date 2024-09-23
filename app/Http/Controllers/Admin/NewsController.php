@@ -40,7 +40,7 @@ class NewsController extends AdminBaseController
     public function create()
     {
 
-        $categories = Category::all();
+        $categories = Category::where('status',1)->get();
 
         return view('admin.news.create', [
             'categories' => $categories,

@@ -12,6 +12,8 @@
             text: '{{ session("success") }}',
             icon: 'success',
             confirmButtonText: 'OK'
+        }).then((result) => {
+            window.location.reload();
         });
     </script>
 @endif
