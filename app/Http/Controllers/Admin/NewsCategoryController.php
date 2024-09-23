@@ -24,7 +24,7 @@ class NewsCategoryController extends AdminBaseController
     public function index(Request $request)
     {
 
-        $categories = Category::paginate(5);
+        $categories = Category::latest()->paginate(5);
 
         return view('admin.newsCategory.index', [
             'categories' => $categories,

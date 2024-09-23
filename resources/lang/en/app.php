@@ -11,6 +11,7 @@ return array (
 'action' => "Action",
 'delete' => "Delete",
 'back' => "Back",
+'edit' => "Edit",
 'createdAt' => "Created At",
 'createdBy' => "Created By",
 'updatedAt' => "Updated At",

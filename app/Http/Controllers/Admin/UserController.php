@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -23,7 +24,7 @@ class UserController extends AdminBaseController
      */
     public function index()
     {
-        $users = User::paginate(5);
+        $users = User::latest()->paginate(5);
         return view('admin.user.index', [
             'users' => $users,
             'pageTitle' => $this->pageTitle,
@@ -81,7 +82,7 @@ class UserController extends AdminBaseController
         $userData = User::findOrFail($id);
         $userData->name = $request->name;
         $userData->email = $request->email;
-
+        $userData->updated_by = Auth::id();
 
         if ($request->input('image')) {
 
@@ -120,7 +121,7 @@ class UserController extends AdminBaseController
         $userData->save();
 
 
-        return redirect()->route('user.index')->with('success', 'User updated successfully.');
+        return redirect()->route('user.show',$userData->id)->with('success', 'User updated successfully.');
 
 
     }
