@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\NewsDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsStoreRequest;
 use App\Models\Category;
@@ -24,15 +25,23 @@ class NewsController extends AdminBaseController
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $news = News::latest()->get();
+    // public function index()
+    // {
+    //     $news = News::latest()->get();
 
-        return view('admin.news.index', [
-            'news' => $news,
+    //     return view('admin.news.index', [
+    //         'news' => $news,
+    //         'pageTitle' => $this->pageTitle,
+    //     ]);
+    // }
+
+    public function index(NewsDataTable $dataTable)
+    {
+        return $dataTable->render('admin.news.index', [
             'pageTitle' => $this->pageTitle,
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

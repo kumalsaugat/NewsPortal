@@ -22,7 +22,7 @@
                                     <button class="btn btn-success"><i class="fa fa-plus"></i> @lang('app.createNew')</button></a>
                                 </div>
                             </div>
-                            <table class="table table-striped" id="myTable">
+                            {{-- <table class="table table-striped" id="myTable">
                                 <thead>
                                     <tr>
                                         <th style="width: 280px">@lang('app.action')</th>
@@ -76,11 +76,9 @@
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $category->id }}" {{ $category->status ? 'checked' : '' }}>
                                                         <label class="form-check-label" id="statusLabel{{ $category->id }}">
-                                                            {{-- Optionally: {{ $category->status ? 'Active' : 'Inactive' }} --}}
                                                         </label>
                                                     </div>
                                                 </td>
-                                                {{-- <td>{!! Str::limit($category->description, 50) !!}</td> --}}
                                             </tr>
                                         @endforeach
                                     @else
@@ -90,10 +88,11 @@
                                     @endif
 
                                 </tbody>
-                            </table>
+                            </table> --}}
+                            {!! $dataTable->table() !!}
                         </div> <!-- /.card-body -->
                         <div class="card-footer clearfix">
-                            {{ $categories->links('pagination::bootstrap-5') }}
+                            {{-- {{ $categories->links('pagination::bootstrap-5') }} --}}
 
                         </div>
                     </div> <!-- /.card -->
@@ -105,22 +104,18 @@
 @endsection
 
 @push('scripts')
+{!! $dataTable->scripts() !!}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Setup status toggles for this module
             setupStatusToggles('.status-toggle', '/news-category/update-status');
+
+            // Re-initialize the status toggle after DataTable is drawn
+            $(document).on('draw.dt', function() {
+                setupStatusToggles('.status-toggle', '/news-category/update-status');
+            });
         });
     </script>
-
-<script>
-    $(document).ready(function() {
-        $('#myTable').DataTable({
-
-        });
-
-    });
-
-</script>
 
 @endpush
 

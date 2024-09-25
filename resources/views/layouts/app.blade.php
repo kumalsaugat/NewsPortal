@@ -51,11 +51,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
 
     {{-- DataTable --}}
-    <link rel="stylesheet" href="{{asset('backend/DataTable/datatables.css')}}" />
+    {{-- <link rel="stylesheet" href="{{asset('backend/DataTable/datatables.css')}}" />
 
-    <script src="{{ asset('backend/DataTable/datatables.js')}}"></script>
+    <script src="{{ asset('backend/DataTable/datatables.js')}}"></script> --}}
+    {{-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script> --}}
 
-
+    @vite(['resources/js/app.js'])
 
     @stack('styles')
 

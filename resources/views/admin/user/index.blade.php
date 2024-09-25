@@ -22,7 +22,7 @@
                                     <button class="btn btn-success"><i class="fa fa-plus"></i> @lang('app.createNew')</button></a>
                                 </div>
                             </div>
-                            <table class="table table-striped" id="myTable">
+                            {{-- <table class="table table-striped" id="myTable">
                                 <thead>
                                     <tr>
                                         <th >Action</th>
@@ -46,7 +46,6 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     @auth
-                                                        {{-- Only show the delete button if the authenticated user is not the same as the user being deleted --}}
                                                         @if (auth()->id() !== $user->id)
                                                             <form id="deleteForm-user-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
                                                                 @csrf
@@ -87,10 +86,11 @@
                                     @endif
 
                                 </tbody>
-                            </table>
+                            </table> --}}
+                            {!! $dataTable->table() !!}
                         </div> <!-- /.card-body -->
                         <div class="card-footer clearfix">
-                            {{ $users->links('pagination::bootstrap-5') }}
+                            {{-- {{ $users->links('pagination::bootstrap-5') }} --}}
 
                         </div>
                     </div> <!-- /.card -->
@@ -105,15 +105,7 @@
 
 @push('scripts')
 
-<script>
-    $(document).ready(function() {
-        $('#myTable').DataTable({
-
-        });
-
-    });
-
-</script>
+{!! $dataTable->scripts() !!}
 
 @endpush
 

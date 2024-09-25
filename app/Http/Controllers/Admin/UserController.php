@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
@@ -22,11 +23,18 @@ class UserController extends AdminBaseController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $users = User::latest()->get();
+    //     return view('admin.user.index', [
+    //         'users' => $users,
+    //         'pageTitle' => $this->pageTitle,
+    //     ]);
+    // }
+
+    public function index(UsersDataTable $dataTable)
     {
-        $users = User::latest()->get();
-        return view('admin.user.index', [
-            'users' => $users,
+        return $dataTable->render('admin.user.index', [
             'pageTitle' => $this->pageTitle,
         ]);
     }

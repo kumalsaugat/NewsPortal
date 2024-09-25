@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
@@ -21,13 +22,19 @@ class NewsCategoryController extends AdminBaseController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    // public function index(Request $request)
+    // {
+
+    //     $categories = Category::latest()->get();
+
+    //     return view('admin.newsCategory.index', [
+    //         'categories' => $categories,
+    //         'pageTitle' => $this->pageTitle,
+    //     ]);
+    // }
+    public function index(CategoryDataTable $dataTable)
     {
-
-        $categories = Category::latest()->get();
-
-        return view('admin.newsCategory.index', [
-            'categories' => $categories,
+        return $dataTable->render('admin.newsCategory.index', [
             'pageTitle' => $this->pageTitle,
         ]);
     }

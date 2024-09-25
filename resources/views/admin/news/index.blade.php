@@ -24,7 +24,7 @@
                                 </div>
                             </div>
 
-                            <table class="table table-striped" id="myTable">
+                            {{-- <table class="table table-striped" id="myTable">
                                 <thead>
                                     <tr>
                                         <th style="width: 280px">@lang('app.action')</th>
@@ -96,7 +96,8 @@
                                     @endif
 
                                 </tbody>
-                            </table>
+                            </table> --}}
+                            {!! $dataTable->table() !!}
                         </div> <!-- /.card-body -->
                         {{-- <div class="card-footer clearfix">
                             {{ $news->links('pagination::bootstrap-5') }}
@@ -111,21 +112,21 @@
 @endsection
 
 @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Setup status toggles for this module
-            setupStatusToggles('.status-toggle', '/news/update-status');
-        });
-    </script>
+
+{!! $dataTable->scripts() !!}
+
 
 <script>
-    $(document).ready(function() {
-        $('#myTable').DataTable({
+    document.addEventListener('DOMContentLoaded', function() {
+        // Setup status toggles for this module
+        setupStatusToggles('.status-toggle', '/news/update-status');
 
+        // Re-initialize the status toggle after DataTable is drawn
+        $(document).on('draw.dt', function() {
+            setupStatusToggles('.status-toggle', '/news/update-status');
         });
-
     });
-
 </script>
+
 
 @endpush
