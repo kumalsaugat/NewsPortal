@@ -28,7 +28,9 @@ class Category extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+
     }
 
     // Relationship to User (created_by, updated_by, deleted_by)

@@ -60,7 +60,8 @@ class NewsDataTable extends DataTable
      */
     public function query(News $model): QueryBuilder
     {
-        return $model->newQuery();
+        $news = $model->with('category')->newQuery();
+        return $news;
     }
 
     /**
@@ -86,7 +87,7 @@ class NewsDataTable extends DataTable
         return [
             'action',
             'title',
-            'category_id',
+            'category.name',
             'image',
             'status',
         ];
