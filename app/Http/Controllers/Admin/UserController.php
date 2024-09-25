@@ -24,7 +24,7 @@ class UserController extends AdminBaseController
      */
     public function index()
     {
-        $users = User::latest()->paginate(5);
+        $users = User::latest()->get();
         return view('admin.user.index', [
             'users' => $users,
             'pageTitle' => $this->pageTitle,

@@ -14,17 +14,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4">
-
-
-                        <div class="card-header ">
-                            <a href="{{ route('news-category.create') }}">
-                                <button type="submit" class="btn btn-success float-sm-right "><i class="fas fa-plus"></i> @lang('app.createNew')</button>
-                            </a>
-                        </div> <!-- /.card-header -->
-
-
-                        <div class="card-body p-0">
-                            <table class="table table-striped">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <!-- Action Buttons -->
+                                    <a href="{{ route('news-category.create') }}">
+                                    <button class="btn btn-success"><i class="fa fa-plus"></i> @lang('app.createNew')</button></a>
+                                </div>
+                            </div>
+                            <table class="table table-striped" id="myTable">
                                 <thead>
                                     <tr>
                                         <th style="width: 280px">@lang('app.action')</th>
@@ -113,6 +111,16 @@
             setupStatusToggles('.status-toggle', '/news-category/update-status');
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+
+        });
+
+    });
+
+</script>
 
 @endpush
 

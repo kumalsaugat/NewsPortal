@@ -14,16 +14,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4">
-
-                        <div class="card-header ">
-                            {{-- <a href="{{ route('user.create') }}">
-                                <button type="submit" class="btn btn-primary float-sm-right ">Create User</button>
-                            </a> --}}
-                        </div>
-
-
-                        <div class="card-body p-0">
-                            <table class="table table-striped">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <!-- Action Buttons -->
+                                    <a href="{{ route('user.create') }}">
+                                    <button class="btn btn-success"><i class="fa fa-plus"></i> @lang('app.createNew')</button></a>
+                                </div>
+                            </div>
+                            <table class="table table-striped" id="myTable">
                                 <thead>
                                     <tr>
                                         <th >Action</th>
@@ -103,4 +102,19 @@
 
 
 @endsection
+
+@push('scripts')
+
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+
+        });
+
+    });
+
+</script>
+
+@endpush
+
 

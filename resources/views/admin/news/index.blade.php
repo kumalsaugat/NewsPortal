@@ -15,14 +15,16 @@
                 <div class="col-md-12">
                     <div class="card mb-4">
 
-                        <div class="card-header ">
-                            <a href="{{ route('news.create') }}">
-                                <button type="submit" class="btn btn-success float-sm-right "><i class="fas fa-plus"></i> @lang('app.createNew')</button></a>
-                        </div> <!-- /.card-header -->
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <!-- Action Buttons -->
+                                    <a href="{{ route('news.create') }}">
+                                    <button class="btn btn-success"><i class="fa fa-plus"></i>  @lang('app.createNew')</button></a>
+                                </div>
+                            </div>
 
-
-                        <div class="card-body p-0">
-                            <table class="table table-striped">
+                            <table class="table table-striped" id="myTable">
                                 <thead>
                                     <tr>
                                         <th style="width: 280px">@lang('app.action')</th>
@@ -82,7 +84,6 @@
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $new->id }}" {{ $new->status ? 'checked' : '' }}>
                                                         <label class="form-check-label" id="statusLabel{{ $new->id }}">
-                                                            {{-- Optionally: {{ $new->status ? 'Active' : 'Inactive' }} --}}
                                                         </label>
                                                     </div>
                                                 </td>
@@ -97,10 +98,10 @@
                                 </tbody>
                             </table>
                         </div> <!-- /.card-body -->
-                        <div class="card-footer clearfix">
+                        {{-- <div class="card-footer clearfix">
                             {{ $news->links('pagination::bootstrap-5') }}
 
-                        </div>
+                        </div> --}}
                     </div> <!-- /.card -->
                 </div> <!-- /.col -->
             </div> <!--end::Row-->
@@ -116,5 +117,15 @@
             setupStatusToggles('.status-toggle', '/news/update-status');
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+
+        });
+
+    });
+
+</script>
 
 @endpush

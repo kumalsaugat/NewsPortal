@@ -23,6 +23,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -44,6 +49,12 @@
     {{-- Fancy Box --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+
+    {{-- DataTable --}}
+    <link rel="stylesheet" href="{{asset('backend/DataTable/datatables.css')}}" />
+
+    <script src="{{ asset('backend/DataTable/datatables.js')}}"></script>
+
 
 
     @stack('styles')
