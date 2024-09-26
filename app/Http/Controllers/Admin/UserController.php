@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class UserController extends AdminBaseController
@@ -44,15 +47,21 @@ class UserController extends AdminBaseController
      */
     public function create()
     {
-        //
+        return view('admin.user.create', [
+            'pageTitle' => $this->pageTitle,
+            'isEdit' => false,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        $user = new User();
+        $this->saveUsersData($user, $request);
+
+        return redirect()->route('user.show',$user->id)->with('success', 'User created successfully.');
     }
 
     /**
@@ -79,6 +88,7 @@ class UserController extends AdminBaseController
         return view('admin.user.edit', [
             'userData' => $userData,
             'pageTitle' => $this->pageTitle,
+            'isEdit' => true,
         ]);
     }
 
@@ -88,22 +98,101 @@ class UserController extends AdminBaseController
     public function update(Request $request, string $id)
     {
         $userData = User::findOrFail($id);
-        $userData->name = $request->name;
-        $userData->email = $request->email;
-        $userData->updated_by = Auth::id();
+        $this->saveUsersData($userData, $request);
 
-        if ($request->input('image')) {
+        return redirect()->route('user.show', $userData->id)->with('success', 'User updated successfully.');
+    }
+
+    // public function update(Request $request, string $id)
+    // {
+    //     $userData = User::findOrFail($id);
+    //     $userData->name = $request->name;
+    //     $userData->email = $request->email;
+    //     $userData->updated_by = Auth::id();
+
+    //     if ($request->input('image')) {
+
+    //         // Delete old images if they exist
+    //         if ($userData->image) {
+
+    //             if (Storage::exists(public_path('storage/'.$userData->image))) {
+    //                 Storage::delete(public_path('storage/'.$userData->image));
+    //             }
+    //             if (Storage::exists(public_path('storage/images/thumbnails/'.basename($userData->image)))) {
+    //                 Storage::delete(public_path('storage/images/thumbnails/'.basename($userData->image)));
+    //             }
+
+    //         }
+
+    //         $imagePath = $request->input('image');
+    //         $filename = basename($imagePath);
+
+    //         // Define paths
+    //         $originalPath = 'images/'.$filename;
+    //         $resizedPath = 'images/thumbnails/'.$filename;
+
+    //         // Move the file from 'tmp' to 'images'
+    //         Storage::disk('public')->move($imagePath, $originalPath);
+
+    //         // Resize the image using Intervention Image
+    //         $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+    //         // Store the resized image
+    //         Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+    //         // Save the new image path in the database
+    //         $userData->image = $originalPath;
+    //     }
+
+    //     $userData->save();
+
+
+    //     return redirect()->route('user.show',$userData->id)->with('success', 'User updated successfully.');
+
+
+    // }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $users = User::findOrFail($id);
+
+        $users->delete();
+
+        return redirect()->route('user.index')->with('success', 'News deleted successfully.');
+    }
+
+    private function saveUsersData($user, $request)
+    {
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->status = $request->has('status') ? 1 : 0;
+
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        if (!$user->exists) {
+            $user->created_by = Auth::id();
+            $user->updated_at = null;
+        }else {
+            $user->updated_by = Auth::id();
+        }
+
+        if ($request->has('image')) {
 
             // Delete old images if they exist
-            if ($userData->image) {
-
-                if (Storage::exists(public_path('storage/'.$userData->image))) {
-                    Storage::delete(public_path('storage/'.$userData->image));
+            if ($user->image) {
+                if (Storage::exists('public/'.$user->image)) {
+                    Storage::delete('public/'.$user->image);
                 }
-                if (Storage::exists(public_path('storage/images/thumbnails/'.basename($userData->image)))) {
-                    Storage::delete(public_path('storage/images/thumbnails/'.basename($userData->image)));
+                if (Storage::exists('public/images/thumbnails/'.basename($user->image))) {
+                    Storage::delete('public/images/thumbnails/'.basename($user->image));
                 }
-
             }
 
             $imagePath = $request->input('image');
@@ -123,26 +212,24 @@ class UserController extends AdminBaseController
             Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
             // Save the new image path in the database
-            $userData->image = $originalPath;
+            $user->image = $originalPath;
         }
 
-        $userData->save();
-
-
-        return redirect()->route('user.show',$userData->id)->with('success', 'User updated successfully.');
-
-
+        $user->save();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function updateStatus(Request $request, $id)
     {
-        $users = User::findOrFail($id);
+        try {
+            $user = User::findOrFail($id);
+            $user->status = $request->status;
+            $user->updated_by = Auth::id();
+            $user->save();
 
-        $users->delete();
-
-        return redirect()->route('user.index')->with('success', 'News deleted successfully.');
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to update status.']);
+        }
     }
+
 }

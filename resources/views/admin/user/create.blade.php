@@ -10,19 +10,15 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">@lang('app.edit') : {{ $pageTitle }}</div>
+                            <div class="card-title">@lang('app.create'): {{ $pageTitle }}</div>
                         </div>
-                        <form action="{{ route('user.update', $userData->id) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
-
-                            @include('admin.user.field')
+                            @include('admin.user.field', ['isEdit' => false])
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-edit"></i> @lang('app.update')</button>
+                                <button type="submit" class="btn btn-success mt-3"><i class="fas fa-save"></i> @lang('app.submit')</button>
                                 <a href="{{ route('user.index') }}" class="btn btn-warning text-white mt-3"><i class="fas fa-times-circle"></i> @lang('app.cancel')</a>
-
                             </div>
                         </form>
                     </div>
@@ -32,30 +28,24 @@
     </div>
 @endsection
 
+
 @push('scripts')
+
     <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
 
-        const inputElement = document.querySelector('#image');
-
-        const pond = FilePond.create(inputElement, {
+        const pond = FilePond.create(document.querySelector('#image'), {
             acceptedFileTypes: ['image/*'],
             server: {
-                load: (source, load, error, progress, abort, headers) => {
-                    fetch(source, {
-                        mode: 'cors'
-                    }).then((res) => {
-                        return res.blob();
-                    }).then(load).catch(error);
-                },
                 process: {
-                    url: '{{ route('upload') }}',
+                    url: '{{ route('upload') }}',  // Temporary upload route
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     onload: (response) => {
                         const data = JSON.parse(response);
+                        document.querySelector('input[name="uploaded_image"]').value = data.path; // Store temp file path
                         return data.path;
                     }
                 },
@@ -64,19 +54,15 @@
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
-                }
-            },
-
-            files: [
-                @if (isset($userData) && $userData->image)
-                    {
-                        source: '{{ asset('storage/' . $userData->image) }}',
-                        options: {
-                            type: 'local',
-                        },
-                    }
-                @endif
-            ],
+                },
+                load: '{{ old('uploaded_image') }}', // Restore the temporarily uploaded image
+            }
         });
+
+        // If there's an old uploaded image, load it into FilePond
+        @if (old('uploaded_image'))
+            pond.addFile("{{ asset('storage/' . old('uploaded_image')) }}");
+        @endif
     </script>
+
 @endpush

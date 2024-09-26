@@ -72,7 +72,7 @@ class CategoryDataTable extends DataTable
                     ->setTableId('category-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    ->dom('lfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle();
 

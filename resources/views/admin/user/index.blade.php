@@ -107,6 +107,35 @@
 
 {!! $dataTable->scripts() !!}
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Setup status toggles for this module
+        setupStatusToggles('.status-toggle', '/user/update-status');
+
+        // Re-initialize the status toggle after DataTable is drawn
+        $(document).on('draw.dt', function() {
+            setupStatusToggles('.status-toggle', '/user/update-status');
+        });
+    });
+</script>
+
+<script>
+    function toggleStatusLabel() {
+        const statusCheckbox = document.getElementById('status');
+        const statusLabel = document.getElementById('statusLabel');
+
+        if (statusCheckbox.checked) {
+            statusLabel.textContent = 'Active';
+        } else {
+            statusLabel.textContent = 'Inactive';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        toggleStatusLabel();
+    });
+</script>
+
 @endpush
 
 

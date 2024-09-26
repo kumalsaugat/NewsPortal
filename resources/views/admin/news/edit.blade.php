@@ -17,7 +17,7 @@
                             @csrf
                             @method('PUT')
 
-                            @include('admin.news.field')
+                            @include('admin.user.field', ['isEdit' => true])
 
 
 

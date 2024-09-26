@@ -35,6 +35,15 @@
                             </td>
                         </tr>
                         <tr>
+                            <th style="width: 200px;">@lang('app.user.status')</th>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $users->id }}" {{ $users->status ? 'checked' : '' }}>
+                                    <label class="form-check-label" id="statusLabel{{ $users->id }}"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
                             <th style="width: 200px;">@lang('app.createdAt')</th>
                             <td>{{ $users->created_at}}</td>
                         </tr>
@@ -62,13 +71,17 @@
                     <a href="{{ route('user.edit', $users->id) }}" class="btn btn-primary mt-3">
                         <i class="fas fa-edit"></i> @lang('app.update')
                     </a>
-                    <form id="deleteForm-user-{{ $users->id }}" action="{{ route('user.destroy', $users->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <a class="btn btn-danger mt-3" onclick="handleDelete('deleteForm-user-{{ $users->id }}')"><i class="fas fa-trash"></i>
-                            @lang('app.delete')
-                        </a>
-                    </form>
+                    @auth
+                        @if (auth()->id() !== $users->id)
+                            <form id="deleteForm-user-{{ $users->id }}" action="{{ route('user.destroy', $users->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <a class="btn btn-danger mt-3" onclick="handleDelete('deleteForm-user-{{ $users->id }}')"><i class="fas fa-trash"></i>
+                                    @lang('app.delete')
+                                </a>
+                            </form>
+                        @endif
+                    @endauth
 
 
                 </div>
@@ -79,3 +92,10 @@
 </div>
 @endsection
 
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setupStatusToggles('.status-toggle', '/user/update-status');
+        });
+    </script>
+@endpush

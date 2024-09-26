@@ -32,6 +32,16 @@ class UserSeeder extends Seeder
                         'remember_token' => '$2y$12$OHoGL5SvqLI927igkZHMmOTwkEoeDSOnzUmJfybifG4DnZ3alYrja',
                         'created_at' => '2024-09-12 12:48:42',
                     ),
+
+                2 =>
+                    array (
+                        'id' => 3,
+                        'name' => 'Test 2',
+                        'email' => 'test2@gmail.com',
+                        'password' => bcrypt('123456789'),
+                        'remember_token' => '$2y$12$OHoGL5SvqLI927igkZHMmOTwkEoeDSOnzUmJfybifG4DnZ3alYrja',
+                        'created_at' => '2024-09-12 12:48:42',
+                    ),
         ));
     }
 }

@@ -39,6 +39,8 @@ return array (
     'image' => 'Image',
     'name' => 'User Name',
     'email' => 'Email',
+    'password' => 'Password',
+    'phone' => 'Phone',
 ),
 
 

@@ -47,7 +47,16 @@ class UsersDataTable extends DataTable
                 }
                 return $actions;
             })
-            ->rawColumns(['action', 'image']);
+
+            ->editColumn('status', function ($row) {
+                return '
+                    <div class="form-check form-switch">
+                        <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.($row->status ? 'checked' : '').'>
+                        <label class="form-check-label" for="statusLabel'.$row->id.'"></label>
+                    </div>';
+            })
+
+            ->rawColumns(['action','status','image']);
     }
 
     /**
@@ -67,7 +76,7 @@ class UsersDataTable extends DataTable
                     ->setTableId('users-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    ->dom('lfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle();
     }
@@ -82,6 +91,7 @@ class UsersDataTable extends DataTable
             'name',
             'email',
             'image',
+            'status',
         ];
     }
 

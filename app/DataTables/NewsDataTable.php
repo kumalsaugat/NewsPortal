@@ -52,7 +52,7 @@ class NewsDataTable extends DataTable
                         <label class="form-check-label" for="statusLabel'.$row->id.'"></label>
                     </div>';
             })
-            ->rawColumns(['action','title','category_id','image','status']);
+            ->rawColumns(['action','image','status']);
     }
 
     /**
@@ -73,7 +73,7 @@ class NewsDataTable extends DataTable
                     ->setTableId('news-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    // ->dom('Bfrtip')
+                    ->dom('lfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle();
 
