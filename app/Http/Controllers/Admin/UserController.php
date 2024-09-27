@@ -47,9 +47,11 @@ class UserController extends AdminBaseController
      */
     public function create()
     {
+        $userData = new User;
         return view('admin.user.create', [
             'pageTitle' => $this->pageTitle,
             'isEdit' => false,
+            'userData' => $userData,
         ]);
     }
 

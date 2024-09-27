@@ -60,27 +60,29 @@
     </div>
 
     <!-- Full Width: Status Field -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mb-3">
-                <label for="status" class="form-label">
-                    <strong>@lang('app.news.status'):<span class="text-danger"> *</span></strong>
-                </label>
-                <div class="form-check form-switch">
-                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
-                        id="status" name="status" value="1"
-                        {{ (isset($userData) && $userData->status) || old('status') ? 'checked' : '' }}
-                        onchange="toggleStatusLabel()" >
-                    <label class="form-check-label" for="status" id="statusLabel">
-                        {{ (isset($userData) && $userData->status) || old('status') ? 'Active' : 'Inactive' }}
+    @if (auth()->check() && auth()->id() !== $userData->id)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label for="status" class="form-label">
+                        <strong>@lang('app.news.status'):<span class="text-danger"> *</span></strong>
                     </label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
+                            id="status" name="status" value="1"
+                            {{ (isset($userData) && $userData->status) || old('status') ? 'checked' : '' }}
+                            onchange="toggleStatusLabel()" >
+                        <label class="form-check-label" for="status" id="statusLabel">
+                            {{ (isset($userData) && $userData->status) || old('status') ? 'Active' : 'Inactive' }}
+                        </label>
+                    </div>
+                    @error('status')
+                        <div class="form-text text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
-                @error('status')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
             </div>
         </div>
-    </div>
+    @endif
 </div>
 
 <script>
