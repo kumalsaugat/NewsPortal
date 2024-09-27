@@ -27,7 +27,7 @@
             <div class="mb-3">
                 <label for="phone" class="form-label"><strong>@lang('app.user.phone'):<span class="text-danger">*</span></strong></label>
                 <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone"
-                    value="{{ old('phone', $userData->phone ?? '') }}"@if(isset($userData)) readonly @endif>
+                    value="{{ old('phone', $userData->phone ?? '') }}">
                 @error('phone')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -70,7 +70,7 @@
                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
                         id="status" name="status" value="1"
                         {{ (isset($userData) && $userData->status) || old('status') ? 'checked' : '' }}
-                        onchange="toggleStatusLabel()">
+                        onchange="toggleStatusLabel()" >
                     <label class="form-check-label" for="status" id="statusLabel">
                         {{ (isset($userData) && $userData->status) || old('status') ? 'Active' : 'Inactive' }}
                     </label>

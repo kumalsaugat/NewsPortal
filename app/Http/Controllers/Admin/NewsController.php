@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
+
 
 
 class NewsController extends AdminBaseController
@@ -89,10 +91,10 @@ class NewsController extends AdminBaseController
     public function edit(string $id)
     {
         $newsData = News::findOrFail($id);
-        $categories = Category::all();
+        // $categories = Category::all();
 
         // Fetch only active categories
-        $categories = Category::whereNull('deleted_at')->get();
+        $categories = Category::whereNull('deleted_at')->where('status', '=', '1')->get();
 
         // Check if the post's category is soft-deleted
         $deletedCategory = Category::withTrashed()->find($newsData->category_id);
@@ -172,11 +174,18 @@ class NewsController extends AdminBaseController
     protected function saveNewsData(News $news, NewsStoreRequest $request)
 {
     $news->title = $request->title;
-    $news->slug = $request->slug;
     $news->description = $request->description;
     $news->category_id = $request->category_id;
     $news->status = $request->has('status') ? 1 : 0;
     $news->published_at = $request->published_at ? Carbon::parse($request->published_at) : $news->published_at;
+
+    // Check if slug is empty and auto-generate from title
+    if (empty($request->slug)) {
+        $news->slug = Str::slug($news->title);
+    } else {
+        $news->slug = $request->slug;
+    }
+
 
     if (!$news->exists) {
         $news->created_by = Auth::id();

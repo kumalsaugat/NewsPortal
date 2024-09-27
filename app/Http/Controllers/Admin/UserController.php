@@ -95,7 +95,7 @@ class UserController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserStoreRequest $request, string $id)
     {
         $userData = User::findOrFail($id);
         $this->saveUsersData($userData, $request);

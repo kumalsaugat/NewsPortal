@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Str;
 
 class NewsCategoryController extends AdminBaseController
 {
@@ -117,9 +117,15 @@ class NewsCategoryController extends AdminBaseController
     protected function saveCategoryData(Category $category, CategoryStoreRequest $request)
     {
         $category->name = $request->name;
-        $category->slug = $request->slug;
         $category->description = $request->description;
         $category->status = $request->has('status') ? 1 : 0;
+
+        // Check if slug is empty and auto-generate from title
+        if (empty($request->slug)) {
+            $category->slug = Str::slug($category->title);
+        } else {
+            $category->slug = $request->slug;
+        }
 
         if (!$category->exists) {
             $category->created_by = Auth::id();
