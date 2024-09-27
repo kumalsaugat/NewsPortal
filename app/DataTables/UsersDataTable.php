@@ -49,12 +49,16 @@ class UsersDataTable extends DataTable
             })
 
             ->editColumn('status', function ($row) {
+                // Check if the currently authenticated user has an active status and if it's their own record
+                $disabled = (auth()->check() && auth()->user()->status && auth()->id() === $row->id) ? 'disabled' : '';
+
                 return '
                     <div class="form-check form-switch">
-                        <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.($row->status ? 'checked' : '').'>
-                        <label class="form-check-label" for="statusLabel'.$row->id.'"></label>
+                        <input class="form-check-input status-toggle" type="checkbox" id="status'.$row->id.'" data-id="'.$row->id.'" '.($row->status ? 'checked' : '').' '.$disabled.'>
+                        <label class="form-check-label" for="status'.$row->id.'"></label>
                     </div>';
             })
+
 
             ->rawColumns(['action','status','image']);
     }

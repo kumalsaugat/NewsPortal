@@ -28,15 +28,16 @@ class UserStoreRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users,email,' . $usersId,
             'password' => $this->isMethod('post') ? 'required|string|min:8' : 'nullable|string|min:8',
             'image' => ['nullable', 'string'],
-            'phone' => ['required','regex:/^[0-9]{10}$/',],
+            // 'phone' => ['required','regex:/^[0-9]{10}$/',],
+            'phone' => [
+                'required',
+                'string',
+                'regex:/^(\+977-?\d{2}-?\d{8}|\d{10})$/',  // Allow +977 or just 10 digits
+                // Unique phone number
+            ],
             'status' => 'boolean',
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'phone.regex' => 'The phone number must be exactly 10 digits without spaces or special characters.',
-        ];
-    }
+    
 }

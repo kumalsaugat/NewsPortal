@@ -41,6 +41,7 @@ return array (
     'email' => 'Email',
     'password' => 'Password',
     'phone' => 'Phone',
+    'status' => 'Status',
 ),
 
 

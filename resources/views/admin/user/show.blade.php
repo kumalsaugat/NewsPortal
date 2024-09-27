@@ -37,10 +37,16 @@
                         <tr>
                             <th style="width: 200px;">@lang('app.user.status')</th>
                             <td>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $users->id }}" {{ $users->status ? 'checked' : '' }}>
-                                    <label class="form-check-label" id="statusLabel{{ $users->id }}"></label>
-                                </div>
+                                @if (auth()->check() && auth()->id() === $users->id)
+                                    <button class="btn {{ $users->status ? 'btn-success rounded-pill btn-sm' : 'btn-secondary' }}">
+                                        {{ $users->status ? 'Active' : 'Inactive' }}
+                                    </button>
+                                @else
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $users->id }}" {{ $users->status ? 'checked' : '' }}>
+                                        <label class="form-check-label" id="statusLabel{{ $users->id }}"></label>
+                                    </div>
+                                @endif
                             </td>
                         </tr>
                         <tr>
