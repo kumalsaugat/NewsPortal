@@ -90,28 +90,34 @@ class NewsController extends AdminBaseController
      */
     public function edit(string $id)
     {
+        // Retrieve the news data
         $newsData = News::findOrFail($id);
-        // $categories = Category::all();
 
         // Fetch only active categories
-        $categories = Category::whereNull('deleted_at')->where('status', '=', '1')->get();
+        $categories = Category::where('status', '=', '1') // Only active categories
+            ->whereNull('deleted_at')
+            ->get();
 
-        // Check if the post's category is soft-deleted
-        $deletedCategory = Category::withTrashed()->find($newsData->category_id);
+        // Fetch the selected category of the current news (whether inactive or soft-deleted)
+        $selectedCategory = Category::withTrashed()->find($newsData->category_id);
 
-        // If the category is soft-deleted, add it to the categories list
-        if ($deletedCategory && $deletedCategory->trashed()) {
-            $categories->push($deletedCategory);
+        // If the selected category is inactive or soft-deleted, add it to the list
+        if ($selectedCategory && ($selectedCategory->trashed() || $selectedCategory->status == 0)) {
+            $categories->push($selectedCategory);
         }
 
+        // Handle the published_at date format
         $newsData->published_at = $newsData->published_at ? Carbon::parse($newsData->published_at) : null;
 
+        // Pass data to the view
         return view('admin.news.edit', [
             'newsData' => $newsData,
             'categories' => $categories,
             'pageTitle' => $this->pageTitle,
         ]);
     }
+
+
 
     /**
      * Update the specified resource in storage.

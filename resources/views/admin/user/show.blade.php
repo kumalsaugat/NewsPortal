@@ -38,7 +38,7 @@
                             <th style="width: 200px;">@lang('app.user.status')</th>
                             <td>
                                 @if (auth()->check() && auth()->id() === $users->id)
-                                    <button class="btn {{ $users->status ? 'btn-success rounded-pill btn-sm' : 'btn-secondary' }}">
+                                    <button class="btn {{ $users->status ? 'btn-success rounded-pill btn-sm' : 'btn-secondary rounded-pill btn-sm' }}">
                                         {{ $users->status ? 'Active' : 'Inactive' }}
                                     </button>
                                 @else

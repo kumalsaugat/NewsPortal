@@ -1,4 +1,6 @@
 import "./bootstrap";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 import "laravel-datatables-vite";
 
 import "./status-toggle";

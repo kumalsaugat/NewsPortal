@@ -26,6 +26,11 @@
                         <option value="{{ $category->id }}"
                             {{ old('category_id', $newsData->category_id ?? '') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
+                            @if ($category->trashed())
+                                (Deleted)
+                            @elseif ($category->status == 0)
+                                (Inactive)
+                            @endif
                         </option>
                     @endforeach
                 </select>
