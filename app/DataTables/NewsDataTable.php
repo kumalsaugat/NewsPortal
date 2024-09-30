@@ -26,7 +26,7 @@ class NewsDataTable extends DataTable
             ->addColumn('image', function ($row) {
                 if ($row->image) {
                     return '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
-                                <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="width: 50px; height: auto;">
+                                <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="height: 50px;">
                             </a>';
                 } else {
                     return '<p>No image available</p>';
@@ -85,11 +85,24 @@ class NewsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            'action',
-            'title',
-            'category.name',
-            'image',
-            'status',
+            Column::make('action')
+                ->title('Actions')
+                ->width(100), // Fixed width for the action column
+            Column::make('title')
+                ->title('Title')
+                ->width(250),
+
+            Column::make('category.name')
+                ->title('Category')
+                ->width(200),
+
+            Column::make('image')
+                ->title('Image')
+                ->width(100),
+
+            Column::make('status')
+                ->title('Status')
+                ->width(50), 
         ];
     }
 

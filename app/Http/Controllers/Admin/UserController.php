@@ -171,7 +171,15 @@ class UserController extends AdminBaseController
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->status = $request->has('status') ? 1 : 0;
+
+        // Set status to 1 by default if auth id is 1, otherwise take from request
+        if (auth()->check() && auth()->id() === $user->id) {
+            $user->status = 1;
+        } else {
+            $user->status = $request->has('status') ? 1 : 0;
+        }
+
+        // $user->status = $request->has('status') ? 1 : 0;
 
 
         if ($request->filled('password')) {

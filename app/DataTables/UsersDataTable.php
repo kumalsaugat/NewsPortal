@@ -26,7 +26,7 @@ class UsersDataTable extends DataTable
             ->addColumn('image', function ($row) {
                 if ($row->image) {
                     return '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
-                                <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="width: 50px; height: auto;">
+                                <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style=" height: 50px;">
                             </a>';
                 } else {
                     return '<p>No image available</p>';
@@ -91,11 +91,15 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            'action',
-            'name',
-            'email',
-            'image',
-            'status',
+            Column::make('action')
+                ->width(100), // Fixed width for action column
+            Column::make('name'),
+            Column::make('email')
+                ->width(250),
+            Column::make('image')
+                ->width(150),
+            Column::make('status')
+                ->width(50),   // Fixed width for status column
         ];
     }
 

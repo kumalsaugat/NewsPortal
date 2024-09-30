@@ -26,7 +26,7 @@ class CategoryDataTable extends DataTable
             ->addColumn('image', function ($row) {
                 if ($row->image) {
                     return '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
-                                <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="width: 50px; height: auto;">
+                                <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="height: 50px;">
                             </a>';
                 } else {
                     return '<p>No image available</p>';
@@ -84,10 +84,17 @@ class CategoryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            'action',
-            'name',
-            'image',
-            'status',
+            Column::make('action')
+                ->width(100),
+
+            Column::make('name')
+                ->width(200),
+
+            Column::make('image')
+                ->width(100),
+
+            Column::make('status')
+                ->width(80),
         ];
     }
 
