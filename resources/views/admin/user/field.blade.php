@@ -46,7 +46,7 @@
                             class="text-danger">*</span></strong></label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email"
                     value="{{ old('email', $userData->email ?? '') }}"
-                    @if (isset($userData) && ($userData->exists || auth()->id() === optional($userData)->id)) readonly @endif>
+                    @if (isset($userData) && $userData->exists && auth()->id() === $userData->id) readonly @endif>
                 @error('email')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
