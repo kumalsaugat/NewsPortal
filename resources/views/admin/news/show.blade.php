@@ -102,7 +102,7 @@
                             @lang('app.back')
                         </a>
                         <a href="{{ route('news.create') }}" class="btn btn-success  mt-3"> <i class="fas fa-plus"></i>
-                            @lang('app.createNew')
+                            @lang('app.create')
                         </a>
                         <a href="{{ route('news.edit', $news->id) }}" class="btn btn-primary mt-3">
                             <i class="fas fa-edit"></i> @lang('app.update')

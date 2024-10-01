@@ -94,9 +94,9 @@
                                 class="fas fa-arrow-left"></i>
                             @lang('app.back')
                         </a>
-                        {{-- <a href="{{ route('user.create') }}" class="btn btn-success  mt-3"> <i class="fas fa-plus"></i>
-                        @lang('app.createNew')
-                    </a> --}}
+                        <a href="{{ route('user.create') }}" class="btn btn-success  mt-3"> <i class="fas fa-plus"></i>
+                            @lang('app.create')
+                        </a>
                         <a href="{{ route('user.edit', $users->id) }}" class="btn btn-primary mt-3">
                             <i class="fas fa-edit"></i> @lang('app.update')
                         </a>

@@ -25,7 +25,9 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">@lang('app.create'): {{ $pageTitle }}</div>
+                            <div class="card-title">
+                                <h4>@lang('app.create') {{ $pageTitle }}</h4>
+                            </div>
                         </div>
                         <form action="{{ route('news-category.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf

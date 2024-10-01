@@ -1,20 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="app-content-header"> <!--begin::Container-->
-    <div class="container-fluid"> <!--begin::Row-->
-        <div class="row">
-            <div class="col-sm-6">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">
-                        {{ Breadcrumbs::render('user.index') }}
-                    </li>
-                </ol>
-            </div>
-        </div> <!--end::Row-->
-    </div> <!--end::Container-->
-</div> <!--end::App Content Header-->
+    <div class="app-content-header"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ Breadcrumbs::render('user.index') }}
+                        </li>
+                    </ol>
+                </div>
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content Header-->
 
 
 
@@ -35,7 +34,8 @@
                                 <div>
                                     <!-- Action Buttons -->
                                     <a href="{{ route('user.create') }}">
-                                    <button class="btn btn-success"><i class="fa fa-plus"></i> @lang('app.createNew')</button></a>
+                                        <button class="btn btn-success"><i class="fa fa-plus"></i>
+                                            @lang('app.createNew')</button></a>
                                 </div>
                             </div>
                             {{-- <table class="table table-striped" id="myTable">
@@ -103,7 +103,9 @@
 
                                 </tbody>
                             </table> --}}
+
                             {!! $dataTable->table() !!}
+
                         </div> <!-- /.card-body -->
                         <div class="card-footer clearfix">
                             {{-- {{ $users->links('pagination::bootstrap-5') }} --}}
@@ -114,44 +116,37 @@
             </div> <!--end::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content-->
-
-
-
 @endsection
 
 @push('scripts')
+    {!! $dataTable->scripts() !!}
 
-{!! $dataTable->scripts() !!}
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Setup status toggles for this module
-        setupStatusToggles('.status-toggle', '/user/update-status');
-
-        // Re-initialize the status toggle after DataTable is drawn
-        $(document).on('draw.dt', function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup status toggles for this module
             setupStatusToggles('.status-toggle', '/user/update-status');
+
+            // Re-initialize the status toggle after DataTable is drawn
+            $(document).on('draw.dt', function() {
+                setupStatusToggles('.status-toggle', '/user/update-status');
+            });
         });
-    });
-</script>
+    </script>
 
-<script>
-    function toggleStatusLabel() {
-        const statusCheckbox = document.getElementById('status');
-        const statusLabel = document.getElementById('statusLabel');
+    <script>
+        function toggleStatusLabel() {
+            const statusCheckbox = document.getElementById('status');
+            const statusLabel = document.getElementById('statusLabel');
 
-        if (statusCheckbox.checked) {
-            statusLabel.textContent = 'Active';
-        } else {
-            statusLabel.textContent = 'Inactive';
+            if (statusCheckbox.checked) {
+                statusLabel.textContent = 'Active';
+            } else {
+                statusLabel.textContent = 'Inactive';
+            }
         }
-    }
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        toggleStatusLabel();
-    });
-</script>
-
+        document.addEventListener('DOMContentLoaded', (event) => {
+            toggleStatusLabel();
+        });
+    </script>
 @endpush
-
-

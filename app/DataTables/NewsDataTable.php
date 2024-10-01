@@ -60,7 +60,7 @@ class NewsDataTable extends DataTable
      */
     public function query(News $model): QueryBuilder
     {
-        $news = $model->with('category')->newQuery();
+        $news = $model->with('category')->newQuery()->latest();
         return $news;
     }
 
@@ -102,7 +102,7 @@ class NewsDataTable extends DataTable
 
             Column::make('status')
                 ->title('Status')
-                ->width(50), 
+                ->width(50),
         ];
     }
 

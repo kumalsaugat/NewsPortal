@@ -3,7 +3,7 @@
 return array (
 'projectName' => 'NewsPortal',
 'designed' => 'Designed by Saugat Kumal.',
-"createNew" => "Create New",
+"createNew" => "Create",
 'create' => 'Create',
 "submit" => "Save",
 'update' => 'Update',

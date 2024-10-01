@@ -1,20 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="app-content-header"> <!--begin::Container-->
-    <div class="container-fluid"> <!--begin::Row-->
-        <div class="row">
-            <div class="col-sm-6">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">
-                        {{ Breadcrumbs::render('user.edit', $userData) }}
-                    </li>
-                </ol>
-            </div>
-        </div> <!--end::Row-->
-    </div> <!--end::Container-->
-</div> <!--end::App Content Header-->
+    <div class="app-content-header"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ Breadcrumbs::render('user.edit', $userData) }}
+                        </li>
+                    </ol>
+                </div>
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content Header-->
 
 
 
@@ -29,7 +28,9 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">@lang('app.edit') : {{ $pageTitle }}</div>
+                            <div class="card-title">
+                                <h4>@lang('app.edit') {{ $pageTitle }}</h4>
+                            </div>
                         </div>
                         <form action="{{ route('user.update', $userData->id) }}" method="POST"
                             enctype="multipart/form-data">
@@ -39,8 +40,10 @@
                             @include('admin.user.field')
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-edit"></i> @lang('app.update')</button>
-                                <a href="{{ route('user.index') }}" class="btn btn-warning text-white mt-3"><i class="fas fa-times-circle"></i> @lang('app.cancel')</a>
+                                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-edit"></i>
+                                    @lang('app.update')</button>
+                                <a href="{{ route('user.index') }}" class="btn btn-warning text-white mt-3"><i
+                                        class="fas fa-times-circle"></i> @lang('app.cancel')</a>
 
                             </div>
                         </form>

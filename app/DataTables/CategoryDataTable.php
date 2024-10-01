@@ -60,7 +60,7 @@ class CategoryDataTable extends DataTable
      */
     public function query(Category $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->latest();
     }
 
     /**

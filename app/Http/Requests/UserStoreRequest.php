@@ -39,5 +39,12 @@ class UserStoreRequest extends FormRequest
         ];
     }
 
-    
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => 'The phone number must be a valid number (+977 or 10 digits).',
+        ];
+    }
+
+
 }
