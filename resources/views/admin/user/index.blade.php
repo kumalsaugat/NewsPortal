@@ -2,6 +2,20 @@
 
 @section('content')
 
+<div class="app-content-header"> <!--begin::Container-->
+    <div class="container-fluid"> <!--begin::Row-->
+        <div class="row">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ Breadcrumbs::render('user.index') }}
+                    </li>
+                </ol>
+            </div>
+        </div> <!--end::Row-->
+    </div> <!--end::Container-->
+</div> <!--end::App Content Header-->
+
 
 
     <div class="app-content"> <!--begin::Container-->
@@ -10,6 +24,8 @@
         <div class="container-fluid"> <!--begin::Row-->
 
             @include('admin.message')
+
+
 
             <div class="row">
                 <div class="col-md-12">

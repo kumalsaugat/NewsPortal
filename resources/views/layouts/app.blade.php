@@ -18,10 +18,10 @@
         integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
     <!--end::Third Party Plugin(Bootstrap Icons)--><!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="../../dist/css/adminlte.css"><!--end::Required Plugin(AdminLTE)--><!-- apexcharts -->
-    
 
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 
@@ -31,11 +31,12 @@
 
 
     {{-- tinymce editor --}}
-    <script src="{{ asset('backend/tinymce/js/tinymce/tinymce.min.js') }}"> </script>
+    <script src="{{ asset('backend/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 
     {{-- Filepond --}}
     <link rel="stylesheet" href="{{ asset('backend/filepond/filepond/dist/filepond.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/filepond/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('backend/filepond/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}">
 
     <!-- SweetAlert2 -->
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -48,18 +49,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
 
-    {{-- DataTable --}}
-    {{-- <link rel="stylesheet" href="{{asset('backend/DataTable/datatables.css')}}" />
 
-    <script src="{{ asset('backend/DataTable/datatables.js')}}"></script> --}}
-    {{-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script> --}}
 
     @vite(['resources/js/app.js'])
 
@@ -80,7 +70,6 @@
 
         <!--begin::App Main-->
         <main class="app-main"> <!--begin::App Content Header-->
-            @include('sections.content-header')
 
             <!--begin::App Content-->
 
@@ -114,8 +103,11 @@
 
 
     {{-- File Pond --}}
-    <script src="{{ asset('backend/filepond/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}"></script>
-    <script src="{{ asset('backend/filepond/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js') }}"></script>
+    <script
+        src="{{ asset('backend/filepond/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}">
+    </script>
+    <script src="{{ asset('backend/filepond/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js') }}">
+    </script>
     <script src="{{ asset('backend/filepond/filepond/dist/filepond.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
@@ -150,16 +142,12 @@
             }
         });
     </script> <!--end::OverlayScrollbars Configure--> <!-- OPTIONAL SCRIPTS --> <!-- sortablejs -->
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
-        integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ=" crossorigin="anonymous"></script> <!-- sortablejs -->
-
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
-        integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script> <!-- ChartJS -->
 
 
 
 
-        @stack('scripts')
+
+    @stack('scripts')
 
 
 

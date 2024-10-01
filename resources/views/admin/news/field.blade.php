@@ -48,8 +48,7 @@
                     <strong>@lang('app.news.slug'):<span class="text-danger"> *</span></strong>
                 </label>
                 <input type="text" class="form-control" id="slug" name="slug"
-                    placeholder="will be auto generated if left empty"
-                    value="{{ old('slug', $newsData->slug ?? '') }}">
+                    placeholder="will be auto generated if left empty" value="{{ old('slug', $newsData->slug ?? '') }}">
                 @error('slug')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -95,7 +94,8 @@
                     <label for="published_at" class="form-label">
                         <strong>@lang('app.news.publish'):<span class="text-danger"> *</span></strong>
                     </label>
-                    <input type="datetime-local" name="published_at" class="form-control" id="published_at"
+                    <input type="datetime-local" onclick="this.showPicker()" name="published_at" class="form-control"
+                        id="published_at"
                         value="{{ old('published_at', isset($newsData->published_at) ? $newsData->published_at->format('Y-m-d\TH:i') : '') }}">
                     @error('published_at')
                         <span class="text-danger">{{ $message }}</span>

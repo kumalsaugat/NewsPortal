@@ -1,12 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-
+    <div class="app-content-header"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ Breadcrumbs::render('news-category.create') }}
+                        </li>
+                    </ol>
+                </div>
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content Header-->
 
     <div class="app-content">
         <div class="container-fluid">
 
             @include('admin.message')
+
 
             <div class="row g-4">
                 <div class="col-md-12">
@@ -20,8 +33,10 @@
                             @include('admin.newsCategory.field')
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-success mt-3"><i class="fas fa-save"></i> @lang('app.submit')</button>
-                                <a href="{{ route('news-category.index') }}" class="btn btn-warning text-white mt-3"><i class="fas fa-times-circle"></i> @lang('app.cancel')</a>
+                                <button type="submit" class="btn btn-success mt-3"><i class="fas fa-save"></i>
+                                    @lang('app.submit')</button>
+                                <a href="{{ route('news-category.index') }}" class="btn btn-warning text-white mt-3"><i
+                                        class="fas fa-times-circle"></i> @lang('app.cancel')</a>
                             </div>
 
                         </form>
@@ -34,11 +49,9 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('scripts')
-
     {{-- <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
@@ -74,13 +87,14 @@
             acceptedFileTypes: ['image/*'],
             server: {
                 process: {
-                    url: '{{ route('upload') }}',  // Temporary upload route
+                    url: '{{ route('upload') }}', // Temporary upload route
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     onload: (response) => {
                         const data = JSON.parse(response);
-                        document.querySelector('input[name="uploaded_image"]').value = data.path; // Store temp file path
+                        document.querySelector('input[name="uploaded_image"]').value = data
+                            .path; // Store temp file path
                         return data.path;
                     }
                 },
@@ -100,4 +114,3 @@
         @endif
     </script>
 @endpush
-

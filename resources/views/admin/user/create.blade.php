@@ -1,10 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="app-content-header"> <!--begin::Container-->
+    <div class="container-fluid"> <!--begin::Row-->
+        <div class="row">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ Breadcrumbs::render('user.create') }}
+                    </li>
+                </ol>
+            </div>
+        </div> <!--end::Row-->
+    </div> <!--end::Container-->
+</div> <!--end::App Content Header-->
+
+
     <div class="app-content">
         <div class="container-fluid">
 
             @include('admin.message')
+
+
 
             <div class="row g-4">
                 <div class="col-md-12">

@@ -3,8 +3,24 @@
 
 @section('content')
 @include('admin.message')
+
+<div class="app-content-header"> <!--begin::Container-->
+    <div class="container-fluid"> <!--begin::Row-->
+        <div class="row">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ Breadcrumbs::render('news-category.show', $category) }}
+                    </li>
+                </ol>
+            </div>
+        </div> <!--end::Row-->
+    </div> <!--end::Container-->
+</div> <!--end::App Content Header-->
+
+
 <div class="container">
-    <div class="row mt-4">
+    <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
