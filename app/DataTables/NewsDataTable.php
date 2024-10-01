@@ -23,36 +23,42 @@ class NewsDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('image', function ($row) {
-                if ($row->image) {
-                    return '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
-                                <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="height: 50px;">
-                            </a>';
-                } else {
-                    return '<p>No image available</p>';
-                }
-            })
-            ->addColumn('action', function ($row) {
-                return '
-                        <a href="'.route('news.show', $row->id).'" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
-                        <a href="'.route('news.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                        <form id="deleteForm-news-'.$row->id.'" action="'.route('news.destroy', $row->id).'" method="POST" style="display:inline;">
-                            '.csrf_field().'
-                            '.method_field('DELETE').'
-                            <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete(\'deleteForm-news-'.$row->id.'\')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>';
-
-            })
-            ->editColumn('status', function ($row) {
-                return '
-                    <div class="form-check form-switch">
-                        <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.($row->status ? 'checked' : '').'>
-                        <label class="form-check-label" for="statusLabel'.$row->id.'"></label>
-                    </div>';
-            })
+            ->addColumn('image', fn($row) => $this->renderImageColumn($row))
+            ->addColumn('action', fn($row) => $this->renderActionColumn($row))
+            ->editColumn('status', fn($row) => $this->renderStatusColumn($row))
             ->rawColumns(['action','image','status']);
+    }
+
+    private function renderImageColumn($row): string
+    {
+        return $row->image
+            ? '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
+                   <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="height: 50px;">
+               </a>'
+            : '<p>No image available</p>';
+    }
+
+    private function renderActionColumn($row): string
+    {
+        return '
+            <a href="'.route('news.show', $row->id).'" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
+            <a href="'.route('news.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+            <form id="deleteForm-news-'.$row->id.'" action="'.route('news.destroy', $row->id).'" method="POST" style="display:inline;">
+                '.csrf_field().'
+                '.method_field('DELETE').'
+                <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete(\'deleteForm-news-'.$row->id.'\')">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>';
+    }
+
+    private function renderStatusColumn($row): string
+    {
+        return '
+            <div class="form-check form-switch">
+                <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.($row->status ? 'checked' : '').'>
+                <label class="form-check-label" for="statusLabel'.$row->id.'"></label>
+            </div>';
     }
 
     /**
@@ -74,8 +80,7 @@ class NewsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('lfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle();
+                    ->orderBy(1);
 
     }
 

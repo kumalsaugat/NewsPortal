@@ -25,10 +25,9 @@ class UserStoreRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => 'required|string|email|max:255|unique:users,email,' . $usersId,
+            'email' => 'required|string|email:rfc,dns|max:255|unique:users,email,' . $usersId,
             'password' => $this->isMethod('post') ? 'required|string|min:8' : 'nullable|string|min:8',
             'image' => ['nullable', 'string'],
-            // 'phone' => ['required','regex:/^[0-9]{10}$/',],
             'phone' => [
                 'required',
                 'string',

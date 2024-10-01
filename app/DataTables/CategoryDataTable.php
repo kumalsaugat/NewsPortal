@@ -23,41 +23,47 @@ class CategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('image', function ($row) {
-                if ($row->image) {
-                    return '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
-                                <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="height: 50px;">
-                            </a>';
-                } else {
-                    return '<p>No image available</p>';
-                }
-            })
-            ->addColumn('action', function ($row) {
-                return '
-                        <a href="'.route('news-category.show', $row->id).'" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
-                        <a href="'.route('news-category.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                        <form id="deleteForm-category-'.$row->id.'" action="'.route('news-category.destroy', $row->id).'" method="POST" style="display:inline;">
-                            '.csrf_field().'
-                            '.method_field('DELETE').'
-                            <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete(\'deleteForm-category-'.$row->id.'\')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>';
-
-            })
-            ->editColumn('status', function ($row) {
-                return '
-                    <div class="form-check form-switch">
-                        <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.($row->status ? 'checked' : '').'>
-                        <label class="form-check-label" for="statusLabel'.$row->id.'"></label>
-                    </div>';
-            })
+            ->addColumn('image', fn($row) => $this->renderImageColumn($row))
+            ->addColumn('action', fn($row) => $this->renderActionColumn($row))
+            ->editColumn('status', fn($row) => $this->renderStatusColumn($row))
             ->rawColumns(['action','title','image','status']);
     }
 
     /**
      * Get the query source of dataTable.
      */
+    private function renderImageColumn($row): string
+    {
+        if ($row->image) {
+            return '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
+                        <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->title.'" style="height: 50px;">
+                    </a>';
+        }
+        return '<p>No image available</p>';
+    }
+
+    private function renderActionColumn($row): string
+    {
+        return '
+            <a href="'.route('news-category.show', $row->id).'" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
+            <a href="'.route('news-category.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+            <form id="deleteForm-category-'.$row->id.'" action="'.route('news-category.destroy', $row->id).'" method="POST" style="display:inline;">
+                '.csrf_field().'
+                '.method_field('DELETE').'
+                <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete(\'deleteForm-category-'.$row->id.'\')">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>';
+    }
+
+    private function renderStatusColumn($row): string
+    {
+        return '
+            <div class="form-check form-switch">
+                <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.($row->status ? 'checked' : '').'>
+                <label class="form-check-label" for="statusLabel'.$row->id.'"></label>
+            </div>';
+    }
     public function query(Category $model): QueryBuilder
     {
         return $model->newQuery()->latest();
@@ -73,8 +79,7 @@ class CategoryDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('lfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle();
+                    ->orderBy(1);
 
     }
 
