@@ -52,7 +52,7 @@
                                         <a href="{{ asset('storage/' . $news->image) }}" data-fancybox="gallery"
                                             data-caption="{{ $news->title }}">
                                             <img src="{{ asset('storage/images/thumbnails/' . basename($news->image)) }}"
-                                                alt="{{ $news->title }}" style="width: 50px; height: auto;">
+                                                alt="{{ $news->title }}" style=" height: 50px;">
                                         </a>
                                     @else
                                         <p>No image available</p>

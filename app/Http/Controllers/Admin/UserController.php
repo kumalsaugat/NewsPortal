@@ -193,16 +193,18 @@ class UserController extends AdminBaseController
             $user->updated_by = Auth::id();
         }
 
-        if ($request->has('image')) {
+        if ($request->input('image')) {
 
             // Delete old images if they exist
             if ($user->image) {
-                if (Storage::exists('public/'.$user->image)) {
-                    Storage::delete('public/'.$user->image);
+
+                if (Storage::exists(public_path('storage/'.$user->image))) {
+                    Storage::delete(public_path('storage/'.$user->image));
                 }
-                if (Storage::exists('public/images/thumbnails/'.basename($user->image))) {
-                    Storage::delete('public/images/thumbnails/'.basename($user->image));
+                if (Storage::exists(public_path('storage/images/thumbnails/'.basename($user->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/'.basename($user->image)));
                 }
+
             }
 
             $imagePath = $request->input('image');

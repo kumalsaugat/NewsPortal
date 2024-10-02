@@ -44,7 +44,7 @@
                                         data-fancybox="gallery" data-caption="{{ $category->title }}">
                                         <img src="{{ asset('storage/images/thumbnails/' . basename($category->image)) }}"
                                             alt="{{ $category->title }}"
-                                            style="width: 50px; height: auto;">
+                                            style=" height: 50px;">
                                     </a>
                                 @else
                                     <p>No image available</p>

@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="nav-item {{request()->routeIs('user.index') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                    <a href="#" class="nav-link"> <i class="nav-icon fas fa-user-cog"></i>
                         <p>
                             User Management
                             <i class="nav-arrow bi bi-chevron-right"></i>
@@ -31,7 +31,7 @@
 
 
                 <li class="nav-item {{ request()->routeIs('news-category.index') || request()->routeIs('news.index') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link"> <i class="nav-icon bi bi-tree-fill"></i>
+                    <a href="#" class="nav-link"> <i class="nav-icon fas fa-newspaper"></i>
                         <p>
                             News Management
                             <i class="nav-arrow bi bi-chevron-right"></i>
