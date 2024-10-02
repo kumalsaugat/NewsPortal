@@ -23,19 +23,20 @@ Breadcrumbs::for('news.create', function (BreadcrumbTrail $trail) {
 // Dynamic Edit News Breadcrumb
 Breadcrumbs::for('news.edit', function (BreadcrumbTrail $trail, $news) {
     $trail->parent('news.index');
-    $trail->push('Edit ' . $news->title, route('news.edit', $news->id));
+    $trail->push('Edit ' . ($news->title ? ' / ' . $news->title : ''),  route('news.edit', $news->id));
 });
 
 // Dynamic Show Single News Breadcrumb
 Breadcrumbs::for('news.show', function (BreadcrumbTrail $trail, $news) {
     $trail->parent('news.index');
-    $trail->push($news->title, route('news.show', $news->id));
+    $trail->push('View ' . ($news->title ? ' / ' . $news->title : ''),  route('news.show', $news->id));
+
 });
 
 // Category Index Breadcrumb
 Breadcrumbs::for('news-category.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('Categories', route('news-category.index'));
+    $trail->push('Category', route('news-category.index'));
 });
 
 // Create Category Breadcrumb
@@ -47,13 +48,15 @@ Breadcrumbs::for('news-category.create', function (BreadcrumbTrail $trail) {
 // Edit Category Breadcrumb
 Breadcrumbs::for('news-category.edit', function (BreadcrumbTrail $trail, $category) {
     $trail->parent('news-category.index');
-    $trail->push('Edit ' . $category->name, route('news-category.edit', $category->id));
+    $trail->push('Edit '. ($category->name ? ' / ' . $category->name : ''), route('news-category.edit', $category->id));
+
 });
 
 // Show Category Breadcrumb
 Breadcrumbs::for('news-category.show', function (BreadcrumbTrail $trail, $category) {
     $trail->parent('news-category.index');
-    $trail->push($category->name, route('news-category.show', $category->id));
+    $trail->push('View '. ($category->name ? ' / ' . $category->name : ''), route('news-category.show', $category->id));
+
 });
 
 // User Index Breadcrumb
@@ -71,11 +74,11 @@ Breadcrumbs::for('user.create', function (BreadcrumbTrail $trail) {
 // Edit User Breadcrumb
 Breadcrumbs::for('user.edit', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('user.index');
-    $trail->push('Edit ' . $user->name, route('user.edit', $user->id));
+    $trail->push('Edit '. ($user->name ? ' / ' . $user->name : ''), route('user.edit', $user->id));
 });
 
 // Show User Breadcrumb
 Breadcrumbs::for('user.show', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('user.index');
-    $trail->push($user->name, route('user.show', $user->id));
+    $trail->push('View '. ($user->name ? ' / ' . $user->name : ''), route('user.show', $user->id));
 });

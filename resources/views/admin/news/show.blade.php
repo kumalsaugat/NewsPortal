@@ -9,7 +9,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" aria-current="page">
-                            {{ Breadcrumbs::render('news.edit', $news) }}
+                            {{ Breadcrumbs::render('news.show', $news) }}
                         </li>
                     </ol>
                 </div>

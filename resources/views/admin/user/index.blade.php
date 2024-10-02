@@ -104,7 +104,10 @@
                                 </tbody>
                             </table> --}}
 
-                            {!! $dataTable->table() !!}
+                                <div class="table-responsive">
+                                    {!! $dataTable->table(['class' => 'table table-striped table-bordered dt-responsive nowrap', 'width' => '100%']) !!}
+                                </div>
+
 
                         </div> <!-- /.card-body -->
                         <div class="card-footer clearfix">

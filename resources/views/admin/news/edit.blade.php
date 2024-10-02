@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" aria-current="page">
-                            {{ Breadcrumbs::render('news.show', $newsData) }}
+                            {{ Breadcrumbs::render('news.edit', $newsData) }}
                         </li>
                     </ol>
                 </div>
@@ -99,7 +99,7 @@
             files: [
                 @if (isset($newsData) && $newsData->image)
                     {
-                        source: '{{ asset('storage/' . $newsData->image) }}',
+                        source: '{{ asset('storage/images/thumbnails/' . basename($newsData->image)) }}',
                         options: {
                             type: 'local',
                         },

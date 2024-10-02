@@ -58,14 +58,23 @@ class UsersDataTable extends DataTable
 
     private function renderStatusColumn($row): string
     {
+        // If the authenticated user is the same as the current row, display status as plain text
+        if (auth()->check() && auth()->id() === $row->id) {
+            return '<span style="color: #fff; background-color: '.($row->status ? '#28a745' : '#dc3545').'" class="badge '.($row->status ? 'badge-success' : 'badge-danger').'">'
+                .($row->status ? 'Active' : 'Inactive').'</span>';
+        }
+
+        // Otherwise, display the toggle switch
+        $checked = $row->status ? 'checked' : '';
         $disabled = (auth()->check() && auth()->user()->status && auth()->id() === $row->id) ? 'disabled' : '';
 
         return '
             <div class="form-check form-switch">
-                <input class="form-check-input status-toggle" type="checkbox" id="status'.$row->id.'" data-id="'.$row->id.'" '.($row->status ? 'checked' : '').' '.$disabled.'>
+                <input class="form-check-input status-toggle" type="checkbox" id="status'.$row->id.'" data-id="'.$row->id.'" '.$checked.' '.$disabled.'>
                 <label class="form-check-label" for="status'.$row->id.'"></label>
             </div>';
     }
+
 
     /**
      * Get the query source of dataTable.

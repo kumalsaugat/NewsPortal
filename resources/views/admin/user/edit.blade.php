@@ -92,7 +92,7 @@
             files: [
                 @if (isset($userData) && $userData->image)
                     {
-                        source: '{{ asset('storage/' . $userData->image) }}',
+                        source: '{{ asset('storage/images/thumbnails/' . basename($userData->image)) }}',
                         options: {
                             type: 'local',
                         },

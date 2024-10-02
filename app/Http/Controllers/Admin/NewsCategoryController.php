@@ -122,7 +122,7 @@ class NewsCategoryController extends AdminBaseController
 
         // Check if slug is empty and auto-generate from title
         if (empty($request->slug)) {
-            $category->slug = Str::slug($category->title);
+            $category->slug = Str::slug($category->name);
         } else {
             $category->slug = $request->slug;
         }

@@ -91,7 +91,7 @@
             files: [
                 @if (isset($categoryData) && $categoryData->image)
                     {
-                        source: '{{ asset('storage/' . $categoryData->image) }}',
+                        source: '{{ asset('storage/images/thumbnails/' . basename($categoryData->image)) }}',
                         options: {
                             type: 'local',
                         },

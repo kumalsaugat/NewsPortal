@@ -37,9 +37,11 @@
                                 </div>
                             </div>
 
-                            {!! $dataTable->table() !!}
+                            <div class="table-responsive">
+                                {!! $dataTable->table(['class' => 'table table-striped table-bordered dt-responsive nowrap', 'width' => '100%']) !!}
+                            </div>
                         </div> <!-- /.card-body -->
-                        
+
                     </div> <!-- /.card -->
                 </div> <!-- /.col -->
             </div> <!--end::Row-->
