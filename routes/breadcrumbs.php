@@ -82,3 +82,8 @@ Breadcrumbs::for('user.show', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('user.index');
     $trail->push('View '. ($user->name ? ' / ' . $user->name : ''), route('user.show', $user->id));
 });
+
+Breadcrumbs::for('user-update', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('user.index');
+    $trail->push('Update/'.$user->name, route('user.update', $user));
+});

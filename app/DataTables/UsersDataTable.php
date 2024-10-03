@@ -42,7 +42,10 @@ class UsersDataTable extends DataTable
     private function renderActionColumn($row): string
     {
         $actions = '<a href="'.route('user.show', $row->id).'" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
-                    <a href="'.route('user.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
+                    <a href="'.route('user.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                    <a href="'.route('password', $row->id).'" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-lock"></i>
+                    </a>';
 
         if (auth()->id() !== $row->id) {
             $actions .= '<form id="deleteForm-user-'.$row->id.'" action="'.route('user.destroy', $row->id).'" method="POST" style="display:inline;">

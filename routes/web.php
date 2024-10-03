@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     //User
     Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
     Route::patch('/user/update-status/{id}', [\App\Http\Controllers\Admin\UserController::class, 'updateStatus'])->name('user.update-status');
+    Route::get('/user/password/{id}', [\App\Http\Controllers\Admin\UserController::class,  'password'])->name('password');
+    Route::put('/user/password/change/{id}', [\App\Http\Controllers\Admin\UserController::class,  'updatepassword'])->name('user.password.change');
 
 
 });

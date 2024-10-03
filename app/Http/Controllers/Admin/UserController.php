@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
 use Carbon\Carbon;
@@ -253,6 +254,52 @@ class UserController extends AdminBaseController
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to update status.']);
         }
+    }
+
+    public function password(string $id)
+    {
+        $user = User::find($id);
+
+        return view('admin.user.password', [
+                    'user' => $user,
+                    'pageTitle' => $this->pageTitle,
+            ]);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request, string $id)
+    {
+        $user = user::findorfail($id);
+        if ($request->current_password && $request->new_password) {
+            if (Hash::check($request->current_password, $user->password)) {
+                if (Hash::check($request->new_password, $user->password)) {
+
+                    return redirect()->route('password', $user->id)->with('error', 'The new password is same as old password');
+
+                }
+
+                $user->password = Hash::make($request->new_password);
+                $user->save();
+
+                return redirect()->route('user.show', $user->id)->with('success', 'password updated successfully');
+            } else {
+
+                return redirect()->route('password', $user->id)->with('error', 'current password not match');
+            }
+
+        } elseif ($request->confirm_password && $request->new_password) {
+            if ($request->new_password == $request->confirm_password) {
+                $user->password = Hash::make($request->new_password);
+
+                $user->save();
+
+                return redirect()->route('user.show', $user->id)->with('success', 'password updated successfully');
+            } else {
+
+                return redirect()->route('password', $user->id)->with('error', 'password not match');
+            }
+
+        }
+
     }
 
 }
