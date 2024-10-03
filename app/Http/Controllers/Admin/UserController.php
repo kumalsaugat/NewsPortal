@@ -212,8 +212,8 @@ class UserController extends AdminBaseController
 
             // Define paths
             $originalPath = 'images/'.$filename;
-            $thumbnail100Path = 'images/thumbnails/100px/'.$filename;
-            $thumbnail800Path = 'images/thumbnails/800px/'.$filename;
+            $thumbnail100Path = 'images/thumbnails/100px_'.$filename;
+            $thumbnail800Path = 'images/thumbnails/800px_'.$filename;
 
             // Move the file from 'tmp' to 'images'
             Storage::disk('public')->move($imagePath, $originalPath);
@@ -221,19 +221,17 @@ class UserController extends AdminBaseController
             // Resize the image using Intervention Image
 
             // 100px width image
-            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, 100);
-            // $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
-            //     $constraint->aspectRatio(); // Keep aspect ratio
-            //     $constraint->upsize(); // Prevent upsizing
-            // });
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
             Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
 
             // 800px width image
-            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, 800);
-            // $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
-            //     $constraint->aspectRatio(); // Keep aspect ratio
-            //     $constraint->upsize(); // Prevent upsizing
-            // });
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
             Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
 
             // Save the new image path in the database (original path)

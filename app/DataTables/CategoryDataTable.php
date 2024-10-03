@@ -36,7 +36,7 @@ class CategoryDataTable extends DataTable
     {
         if ($row->image) {
             return '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
-                        <img src="'.asset('storage/images/thumbnails/100px/' . basename($row->image)).'" alt="'.$row->title.'" style=" width:80px; height: auto;">
+                        <img src="'.asset('storage/images/thumbnails/100px_' . basename($row->image)).'" alt="'.$row->title.'" style=" width:80px; height: auto;">
                     </a>';
         }
         return '<p>No image available</p>';

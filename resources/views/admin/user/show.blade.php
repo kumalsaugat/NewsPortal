@@ -39,9 +39,9 @@
                                 <th style="width: 200px;">@lang('app.user.image')</th>
                                 <td>
                                     @if ($users->image)
-                                        <a href="{{ asset('storage/' . $users->image) }}" data-fancybox="gallery"
+                                        <a href="{{ asset('storage/images/thumbnails/800px_' . $users->image) }}" data-fancybox="gallery"
                                             data-caption="{{ $users->title }}">
-                                            <img src="{{ asset('storage/images/thumbnails/800px/' . basename($users->image)) }}"
+                                            <img src="{{ asset('storage/images/thumbnails/100px_' . basename($users->image)) }}"
                                                 alt="{{ $users->title }}" style=" width:100px; height: auto;">
                                         </a>
                                     @else

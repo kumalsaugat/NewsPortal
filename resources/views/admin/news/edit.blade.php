@@ -99,7 +99,7 @@
             files: [
                 @if (isset($newsData) && $newsData->image)
                     {
-                        source: '{{ asset('storage/images/thumbnails/800px/' . basename($newsData->image)) }}',
+                        source: '{{ asset('storage/images/thumbnails/800px_' . basename($newsData->image)) }}',
                         options: {
                             type: 'local',
                         },
