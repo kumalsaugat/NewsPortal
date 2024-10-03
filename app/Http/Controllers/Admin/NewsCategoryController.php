@@ -141,13 +141,13 @@ class NewsCategoryController extends AdminBaseController
             // Delete old images if they exist
             if ($category->image) {
 
+                // Delete original and thumbnail images if they exist
                 if (Storage::exists(public_path('storage/'.$category->image))) {
                     Storage::delete(public_path('storage/'.$category->image));
                 }
                 if (Storage::exists(public_path('storage/images/thumbnails/'.basename($category->image)))) {
                     Storage::delete(public_path('storage/images/thumbnails/'.basename($category->image)));
                 }
-
             }
 
             $imagePath = $request->input('image');
@@ -155,20 +155,34 @@ class NewsCategoryController extends AdminBaseController
 
             // Define paths
             $originalPath = 'images/'.$filename;
-            $resizedPath = 'images/thumbnails/'.$filename;
+            $thumbnail100Path = 'images/thumbnails/100px/'.$filename;
+            $thumbnail800Path = 'images/thumbnails/800px/'.$filename;
 
             // Move the file from 'tmp' to 'images'
             Storage::disk('public')->move($imagePath, $originalPath);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-            // Store the resized image
-            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // 100px width image
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, 100);
+            // $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+            //     $constraint->aspectRatio(); // Keep aspect ratio
+            //     $constraint->upsize(); // Prevent upsizing
+            // });
+            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
 
-            // Save the new image path in the database
+            // 800px width image
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, 800);
+            // $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+            //     $constraint->aspectRatio(); // Keep aspect ratio
+            //     $constraint->upsize(); // Prevent upsizing
+            // });
+            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
+            // Save the new image path in the database (original path)
             $category->image = $originalPath;
         }
+
         $category->save();
     }
 

@@ -34,7 +34,7 @@ class UsersDataTable extends DataTable
     {
         return $row->image
             ? '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->name.'">
-                   <img src="'.asset('storage/images/thumbnails/' . basename($row->image)).'" alt="'.$row->name.'" style="height: 50px;">
+                   <img src="'.asset('storage/images/thumbnails/100px/' . basename($row->image)).'" alt="'.$row->name.'" style=" width:80px; height: auto;">
                </a>'
             : '<p>No image available</p>';
     }
@@ -93,7 +93,7 @@ class UsersDataTable extends DataTable
             ->setTableId('users-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('lfrtip')
+            ->dom('ftiprl')
             ->orderBy(1);
     }
 

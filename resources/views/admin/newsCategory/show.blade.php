@@ -42,9 +42,9 @@
                                 @if ($category->image)
                                     <a href="{{ asset('storage/' . $category->image) }}"
                                         data-fancybox="gallery" data-caption="{{ $category->title }}">
-                                        <img src="{{ asset('storage/images/thumbnails/' . basename($category->image)) }}"
+                                        <img src="{{ asset('storage/images/thumbnails/800px/' . basename($category->image)) }}"
                                             alt="{{ $category->title }}"
-                                            style=" height: 50px;">
+                                            style=" width:100px; height: auto;">
                                     </a>
                                 @else
                                     <p>No image available</p>

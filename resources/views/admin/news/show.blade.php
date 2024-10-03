@@ -51,8 +51,8 @@
                                     @if ($news->image)
                                         <a href="{{ asset('storage/' . $news->image) }}" data-fancybox="gallery"
                                             data-caption="{{ $news->title }}">
-                                            <img src="{{ asset('storage/images/thumbnails/' . basename($news->image)) }}"
-                                                alt="{{ $news->title }}" style=" height: 50px;">
+                                            <img src="{{ asset('storage/images/thumbnails/800px/' . basename($news->image)) }}"
+                                                alt="{{ $news->title }}" style=" width:100px; height: auto;">
                                         </a>
                                     @else
                                         <p>No image available</p>
