@@ -35,7 +35,7 @@ class CategoryDataTable extends DataTable
     private function renderImageColumn($row): string
     {
         if ($row->image) {
-            return '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
+            return '<a href="'.asset('storage/images/thumbnails/800px_' . basename($row->image)).'" data-fancybox="gallery" data-caption="'.$row->title.'">
                         <img src="'.asset('storage/images/thumbnails/100px_' . basename($row->image)).'" alt="'.$row->title.'" style=" width:80px; height: auto;">
                     </a>';
         }

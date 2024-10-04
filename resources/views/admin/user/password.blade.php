@@ -154,11 +154,12 @@
                             <div class="row">
 
                                 <div class="card-footer">
-                                    <a href="{{ route('user.index') }}" class="btn btn-warning text-white">
-                                        <i class="fas fa-times-circle"></i> Cancel</a>
-
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
-                                        Update</button>
+                                        @lang('app.update')</button>
+                                    <a href="{{ route('user.index') }}" class="btn btn-warning text-white">
+                                        <i class="fas fa-times-circle"></i> @lang('app.cancel')</a>
+
+
 
                                 </div>
                             </div>

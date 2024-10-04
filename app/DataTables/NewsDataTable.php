@@ -32,7 +32,7 @@ class NewsDataTable extends DataTable
     private function renderImageColumn($row): string
     {
         return $row->image
-            ? '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
+            ? '<a href="'.asset('storage/images/thumbnails/800px_' . basename($row->image)).'" data-fancybox="gallery" data-caption="'.$row->title.'">
                    <img src="'.asset('storage/images/thumbnails/100px_' . basename($row->image)).'" alt="'.$row->title.'" style=" width:80px; height: auto;">
                </a>'
             : '<p>No image available</p>';

@@ -33,7 +33,7 @@ class UsersDataTable extends DataTable
     private function renderImageColumn($row): string
     {
         return $row->image
-            ? '<a href="'.asset('storage/' . $row->image).'" data-fancybox="gallery" data-caption="'.$row->name.'">
+            ? '<a href="'.asset('storage/images/thumbnails/800px_' . basename($row->image)).'" data-fancybox="gallery" data-caption="'.$row->name.'">
                    <img src="'.asset('storage/images/thumbnails/100px_' . basename($row->image)).'" alt="'.$row->name.'" style=" width:80px; height: auto;">
                </a>'
             : '<p>No image available</p>';
@@ -41,12 +41,11 @@ class UsersDataTable extends DataTable
 
     private function renderActionColumn($row): string
     {
+        // Action buttons for viewing and editing the user
         $actions = '<a href="'.route('user.show', $row->id).'" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
-                    <a href="'.route('user.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                    <a href="'.route('password', $row->id).'" class="btn btn-secondary btn-sm">
-                        <i class="fas fa-lock"></i>
-                    </a>';
+                    <a href="'.route('user.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
 
+        // Only show delete button if the user is not the currently authenticated user
         if (auth()->id() !== $row->id) {
             $actions .= '<form id="deleteForm-user-'.$row->id.'" action="'.route('user.destroy', $row->id).'" method="POST" style="display:inline;">
                             '.csrf_field().'
@@ -56,8 +55,15 @@ class UsersDataTable extends DataTable
                             </button>
                         </form>';
         }
+
+        // The password button now comes after the delete form
+        $actions .= '<a href="'.route('password', $row->id).'" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-lock"></i>
+                    </a>';
+
         return $actions;
     }
+
 
     private function renderStatusColumn($row): string
     {

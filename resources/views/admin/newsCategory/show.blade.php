@@ -40,7 +40,7 @@
                             <th style="width: 200px;">@lang('app.category.image')</th>
                             <td>
                                 @if ($category->image)
-                                    <a href="{{ asset('storage/images/thumbnails/800px_' . $category->image) }}"
+                                    <a href="{{ asset('storage/images/thumbnails/800px_' . basename($category->image)) }}"
                                         data-fancybox="gallery" data-caption="{{ $category->title }}">
                                         <img src="{{ asset('storage/images/thumbnails/100px_' . basename($category->image)) }}"
                                             alt="{{ $category->title }}"
