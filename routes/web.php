@@ -36,6 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/password/{id}', [\App\Http\Controllers\Admin\UserController::class,  'password'])->name('password');
     Route::put('/user/password/change/{id}', [\App\Http\Controllers\Admin\UserController::class,  'updatepassword'])->name('user.password.change');
 
+    //Album
+    Route::resource('album', \App\Http\Controllers\Admin\AlbumController::class);
+
+    //Image
+    Route::resource('album', \App\Http\Controllers\Admin\ImageController::class);
 
 });
 
