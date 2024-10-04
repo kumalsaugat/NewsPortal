@@ -47,6 +47,15 @@
                     </ul>
                 </li>
 
+                <li class="nav-item ">
+                    <a href="{{ route('album.create') }}" class="nav-link"> <i class="nav-icon fas fa-newspaper"></i>
+                        <p>
+                            Gallery
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                </li>
+
             </ul> <!--end::Sidebar Menu-->
         </nav>
     </div> <!--end::Sidebar Wrapper-->

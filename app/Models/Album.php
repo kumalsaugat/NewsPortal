@@ -17,8 +17,8 @@ class Album extends Model
 
     protected $fillable = [
         'title',
-        'date',
         'slug',
+        'date',
         'description',
         'image',
         'status',

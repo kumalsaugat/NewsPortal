@@ -44,6 +44,15 @@ return array (
     'status' => 'Status',
 ),
 
+'album' => array (
+    'title' => 'Title',
+    'date' => 'Date',
+    'slug' => 'Slug',
+    'desc' => 'Description',
+    'image' => 'Gallery',
+    'status' => 'Status',
+),
+
 
 
 

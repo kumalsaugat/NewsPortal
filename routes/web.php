@@ -38,9 +38,12 @@ Route::middleware('auth')->group(function () {
 
     //Album
     Route::resource('album', \App\Http\Controllers\Admin\AlbumController::class);
+    Route::patch('/album/update-status/{id}', [\App\Http\Controllers\Admin\AlbumController::class, 'updateStatus'])->name('albums.update-status');
+    Route::post('upload', [\App\Http\Controllers\Admin\AlbumController::class, 'multipleUpload'])->name('multipleUpload');
 
     //Image
-    Route::resource('album', \App\Http\Controllers\Admin\ImageController::class);
+    Route::resource('image', \App\Http\Controllers\Admin\ImageController::class);
+
 
 });
 
