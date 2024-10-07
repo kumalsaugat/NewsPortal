@@ -2,64 +2,45 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\ImageDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Album;
+use App\Models\AlbumImage;
 use Illuminate\Http\Request;
 
-class ImageController extends Controller
+class ImageController extends AdminBaseController
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->pageTitle = 'Album Images';
+    }
+
     /**
      * Display a listing of the resource.
+     *
+     * @param ImageDataTable $dataTable
+     * @param int $id
+     * @return \Illuminate\View\View
      */
-    public function index()
+
+    public function albumImage(ImageDataTable $dataTable,$id)
     {
-        //
+        $album = Album::findOrFail($id);
+
+        return $dataTable->render('admin.albumimage.index', [
+            'pageTitle' => $this->pageTitle,
+            'album' => $album,
+
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $albumImage  = AlbumImage::findOrFail($id);
+
+        $albumImage ->delete();
+
+        return redirect()->route('album-image.albumImage')->with('success', 'Album Image deleted successfully.');
     }
 }

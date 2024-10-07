@@ -49,4 +49,9 @@ class Album extends Model
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
+
+    public function images()
+    {
+        return $this->hasMany(AlbumImage::class);
+    }
 }

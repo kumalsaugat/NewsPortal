@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Album;
+use App\Models\AlbumImage;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,13 +12,10 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AlbumDataTable extends DataTable
+class ImageDataTable extends DataTable
 {
-    /**
-     * Build the DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     */
+
+
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return datatables()
@@ -28,6 +25,7 @@ class AlbumDataTable extends DataTable
             ->editColumn('status', fn($row) => $this->renderStatusColumn($row))
             ->rawColumns(['action','image','status']);
     }
+
     private function renderImageColumn($row): string
     {
         return $row->image
@@ -39,13 +37,10 @@ class AlbumDataTable extends DataTable
     private function renderActionColumn($row): string
     {
         return '
-            <a href="'.route('album.show', $row->id).'" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
-            <a href="'.route('album.edit', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-            <a href="'.route('album-image.albumImage', $row->id).'" class="btn btn-primary btn-sm"><i class="fas fa-images"></i></a>
-            <form id="deleteForm-album-'.$row->id.'" action="'.route('album.destroy', $row->id).'" method="POST" style="display:inline;">
+            <form id="deleteForm-albumImage-'.$row->id.'" action="'.route('album-image.destroy', $row->id).'" method="POST" style="display:inline;">
                 '.csrf_field().'
                 '.method_field('DELETE').'
-                <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete(\'deleteForm-album-'.$row->id.'\')">
+                <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete(\'deleteForm-albumImage-'.$row->id.'\')">
                     <i class="fas fa-trash"></i>
                 </button>
             </form>';
@@ -63,9 +58,10 @@ class AlbumDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Album $model): QueryBuilder
+    public function query(AlbumImage $model)
     {
-        return $model->newQuery();
+        $album_id = request()->route('album') | 0 ;
+        return $model::with('album')->where('album_id', $album_id)->newQuery();
     }
 
     /**
@@ -74,13 +70,13 @@ class AlbumDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('album-table')
+                    ->setTableId('image-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('lfrtip')
                     ->orderBy(1);
-
     }
+
 
     /**
      * Get the dataTable columns definition.
@@ -91,15 +87,11 @@ class AlbumDataTable extends DataTable
             Column::make('action')
                 ->title('Action')
                 ->width(100), // Fixed width for the action column
-            Column::make('title')
-                ->title('Title')
+            Column::make('caption')
+                ->title('Caption')
                 ->width(250),
 
-            Column::make('slug')
-                ->title('Slug')
-                ->width(200),
-
-            Column::make('image')
+            Column::make('cover_image')
                 ->title('Cover Image')
                 ->width(100),
 
@@ -114,6 +106,6 @@ class AlbumDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Album_' . date('YmdHis');
+        return 'Image_' . date('YmdHis');
     }
 }

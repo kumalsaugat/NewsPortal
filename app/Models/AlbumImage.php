@@ -19,4 +19,9 @@ class AlbumImage extends Model
         'updated_by',
         'deleted_by',
     ];
+
+    public function album()
+    {
+        return $this->belongsTo(Album::class);
+    }
 }
