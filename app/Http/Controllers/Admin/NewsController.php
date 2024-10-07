@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
-
-
+use DB;
 
 class NewsController extends AdminBaseController
 {
@@ -209,8 +208,11 @@ class NewsController extends AdminBaseController
             if (Storage::exists(public_path('storage/'.$news->image))) {
                 Storage::delete(public_path('storage/'.$news->image));
             }
-            if (Storage::exists(public_path('storage/images/thumbnails/'.basename($news->image)))) {
-                Storage::delete(public_path('storage/images/thumbnails/'.basename($news->image)));
+            if (Storage::exists(public_path('storage/images/thumbnails/100px_'.basename($news->image)))) {
+                Storage::delete(public_path('storage/images/thumbnails/100px_'.basename($news->image)));
+            }
+            if (Storage::exists(public_path('storage/images/thumbnails/800px_'.basename($news->image)))) {
+                Storage::delete(public_path('storage/images/thumbnails/800px_'.basename($news->image)));
             }
         }
 
@@ -261,5 +263,21 @@ class NewsController extends AdminBaseController
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to update status.']);
         }
+    }
+
+    public function bulkUpdateStatus(Request $request)
+    {
+        $ids = $request->ids;
+        News::whereIn('id', $ids)->update(['status' => DB::raw('NOT status')]);
+
+        return response()->json(['success' => 'Status updated successfully!']);
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->ids;
+        News::whereIn('id', $ids)->delete();
+
+        return response()->json(['success' => 'Selected rows deleted successfully!']);
     }
 }

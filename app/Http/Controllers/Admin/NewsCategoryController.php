@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use DB;
 
 class NewsCategoryController extends AdminBaseController
 {
@@ -196,5 +197,20 @@ class NewsCategoryController extends AdminBaseController
             return response()->json(['success' => false, 'message' => 'Failed to update status.']);
         }
 
+    }
+    public function bulkUpdateStatus(Request $request)
+    {
+        $ids = $request->ids;
+        Category::whereIn('id', $ids)->update(['status' => DB::raw('NOT status')]);
+
+        return response()->json(['success' => 'Status updated successfully!']);
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->ids;
+        Category::whereIn('id', $ids)->delete();
+
+        return response()->json(['success' => 'Selected rows deleted successfully!']);
     }
 }

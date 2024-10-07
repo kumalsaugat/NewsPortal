@@ -19,7 +19,9 @@ class UserSeeder extends Seeder
                     'name' => 'Saugat Kumal',
                     'email' => 'saugatkumal452@gmail.com',
                     'password' => bcrypt('123456789'),
+
                     'remember_token' => '$2y$12$OHoGL5SvqLI927igkZHMmOTwkEoeDSOnzUmJfybifG4DnZ3alYrja',
+                    'status' => 1,
                     'created_at' => '2024-09-12 12:48:42',
                 ),
 
@@ -30,6 +32,7 @@ class UserSeeder extends Seeder
                         'email' => 'test@gmail.com',
                         'password' => bcrypt('123456789'),
                         'remember_token' => '$2y$12$OHoGL5SvqLI927igkZHMmOTwkEoeDSOnzUmJfybifG4DnZ3alYrja',
+                        'status' => 0,
                         'created_at' => '2024-09-12 12:48:42',
                     ),
 
@@ -40,6 +43,7 @@ class UserSeeder extends Seeder
                         'email' => 'test2@gmail.com',
                         'password' => bcrypt('123456789'),
                         'remember_token' => '$2y$12$OHoGL5SvqLI927igkZHMmOTwkEoeDSOnzUmJfybifG4DnZ3alYrja',
+                        'status' => 0,
                         'created_at' => '2024-09-12 12:48:42',
                     ),
         ));

@@ -26,8 +26,10 @@ class UsersDataTable extends DataTable
             ->addColumn('image', fn($row) => $this->renderImageColumn($row))
             ->addColumn('action', fn($row) => $this->renderActionColumn($row))
             ->editColumn('status', fn($row) => $this->renderStatusColumn($row))
-
-            ->rawColumns(['action', 'status', 'image']);
+            ->addColumn('checkbox', function ($row) {
+                return '<input type="checkbox" name="selected_rows[]" value="'.$row->id.'">';
+            })
+            ->rawColumns(['action', 'status', 'image','checkbox']);
     }
 
     private function renderImageColumn($row): string
@@ -114,6 +116,11 @@ class UsersDataTable extends DataTable
         return [
             Column::make('action')
                 ->width(100), // Fixed width for action column
+
+            Column::make('checkbox')
+                ->orderable(false)
+                ->title('<input type="checkbox" id="select-all">')
+                ->width(30),
             Column::make('name'),
             Column::make('email')
                 ->width(250),

@@ -30,79 +30,33 @@
                 <div class="col-md-12">
                     <div class="card mb-4">
                         <div class="card-body p-3">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div>
+                            <div class="d-flex mb-3">
+
                                     <!-- Action Buttons -->
                                     <a href="{{ route('user.create') }}">
                                         <button class="btn btn-success"><i class="fa fa-plus"></i>
-                                            @lang('app.createNew')</button></a>
-                                </div>
+                                            @lang('app.createNew')</button>
+                                    </a>
+
+                                    <!-- Reset Button -->
+                                    <button type="button" class="btn btn-danger" style="margin-left: 10px">
+                                        <i class="fa fa-undo"></i> Reset
+                                    </button>
+
+                                    <!-- Reload Button -->
+                                    <button type="button" class="btn btn-warning" id="reloadTable"
+                                        onclick="location.reload();" style="margin-left: 10px">
+                                        <i class="fa fa-sync"></i> Reload
+                                    </button>
+                                    <div class="d-flex" style="margin-left: 10px">
+                                        <select id="bulkAction" class="form-select me-2" style="width: auto;">
+                                            <option value="" selected disabled>Bulk Action</option>
+                                            <option value="toggle-status">Toggle Status</option>
+                                            <option value="delete">Delete</option>
+                                        </select>
+                                        <button class="btn btn-secondary" id="applyBulkAction">Apply</button>
+                                    </div>
                             </div>
-                            {{-- <table class="table table-striped" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th >Action</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Image</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($users->isNotEmpty())
-                                        @foreach ($users as $user)
-                                            <tr class="align-middle">
-                                                <td>
-                                                    <a href="{{ route('user.show', $user->id) }}"
-                                                        class="btn btn-info btn-sm">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-
-                                                    <a href="{{ route('user.edit', $user->id) }}"
-                                                        class="btn btn-success btn-sm">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    @auth
-                                                        @if (auth()->id() !== $user->id)
-                                                            <form id="deleteForm-user-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="button" class="btn btn-danger btn-sm" onclick="handleDelete('deleteForm-user-{{ $user->id }}')">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                        @endif
-                                                    @endauth
-
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('user.edit', $user->id) }}" class="text-decoration-none">
-                                                    {{ $user->name }}
-                                                    </a>
-                                                </td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>
-                                                    @if ($user->image)
-                                                    <a href="{{ asset('storage/' . $user->image) }}"
-                                                        data-fancybox="gallery" data-caption="{{ $user->title }}">
-                                                        <img src="{{ asset('storage/' . $user->image) }}"
-                                                            alt="{{ $user->title }}" style="width: 50px; height: auto;">
-                                                    </a>
-                                                    @else
-                                                        <p>No image available</p>
-                                                    @endif
-                                                </td>
-
-
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="5">Records Not Found</td>
-                                        </tr>
-                                    @endif
-
-                                </tbody>
-                            </table> --}}
 
                                 <div class="table-responsive">
                                     {!! $dataTable->table(['class' => 'table table-striped table-bordered dt-responsive nowrap', 'width' => '100%']) !!}
@@ -152,4 +106,21 @@
             toggleStatusLabel();
         });
     </script>
+
+    <script>
+        $('#select-all').click(function() {
+            $('input[name="selected_rows[]"]').prop('checked', this.checked);
+        });
+    </script>
+    <script>
+        // Setup bulk actions for this specific page
+        setupBulkActions({
+            applyBulkAction: '#applyBulkAction',
+            rowSelector: 'input[name="selected_rows[]"]',
+            bulkAction: '#bulkAction',
+            updateUrl: '/user/bulk-update-status', // URL for update status
+            deleteUrl: '/user/bulk-delete' // URL for delete
+        });
+    </script>
+
 @endpush

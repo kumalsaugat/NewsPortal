@@ -101,6 +101,14 @@
     {{-- delete Form --}}
     <script src="{{ asset('js/deleteForm.js') }}"></script>
 
+    {{-- bulk Action --}}
+    <script src="{{ asset('js/bulk.js') }}"></script>
+
+    {{-- Reset --}}
+    <script src="{{ asset('js/reset.js') }}"></script>
+
+
+
 
     {{-- File Pond --}}
     <script

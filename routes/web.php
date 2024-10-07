@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('news-category', \App\Http\Controllers\Admin\NewsCategoryController::class);
     Route::patch('/news-category/update-status/{id}', [\App\Http\Controllers\Admin\NewsCategoryController::class, 'updateStatus'])->name('news-category.update-status');
 
+    Route::post('/news-category/bulk-update-status', [\App\Http\Controllers\Admin\NewsCategoryController::class,'bulkUpdateStatus'])->name('news-category.bulk-update-status');
+    Route::post('/news-category/bulk-delete', [\App\Http\Controllers\Admin\NewsCategoryController::class, 'bulkDelete'])->name('news-category.bulk-delete');
+
     // News
     Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
     Route::post('upload', [\App\Http\Controllers\Admin\NewsController::class, 'upload'])->name('upload');
@@ -30,11 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/fetch/{filename}', [\App\Http\Controllers\Admin\NewsController::class, 'fetch'])->name('fetch');
     Route::patch('/news/update-status/{id}', [\App\Http\Controllers\Admin\NewsController::class, 'updateStatus'])->name('news.update-status');
 
+    Route::post('/news/bulk-update-status', [\App\Http\Controllers\Admin\NewsController::class,'bulkUpdateStatus'])->name('news.bulk-update-status');
+    Route::post('/news/bulk-delete', [\App\Http\Controllers\Admin\NewsController::class, 'bulkDelete'])->name('news.bulk-delete');
+
     //User
     Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
     Route::patch('/user/update-status/{id}', [\App\Http\Controllers\Admin\UserController::class, 'updateStatus'])->name('user.update-status');
     Route::get('/user/password/{id}', [\App\Http\Controllers\Admin\UserController::class,  'password'])->name('password');
     Route::put('/user/password/change/{id}', [\App\Http\Controllers\Admin\UserController::class,  'updatepassword'])->name('user.password.change');
+
+    Route::post('/user/bulk-update-status', [\App\Http\Controllers\Admin\UserController::class,'bulkUpdateStatus'])->name('user.bulk-update-status');
+    Route::post('/user/bulk-delete', [\App\Http\Controllers\Admin\UserController::class, 'bulkDelete'])->name('user.bulk-delete');
 
     //Album
     Route::resource('album', \App\Http\Controllers\Admin\AlbumController::class);

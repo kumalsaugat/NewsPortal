@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
-
+use DB;
 
 
 class UserController extends AdminBaseController
@@ -300,6 +300,27 @@ class UserController extends AdminBaseController
 
         }
 
+    }
+
+    public function bulkUpdateStatus(Request $request)
+    {
+        $ids = $request->ids;
+
+        User::whereIn('id', $ids)
+            ->where('id', '!=', Auth::id()) // Exclude the current logged-in user from changing status
+            ->update(['status' => DB::raw('NOT status')]);
+
+        return response()->json(['success' => 'Status updated successfully!']);
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->ids;
+        User::whereIn('id', $ids)
+            ->where('id', '!=', Auth::id())//Exclude the current logged-in user froim getting deleted
+            ->delete();
+
+        return response()->json(['success' => 'Selected rows deleted successfully!']);
     }
 
 }

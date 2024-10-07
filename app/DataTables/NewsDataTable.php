@@ -26,7 +26,10 @@ class NewsDataTable extends DataTable
             ->addColumn('image', fn($row) => $this->renderImageColumn($row))
             ->addColumn('action', fn($row) => $this->renderActionColumn($row))
             ->editColumn('status', fn($row) => $this->renderStatusColumn($row))
-            ->rawColumns(['action','image','status']);
+            ->addColumn('checkbox', function ($row) {
+                return '<input type="checkbox" name="selected_rows[]" value="'.$row->id.'">';
+            })
+            ->rawColumns(['action','image','status','checkbox']);
     }
 
     private function renderImageColumn($row): string
@@ -93,6 +96,10 @@ class NewsDataTable extends DataTable
             Column::make('action')
                 ->title('Actions')
                 ->width(100), // Fixed width for the action column
+            Column::make('checkbox')
+                ->orderable(false)
+                ->title('<input type="checkbox" id="select-all">')
+                ->width(30),
             Column::make('title')
                 ->title('Title')
                 ->width(250),

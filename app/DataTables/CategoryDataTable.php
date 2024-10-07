@@ -26,7 +26,10 @@ class CategoryDataTable extends DataTable
             ->addColumn('image', fn($row) => $this->renderImageColumn($row))
             ->addColumn('action', fn($row) => $this->renderActionColumn($row))
             ->editColumn('status', fn($row) => $this->renderStatusColumn($row))
-            ->rawColumns(['action','title','image','status']);
+            ->addColumn('checkbox', function ($row) {
+                return '<input type="checkbox" name="selected_rows[]" value="'.$row->id.'">';
+            })
+            ->rawColumns(['action','title','image','status','checkbox']);
     }
 
     /**
@@ -91,6 +94,11 @@ class CategoryDataTable extends DataTable
         return [
             Column::make('action')
                 ->width(100),
+
+            Column::make('checkbox')
+                ->orderable(false)
+                ->title('<input type="checkbox" id="select-all">')
+                ->width(30),
 
             Column::make('name')
                 ->width(200),
