@@ -199,53 +199,60 @@ class NewsController extends AdminBaseController
         $news->updated_by = Auth::id();
     }
 
-    if ($request->input('image')) {
+        $existimage = '800px_'.basename($news->image);
+        $currentimage = basename($request->image);
+            // Delete old images
+              // Delete old images if they exist
+                if ($existimage != $currentimage) {
 
-        // Delete old images if they exist
-        if ($news->image) {
+            if ($news->image) {
 
-            // Delete original and thumbnail images if they exist
-            if (Storage::exists(public_path('storage/'.$news->image))) {
-                Storage::delete(public_path('storage/'.$news->image));
+                // Delete original and thumbnail images if they exist
+                if (Storage::exists(public_path('storage/'.$news->image))) {
+                    Storage::delete(public_path('storage/'.$news->image));
+                }
+                if (Storage::exists(public_path('storage/images/thumbnails/800px_'.basename($news->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/800px_'.basename($news->image)));
+                }
+                if (Storage::exists(public_path('storage/images/thumbnails/100px_'.basename($news->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/100px_'.basename($news->image)));
+                }
             }
-            if (Storage::exists(public_path('storage/images/thumbnails/100px_'.basename($news->image)))) {
-                Storage::delete(public_path('storage/images/thumbnails/100px_'.basename($news->image)));
-            }
-            if (Storage::exists(public_path('storage/images/thumbnails/800px_'.basename($news->image)))) {
-                Storage::delete(public_path('storage/images/thumbnails/800px_'.basename($news->image)));
-            }
+
+
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
+
+            // Define paths
+            $originalPath = 'images/'.$filename;
+            $thumbnail100Path = 'images/thumbnails/100px_'.$filename;
+            $thumbnail800Path = 'images/thumbnails/800px_'.$filename;
+
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
+
+            // Resize the image using Intervention Image
+
+            // 100px width image
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
+
+            // 800px width image
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
+
+                $news->image = $originalPath;
+           } else {
+
+            $news->image = $news->image;
         }
-
-        $imagePath = $request->input('image');
-        $filename = basename($imagePath);
-
-        // Define paths
-        $originalPath = 'images/'.$filename;
-        $thumbnail100Path = 'images/thumbnails/100px_'.$filename;
-        $thumbnail800Path = 'images/thumbnails/800px_'.$filename;
-
-        // Move the file from 'tmp' to 'images'
-        Storage::disk('public')->move($imagePath, $originalPath);
-
-        // Resize the image using Intervention Image
-
-        // 100px width image
-        $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
-            $constraint->aspectRatio(); // Keep aspect ratio
-            $constraint->upsize(); // Prevent upsizing
-        });
-        Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
-
-        // 800px width image
-        $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
-            $constraint->aspectRatio(); // Keep aspect ratio
-            $constraint->upsize(); // Prevent upsizing
-        });
-        Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
-
-        // Save the new image path in the database (original path)
-        $news->image = $originalPath;
-    }
 
 
     $news->save();

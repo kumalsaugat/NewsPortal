@@ -137,19 +137,26 @@ class NewsCategoryController extends AdminBaseController
 
         $category->updated_by = Auth::id();
 
-        if ($request->input('image')) {
+        $existimage = '800px_'.basename($category->image);
+        $currentimage = basename($request->image);
+            // Delete old images
+              // Delete old images if they exist
+                if ($existimage != $currentimage) {
 
-            // Delete old images if they exist
             if ($category->image) {
 
                 // Delete original and thumbnail images if they exist
                 if (Storage::exists(public_path('storage/'.$category->image))) {
                     Storage::delete(public_path('storage/'.$category->image));
                 }
-                if (Storage::exists(public_path('storage/images/thumbnails/'.basename($category->image)))) {
-                    Storage::delete(public_path('storage/images/thumbnails/'.basename($category->image)));
+                if (Storage::exists(public_path('storage/images/thumbnails/800px_'.basename($category->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/800px_'.basename($category->image)));
+                }
+                if (Storage::exists(public_path('storage/images/thumbnails/100px_'.basename($category->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/100px_'.basename($category->image)));
                 }
             }
+
 
             $imagePath = $request->input('image');
             $filename = basename($imagePath);
@@ -178,8 +185,11 @@ class NewsCategoryController extends AdminBaseController
             });
             Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
 
-            // Save the new image path in the database (original path)
-            $category->image = $originalPath;
+
+                $category->image = $originalPath;
+           } else {
+
+            $category->image = $category->image;
         }
 
         $category->save();

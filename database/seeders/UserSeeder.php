@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
 
                     'remember_token' => '$2y$12$OHoGL5SvqLI927igkZHMmOTwkEoeDSOnzUmJfybifG4DnZ3alYrja',
                     'status' => 1,
+                    'phone' => '9811111111',
                     'created_at' => '2024-09-12 12:48:42',
                 ),
 
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
                         'password' => bcrypt('123456789'),
                         'remember_token' => '$2y$12$OHoGL5SvqLI927igkZHMmOTwkEoeDSOnzUmJfybifG4DnZ3alYrja',
                         'status' => 0,
+                        'phone' => '+977-9811111111',
                         'created_at' => '2024-09-12 12:48:42',
                     ),
 
@@ -44,6 +46,7 @@ class UserSeeder extends Seeder
                         'password' => bcrypt('123456789'),
                         'remember_token' => '$2y$12$OHoGL5SvqLI927igkZHMmOTwkEoeDSOnzUmJfybifG4DnZ3alYrja',
                         'status' => 0,
+                        'phone' => '+977-9822222222',
                         'created_at' => '2024-09-12 12:48:42',
                     ),
         ));
