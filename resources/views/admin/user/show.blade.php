@@ -51,7 +51,7 @@
                             </tr>
                             <tr>
                                 <th style="width: 200px;">@lang('app.user.phone')</th>
-                                <td>{{ $users->phone }}</td>
+                                <td>{{ $users->phone ? $users->phone : 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <th style="width: 200px;">@lang('app.user.status')</th>
@@ -99,6 +99,9 @@
                         </a>
                         <a href="{{ route('user.edit', $users->id) }}" class="btn btn-primary mt-3">
                             <i class="fas fa-edit"></i> @lang('app.update')
+                        </a>
+                        <a href="{{ route('password', $users->id) }}" class="btn btn-secondary mt-3">
+                            <i class="fas fa-lock"></i> @lang('app.changePassword')
                         </a>
                         @auth
                             @if (auth()->id() !== $users->id)

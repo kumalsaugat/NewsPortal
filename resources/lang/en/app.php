@@ -16,6 +16,7 @@ return array (
 'createdBy' => "Created By",
 'updatedAt' => "Updated At",
 'updatedBy' => "Updated By",
+'changePassword' => "Change Password",
 
 'category' => array (
     'image' => 'Image',

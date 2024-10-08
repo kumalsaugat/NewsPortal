@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" aria-current="page">
-                            {{ Breadcrumbs::render('news.index') }}
+                            {{ Breadcrumbs::render('album.index') }}
                         </li>
                     </ol>
                 </div>
