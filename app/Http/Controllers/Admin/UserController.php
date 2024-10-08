@@ -64,7 +64,7 @@ class UserController extends AdminBaseController
         $user = new User();
         $this->saveUsersData($user, $request);
 
-        return redirect()->route('user.show',$user->id)->with('success', 'User created successfully.');
+        return redirect()->route('user.show', $user->id)->with('success', 'User created successfully.');
     }
 
     /**
@@ -190,65 +190,66 @@ class UserController extends AdminBaseController
         if (!$user->exists) {
             $user->created_by = Auth::id();
             $user->updated_at = null;
-        }else {
+        } else {
             $user->updated_by = Auth::id();
         }
 
-        $existimage = '800px_'.basename($user->image);
+        $existimage = '800px_' . basename($user->image);
         $currentimage = basename($request->image);
-            // Delete old images
-              // Delete old images if they exist
-                if ($existimage != $currentimage) {
+        // Delete old images
+
+        // Delete old images if they exist
+        if ($existimage != $currentimage) {
 
             if ($user->image) {
 
                 // Delete original and thumbnail images if they exist
-                if (Storage::exists(public_path('storage/'.$user->image))) {
-                    Storage::delete(public_path('storage/'.$user->image));
+                if (Storage::exists(public_path('storage/' . $user->image))) {
+                    Storage::delete(public_path('storage/' . $user->image));
                 }
-                if (Storage::exists(public_path('storage/images/thumbnails/800px_'.basename($user->image)))) {
-                    Storage::delete(public_path('storage/images/thumbnails/800px_'.basename($user->image)));
+                if (Storage::exists(public_path('storage/images/thumbnails/800px_' . basename($user->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/800px_' . basename($user->image)));
                 }
-                if (Storage::exists(public_path('storage/images/thumbnails/100px_'.basename($user->image)))) {
-                    Storage::delete(public_path('storage/images/thumbnails/100px_'.basename($user->image)));
+                if (Storage::exists(public_path('storage/images/thumbnails/100px_' . basename($user->image)))) {
+                    Storage::delete(public_path('storage/images/thumbnails/100px_' . basename($user->image)));
                 }
             }
 
+            if ($request->input('image')) {
+                $imagePath = $request->input('image');
+                $filename = basename($imagePath);
 
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
+                // Define paths
+                $originalPath = 'images/' . $filename;
+                $thumbnail100Path = 'images/thumbnails/100px_' . $filename;
+                $thumbnail800Path = 'images/thumbnails/800px_' . $filename;
 
-            // Define paths
-            $originalPath = 'images/'.$filename;
-            $thumbnail100Path = 'images/thumbnails/100px_'.$filename;
-            $thumbnail800Path = 'images/thumbnails/800px_'.$filename;
+                // Move the file from 'tmp' to 'images'
+                Storage::disk('public')->move($imagePath, $originalPath);
 
-            // Move the file from 'tmp' to 'images'
-            Storage::disk('public')->move($imagePath, $originalPath);
+                // Resize the image using Intervention Image
 
-            // Resize the image using Intervention Image
+                // 100px width image
+                $resized100Image = Image::make(storage_path('app/public/' . $originalPath))->resize(100, null, function ($constraint) {
+                    $constraint->aspectRatio(); // Keep aspect ratio
+                    $constraint->upsize(); // Prevent upsizing
+                });
+                Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
 
-            // 100px width image
-            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
-                $constraint->aspectRatio(); // Keep aspect ratio
-                $constraint->upsize(); // Prevent upsizing
-            });
-            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
-
-            // 800px width image
-            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
-                $constraint->aspectRatio(); // Keep aspect ratio
-                $constraint->upsize(); // Prevent upsizing
-            });
-            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+                // 800px width image
+                $resized800Image = Image::make(storage_path('app/public/' . $originalPath))->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio(); // Keep aspect ratio
+                    $constraint->upsize(); // Prevent upsizing
+                });
+                Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
 
 
                 $user->image = $originalPath;
-           } else {
+            } else {
 
-            $user->image = $user->image;
+                $user->image = $user->image;
+            }
         }
-
         $user->save();
     }
 
@@ -271,9 +272,9 @@ class UserController extends AdminBaseController
         $user = User::find($id);
 
         return view('admin.user.password', [
-                    'user' => $user,
-                    'pageTitle' => $this->pageTitle,
-            ]);
+            'user' => $user,
+            'pageTitle' => $this->pageTitle,
+        ]);
     }
 
     public function updatePassword(UpdatePasswordRequest $request, string $id)
@@ -284,7 +285,6 @@ class UserController extends AdminBaseController
                 if (Hash::check($request->new_password, $user->password)) {
 
                     return redirect()->route('password', $user->id)->with('error', 'The new password is same as old password');
-
                 }
 
                 $user->password = Hash::make($request->new_password);
@@ -295,7 +295,6 @@ class UserController extends AdminBaseController
 
                 return redirect()->route('password', $user->id)->with('error', 'current password not match');
             }
-
         } elseif ($request->confirm_password && $request->new_password) {
             if ($request->new_password == $request->confirm_password) {
                 $user->password = Hash::make($request->new_password);
@@ -307,9 +306,7 @@ class UserController extends AdminBaseController
 
                 return redirect()->route('password', $user->id)->with('error', 'password not match');
             }
-
         }
-
     }
 
     public function bulkUpdateStatus(Request $request)
@@ -327,10 +324,9 @@ class UserController extends AdminBaseController
     {
         $ids = $request->ids;
         User::whereIn('id', $ids)
-            ->where('id', '!=', Auth::id())//Exclude the current logged-in user froim getting deleted
+            ->where('id', '!=', Auth::id()) //Exclude the current logged-in user froim getting deleted
             ->delete();
 
         return response()->json(['success' => 'Selected rows deleted successfully!']);
     }
-
 }

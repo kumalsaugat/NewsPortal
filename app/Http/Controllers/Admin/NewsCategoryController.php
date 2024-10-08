@@ -157,40 +157,43 @@ class NewsCategoryController extends AdminBaseController
                 }
             }
 
-
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
-
-            // Define paths
-            $originalPath = 'images/'.$filename;
-            $thumbnail100Path = 'images/thumbnails/100px_'.$filename;
-            $thumbnail800Path = 'images/thumbnails/800px_'.$filename;
-
-            // Move the file from 'tmp' to 'images'
-            Storage::disk('public')->move($imagePath, $originalPath);
-
-            // Resize the image using Intervention Image
-
-            // 100px width image
-            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
-                $constraint->aspectRatio(); // Keep aspect ratio
-                $constraint->upsize(); // Prevent upsizing
-            });
-            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
-
-            // 800px width image
-            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
-                $constraint->aspectRatio(); // Keep aspect ratio
-                $constraint->upsize(); // Prevent upsizing
-            });
-            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+            if ($request->input('image')) {
 
 
-                $category->image = $originalPath;
-           } else {
+                    $imagePath = $request->input('image');
+                    $filename = basename($imagePath);
 
-            $category->image = $category->image;
-        }
+                    // Define paths
+                    $originalPath = 'images/'.$filename;
+                    $thumbnail100Path = 'images/thumbnails/100px_'.$filename;
+                    $thumbnail800Path = 'images/thumbnails/800px_'.$filename;
+
+                    // Move the file from 'tmp' to 'images'
+                    Storage::disk('public')->move($imagePath, $originalPath);
+
+                    // Resize the image using Intervention Image
+
+                    // 100px width image
+                    $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                        $constraint->aspectRatio(); // Keep aspect ratio
+                        $constraint->upsize(); // Prevent upsizing
+                    });
+                    Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
+
+                    // 800px width image
+                    $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio(); // Keep aspect ratio
+                        $constraint->upsize(); // Prevent upsizing
+                    });
+                    Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
+
+                        $category->image = $originalPath;
+                } else {
+
+                    $category->image = $category->image;
+                }
+            }
 
         $category->save();
     }

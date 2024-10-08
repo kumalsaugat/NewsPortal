@@ -82,8 +82,9 @@ class NewsDataTable extends DataTable
                     ->setTableId('news-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('lfrtip')
-                    ->orderBy(1);
+                    ->dom('frt<"mt-3 d-inline-flex justify-content-between align-items-center w-100" lip>')
+                    ->orderBy(1)
+                    ->lengthMenu([[5, 10, 15, 20, 50], [5, 10, 15, 20, 50]]);
 
     }
 

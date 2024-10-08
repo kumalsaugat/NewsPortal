@@ -30,7 +30,7 @@
                 <div class="col-md-12">
                     <div class="card mb-4">
                         <div class="card-body p-3">
-                            <div class="d-flex mb-3">
+                            <div class="d-flex">
 
                                     <!-- Action Buttons -->
                                     <a href="{{ route('user.create') }}">

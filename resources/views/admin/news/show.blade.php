@@ -60,6 +60,15 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th style="width: 200px;">@lang('app.news.desc')</th>
+                                <td style="white-space: normal;">{!! $news->description !!}</td>
+                                <!-- Add white-space: normal for text wrap -->
+                            </tr>
+                            <tr>
+                                <th style="width: 200px;">@lang('app.news.publish')</th>
+                                <td>{{ $news->published_at }}</td>
+                            </tr>
+                            <tr>
                                 <th style="width: 200px;">@lang('app.news.status')</th>
                                 <td>
                                     <div class="form-check form-switch">
@@ -68,15 +77,6 @@
                                         <label class="form-check-label" id="statusLabel{{ $news->id }}"></label>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr>
-                                <th style="width: 200px;">@lang('app.news.desc')</th>
-                                <td style="white-space: normal;">{!! $news->description !!}</td>
-                                <!-- Add white-space: normal for text wrap -->
-                            </tr>
-                            <tr>
-                                <th style="width: 200px;">@lang('app.news.publish')</th>
-                                <td>{{ $news->published_at }}</td>
                             </tr>
                             <tr>
                                 <th style="width: 200px;">@lang('app.createdAt')</th>

@@ -30,7 +30,7 @@ class UpdatePasswordRequest extends FormRequest
             'new_password' => ['required', 'string', 'min:8', PasswordRule::defaults()],
 
             // Require confirm_password if new_password is present and ensure they match
-            'confirm_password' => ['same:new_password'],
+            'confirm_password' => ['required','same:new_password'],
         ];
     }
 }

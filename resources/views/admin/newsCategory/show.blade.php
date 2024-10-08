@@ -52,15 +52,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 200px;">@lang('app.category.status')</th>
-                            <td>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $category->id }}" {{ $category->status ? 'checked' : '' }}>
-                                    <label class="form-check-label" id="statusLabel{{ $category->id }}"></label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
                             <th style="width: 200px;">@lang('app.category.desc')</th>
                             <td >@if ($category->description)
                                 {!! nl2br(e($category->description)) !!}
@@ -68,6 +59,15 @@
                                     N/A
                                 @endif
                             </td>  <!-- Add white-space: normal for text wrap -->
+                        </tr>
+                        <tr>
+                            <th style="width: 200px;">@lang('app.category.status')</th>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $category->id }}" {{ $category->status ? 'checked' : '' }}>
+                                    <label class="form-check-label" id="statusLabel{{ $category->id }}"></label>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <th style="width: 200px;">@lang('app.createdAt')</th>
